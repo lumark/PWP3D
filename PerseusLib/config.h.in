@@ -1,0 +1,20 @@
+#ifndef DDTR_CONFIG_H
+#define DDTR_CONFIG_H
+
+/// Platform
+#cmakedefine _UNIX_
+#cmakedefine _WIN_
+#cmakedefine _OSX_
+#cmakedefine _LINUX_
+#cmakedefine _ANDROID_
+
+/// Configured libraries
+#cmakedefine HAVE_PANGOLIN
+#cmakedefine HAVE_SCENEGRAPH
+#cmakedefine HAVE_KANGAROO
+#cmakedefine HAVE_TINYXML2
+#cmakedefine HAVE_OPENCV
+#cmakedefine HAVE_CVARS
+#cmakedefine HAVE_SOPHUS
+
+#endif 

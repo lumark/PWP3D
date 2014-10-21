@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+   <FileVersion major="1" minor="6" />
+   <Project>
+      <Option title="PWP3D" />
+      <Option makefile_is_custom="1" />
+      <Option compiler="gcc" />
+      <Option virtualFolders="CMake Files\;CMake Files\CMakeModules\;CMake Files\PerseusLib\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\usr\local\;CMake Files\..\..\..\..\..\usr\local\share\;CMake Files\..\..\..\..\..\usr\local\share\OpenCV\;" />
+      <Build>
+      <Target title="all">
+         <Option working_dir="/Users/luma/Code/Luma/PWP3D/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 all" />
+            <CompileFile command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="edit_cache">
+         <Option working_dir="/Users/luma/Code/Luma/PWP3D/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 edit_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="install">
+         <Option working_dir="/Users/luma/Code/Luma/PWP3D/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 install" />
+            <CompileFile command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="install/local">
+         <Option working_dir="/Users/luma/Code/Luma/PWP3D/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 install/local" />
+            <CompileFile command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="install/strip">
+         <Option working_dir="/Users/luma/Code/Luma/PWP3D/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 install/strip" />
+            <CompileFile command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="list_install_components">
+         <Option working_dir="/Users/luma/Code/Luma/PWP3D/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 list_install_components" />
+            <CompileFile command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="rebuild_cache">
+         <Option working_dir="/Users/luma/Code/Luma/PWP3D/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 rebuild_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="pwp3d">
+         <Option output="/Users/luma/Code/Luma/PWP3D/build/PerseusLib/libpwp3d.dylib" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/Users/luma/Code/Luma/PWP3D/build/PerseusLib" />
+         <Option object_output="./" />
+         <Option type="3" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/Users/luma/Code/Luma/PWP3D/PerseusLib/.." />
+            <Add directory="/Users/luma/Code/Luma/PWP3D/build/PerseusLib/.." />
+            <Add directory="/usr/local/cuda/include" />
+            <Add directory="/usr/local/include" />
+            <Add directory="/usr/local/include/eigen3" />
+            <Add directory="/usr/local/include/opencv" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/PerseusLib/Makefile&quot;  VERBOSE=1 pwp3d" />
+            <CompileFile command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/PerseusLib/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/PerseusLib/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/PerseusLib/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="pwp3d/fast">
+         <Option output="/Users/luma/Code/Luma/PWP3D/build/PerseusLib/libpwp3d.dylib" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/Users/luma/Code/Luma/PWP3D/build/PerseusLib" />
+         <Option object_output="./" />
+         <Option type="3" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="/Users/luma/Code/Luma/PWP3D/PerseusLib/.." />
+            <Add directory="/Users/luma/Code/Luma/PWP3D/build/PerseusLib/.." />
+            <Add directory="/usr/local/cuda/include" />
+            <Add directory="/usr/local/include" />
+            <Add directory="/usr/local/include/eigen3" />
+            <Add directory="/usr/local/include/opencv" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/PerseusLib/Makefile&quot;  VERBOSE=1 pwp3d/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/PerseusLib/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/PerseusLib/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/Users/luma/Code/Luma/PWP3D/build/PerseusLib/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      </Build>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Optimiser/EFs/EFStandard.cpp">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Optimiser/Engine/OptimisationEngine.cpp">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Renderer/Engine/DrawingEngine.cpp">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Renderer/Engine/DrawingPrimitives.cpp">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Renderer/Model/Model.cpp">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Renderer/Model/ModelGroup.cpp">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Renderer/Model/ModelH.cpp">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Renderer/Primitives/Quaternion.cpp">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Renderer/Transforms/CameraCoordinateTransform.cpp">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Renderer/Transforms/CoordinateTransform.cpp">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Utils/FileUtils.cpp">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Utils/HistogramEngine.cpp">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Utils/ImageUtils.cpp">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Utils/MathUtils.cpp">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Utils/VisualisationEngine.cpp">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/CUDA/CUDAConvolution.cu">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/CUDA/CUDAConvolution.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/CUDA/CUDADT.cu">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/CUDA/CUDADT.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/CUDA/CUDAData.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/CUDA/CUDAEF.cu">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/CUDA/CUDAEF.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/CUDA/CUDAEngine.cu">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/CUDA/CUDAEngine.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/CUDA/CUDARenderer.cu">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/CUDA/CUDARenderer.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/CUDA/CUDAScharr.cu">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/CUDA/CUDAScharr.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/CUDA/CUDAUtils.cu">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/CUDA/CUDAUtils.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Objects/HistogramVarBin.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Objects/ImageRender.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Objects/IterationConfiguration.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Objects/Object3D.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Objects/Object3DParams.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Objects/Pose3D.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Objects/StepSize3D.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Objects/View3D.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Objects/View3DParams.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Optimiser/EFs/EFStandard.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Optimiser/EFs/IEnergyFunction.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Optimiser/Engine/OptimisationEngine.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Others/PerseusLibDefines.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/PerseusLib.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Primitives/ImagePerseus.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Primitives/PixelUCHAR4.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Primitives/Vector2D.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Primitives/Vector3D.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Primitives/Vector4D.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Renderer/Engine/DrawingEngine.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Renderer/Engine/DrawingPrimitives.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Renderer/Model/Model.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Renderer/Model/ModelFace.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Renderer/Model/ModelGroup.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Renderer/Model/ModelH.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Renderer/Model/ModelVertex.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Renderer/Objects/Renderer3DObject.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Renderer/Objects/Renderer3DView.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Renderer/Primitives/Camera3D.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Renderer/Primitives/Quaternion.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Renderer/Transforms/CameraCoordinateTransform.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Renderer/Transforms/CoordinateTransform.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Renderer/Transforms/ObjectCoordinateTransform.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Utils/Debug.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Utils/FileUtils.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Utils/HistogramEngine.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Utils/ImageUtils.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Utils/MathUtils.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/Utils/VisualisationEngine.h">
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\" />
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/CMakeModules/SetPlatformVars.cmake">
+          <Option virtualFolder="CMake Files\CMakeModules\" />
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/CMakeModules/FindEigen3.cmake">
+          <Option virtualFolder="CMake Files\CMakeModules\" />
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\PerseusLib\" />
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/config.h.in">
+          <Option virtualFolder="CMake Files\PerseusLib\" />
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/PWP3DConfigVersion.cmake.in">
+          <Option virtualFolder="CMake Files\PerseusLib\" />
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/PWP3DConfig.cmake.in">
+          <Option virtualFolder="CMake Files\PerseusLib\" />
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/PerseusLib/PWP3DConfig.cmake.in">
+          <Option virtualFolder="CMake Files\PerseusLib\" />
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/../../../../../usr/local/share/OpenCV/OpenCVConfig-version.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\local\share\OpenCV\" />
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/../../../../../usr/local/share/OpenCV/OpenCVConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\local\share\OpenCV\" />
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/../../../../../usr/local/share/OpenCV/OpenCVModules.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\local\share\OpenCV\" />
+      </Unit>
+      <Unit filename="/Users/luma/Code/Luma/PWP3D/../../../../../usr/local/share/OpenCV/OpenCVModules-release.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\local\share\OpenCV\" />
+      </Unit>
+   </Project>
+</CodeBlocks_project_file>
