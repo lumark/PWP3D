@@ -22,7 +22,7 @@ include(SetPlatformVars)
 
 add_subdirectory(PerseusLib)
 
-#if(BUILD_APPLICATIONS)
-#  add_subdirectory(applications)
-#endif()
+if(BUILD_APPLICATIONS)
+  add_subdirectory(Perseus)
+endif()
 
