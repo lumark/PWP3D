@@ -1,8 +1,6 @@
-#include <PerseusLib/Utils\ImageUtils.h"
+#include <PerseusLib/Utils/ImageUtils.h>
 
-#include <windows.h>
 #include <FreeImage.h>
-
 #include <math.h>
 
 using namespace PerseusLib::Utils;
@@ -132,9 +130,9 @@ void ImageUtils::Overlay(ImageUChar* srcGrey, ImageUChar4 *destRGB, int destB, i
 	{
 		if (srcGrey->pixels[idx] > 0)
 		{
-			destRGB->pixels[idx].x = unsigned char(float(destR) * (float(srcGrey->pixels[idx]) / 255.0f));
-			destRGB->pixels[idx].y = unsigned char(float(destG) * (float(srcGrey->pixels[idx]) / 255.0f));
-			destRGB->pixels[idx].z = unsigned char(float(destB) * (float(srcGrey->pixels[idx]) / 255.0f));
+      destRGB->pixels[idx].x = (unsigned char)(float(destR) * (float(srcGrey->pixels[idx]) / 255.0f));
+      destRGB->pixels[idx].y = (unsigned char)(float(destG) * (float(srcGrey->pixels[idx]) / 255.0f));
+      destRGB->pixels[idx].z = (unsigned char)(float(destB) * (float(srcGrey->pixels[idx]) / 255.0f));
 			destRGB->pixels[idx].w = 255;
 		}
 	}

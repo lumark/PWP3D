@@ -1,13 +1,15 @@
 #pragma once
 
-#include <io.h>
+//#include <io.h>
 #include <string.h>
+#include <string>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <fcntl.h>
 #include <vector>
 #include <list>
-#include <PerseusLib/Others\PerseusLibDefines.h"
+#include <PerseusLib/Others/PerseusLibDefines.h>
 
 namespace PerseusLib
 {

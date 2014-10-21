@@ -27,11 +27,11 @@ char* FileUtils::TextFileRead(char *fn)
 
 	int f, count;
 
-	f = _open(fn, O_RDONLY);
+  f = open(fn, O_RDONLY);
 
-	count = _lseek(f, 0, SEEK_END);
+  count = lseek(f, 0, SEEK_END);
 
-	_close(f);
+  close(f);
 
 	if (fn != NULL)
 	{

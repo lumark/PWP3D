@@ -42,12 +42,12 @@ computeSihluettePP(unsigned char ul, unsigned char um, unsigned char ur, unsigne
     short Horz = 3*ur + 10*mr + 3*lr - 3*ul - 10*ml - 3*ll;
     short Vert = 3*ul + 10*um + 3*ur - 3*ll - 10*lm - 3*lr;
     short Sum = (short) ((abs(Horz) + abs(Vert))); //was fScale * abs..
-    bool and = (ul == 0) || (um == 0) || (ur == 0) || (ml == 0) || (mr == 0) || (ll == 0) || (lm == 0) || (lr == 0);
+    bool bAnd = (ul == 0) || (um == 0) || (ur == 0) || (ml == 0) || (mr == 0) || (ll == 0) || (lm == 0) || (lr == 0) ;
 
   Sum = max(0, Sum);
   Sum = min(0xFF, Sum);
 
-  Sum = (Sum != 0 && mm != valm && and) ? 254 : 0;
+  Sum = (Sum != 0 && mm != valm && bAnd) ? 254 : 0;
 
     return (unsigned char) Sum;
 }

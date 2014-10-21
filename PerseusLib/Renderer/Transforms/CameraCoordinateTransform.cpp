@@ -203,7 +203,7 @@ void CameraCoordinateTransform::SetProjectionMatrix(VFLOAT fovy, VFLOAT aspect, 
 	this->zNear = zNear;
 	this->fovy = fovy;
 
-	memset(projectionMatrix, 0, 16 * sizeof(float));
+  memset(projectionMatrix, 0, 16 * sizeof(float));
 	VFLOAT f = (VFLOAT) 1.0 / (VFLOAT) tan(PI/180 * fovy/2);
 	projectionMatrix[0] = f/aspect;
 	projectionMatrix[5] = f;

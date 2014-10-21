@@ -142,11 +142,11 @@ if(EIGEN3_FOUND)
 endif()
 
 
-find_package( OpenCV QUIET )
-if(OpenCV_FOUND)
-    set(HAVE_OPENCV 1)
-    list(APPEND USER_INC ${OpenCV_INCLUDE_DIRS} )
-    list(APPEND LINK_LIBS ${OpenCV_LIBRARIES} )
+find_package( FREEIMAGE REQUIRED )
+if(FREEIMAGE_FOUND)
+    set(HAVE_FREEIMAGE 1)
+    list(APPEND USER_INC ${FREEIMAGE_INCLUDE_DIRS} )
+    list(APPEND LINK_LIBS ${FREEIMAGE_LIBRARIES} )
 endif()
 
 # So that we can find config.h

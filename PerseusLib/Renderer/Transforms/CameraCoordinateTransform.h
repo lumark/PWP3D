@@ -4,7 +4,7 @@
 #include <PerseusLib/Others/PerseusLibDefines.h>
 #include <PerseusLib/Renderer/Primitives/Camera3D.h>
 #include <cmath>
-#include <string>
+#include <string.h>
 #include <memory>
 
 using namespace PerseusLib::Utils;

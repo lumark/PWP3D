@@ -1,10 +1,10 @@
 #pragma once
 
-#include <PerseusLib/Utils\ImageUtils.h"
-#include <PerseusLib/Objects\Object3D.h"
-#include <PerseusLib/Objects\View3D.h"
-#include <PerseusLib/Objects\StepSize3D.h"
-#include <PerseusLib/Renderer\Engine\DrawingEngine.h"
+#include <PerseusLib/Utils/ImageUtils.h>
+#include <PerseusLib/Objects/Object3D.h>
+#include <PerseusLib/Objects/View3D.h>
+#include <PerseusLib/Objects/StepSize3D.h>
+#include <PerseusLib/Renderer/Engine/DrawingEngine.h>
 
 using namespace PerseusLib::Primitives;
 using namespace PerseusLib::Objects;
