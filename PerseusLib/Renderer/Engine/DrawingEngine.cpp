@@ -32,6 +32,10 @@ void DrawingEngine::drawWireframe(ImageUChar* imageWireframe, ModelH* drawingMod
 {
 	size_t i, j;
 	int localExtrems[4];
+  localExtrems[0] = 0;
+  localExtrems[1] = 0;
+  localExtrems[2] = 0;
+  localExtrems[3] = 0;
 
 	ModelFace* currentFace;
 	VBYTE currentColor;
@@ -48,8 +52,9 @@ void DrawingEngine::drawWireframe(ImageUChar* imageWireframe, ModelH* drawingMod
 
 			if (currentFace->isVisible)
 			{
+        printf("localExtrems is (%d,%d,%d,%d)\n", localExtrems[0], localExtrems[1], localExtrems[2], localExtrems[3]);
 				this->drawFaceEdges(imageWireframe, currentFace, drawingModel, currentColor, localExtrems);
-
+        printf("localExtrems is (%d,%d,%d,%d)\n", localExtrems[0], localExtrems[1], localExtrems[2], localExtrems[3]);
 				roiGenerated[0] = MIN(roiGenerated[0], localExtrems[0]);
 				roiGenerated[1] = MIN(roiGenerated[1], localExtrems[1]);
 				roiGenerated[2] = MAX(roiGenerated[2], localExtrems[2]);
@@ -200,6 +205,7 @@ void DrawingEngine::DrawAllInView(Object3D** objects, int objectCount, View3D* v
 
 void DrawingEngine::Draw(Object3D* object, View3D* view, bool useCUDA, bool getBackData)
 {
+  printf("run DrawingEngine::Draw;\n");
 	Renderer3DObject *renderObject = object->renderObject;
 	Renderer3DView *renderView = view->renderView;
 	int objectId = object->objectId, viewId = view->viewId;
@@ -219,10 +225,16 @@ void DrawingEngine::Draw(Object3D* object, View3D* view, bool useCUDA, bool getB
 		object->imageRender[viewId]->Clear();
 		object->imageRender[viewId]->ClearZBuffer();
 
-		object->roiGenerated[viewId][0] = 0xFFFF; object->roiGenerated[viewId][1] = 0xFFFF;
+    object->roiGenerated[viewId][0] = 0xFFFF; object->roiGenerated[viewId][1] = 0xFFFF;
 		object->roiGenerated[viewId][2] = -1; object->roiGenerated[viewId][3] = -1;
+    object->roiGenerated[viewId][4] = 0; object->roiGenerated[viewId][5] = 0;
+
+    int *roiGenerated = object->roiGenerated[0];
+    printf("init roiGenerated value is (%d,%d,%d,%d,%d,%d)\n", roiGenerated[0],roiGenerated[1] ,roiGenerated[2] ,roiGenerated[3] ,roiGenerated[4] ,roiGenerated[5]   );
 
 		drawWireframe(object->imageWireframe[viewId], renderObject->drawingModel[view->viewId], object->roiGenerated[viewId]);
+    printf("roiGenerated value after drawWireframe is (%d,%d,%d,%d,%d,%d)\n", roiGenerated[0],roiGenerated[1] ,roiGenerated[2] ,roiGenerated[3] ,roiGenerated[4] ,roiGenerated[5]   );
+
 		drawFilled(object->imageRender[viewId], renderObject->drawingModel[view->viewId], objectId);
 	}
 }
@@ -230,17 +242,21 @@ void DrawingEngine::Draw(Object3D* object, View3D* view, bool useCUDA, bool getB
 void DrawingEngine::ChangeROIWithBand(Object3D* object, View3D *view, int bandSize, int width, int height)
 {
 	int *roiGenerated = object->roiGenerated[view->viewId];
+  printf("roiGenerated value is (%d,%d,%d,%d,%d,%d)\n", roiGenerated[0],roiGenerated[1] ,roiGenerated[2] ,roiGenerated[3] ,roiGenerated[4] ,roiGenerated[5]   );
 
 	int roiTest[6];
 	memcpy(roiTest, roiGenerated, 6 * sizeof(int));
 
-	roiGenerated[0] = CLAMP(roiGenerated[0] - bandSize, 0, width);
+  printf("bandSize:%d,width:%d,height:%d\n",bandSize, width, height);
+  roiGenerated[0] = CLAMP(roiGenerated[0] - bandSize, 0, width);
 	roiGenerated[1] = CLAMP(roiGenerated[1] - bandSize, 0, height);
 	roiGenerated[2] = CLAMP(roiGenerated[2] + bandSize, 0, width);
 	roiGenerated[3] = CLAMP(roiGenerated[3] + bandSize, 0, height);
 
 	roiGenerated[4] = roiGenerated[2] - roiGenerated[0];
 	roiGenerated[5] = roiGenerated[3] - roiGenerated[1];
+
+  printf("change roiGenerated value to (%d,%d,%d,%d,%d,%d)\n \n", roiGenerated[0],roiGenerated[1] ,roiGenerated[2] ,roiGenerated[3] ,roiGenerated[4] ,roiGenerated[5]   );
 }
 
 void DrawingEngine::ChangeROIWithBand(View3D *view3D, int bandSize, int width, int height)
@@ -261,10 +277,20 @@ void DrawingEngine::ChangeROIWithBand(View3D *view3D, int bandSize, int width, i
 
 void DrawingEngine::drawFaceEdges(ImageUChar *image, ModelFace* currentFace, ModelH* drawingModel, VBYTE color, int* extrems)
 {
+  printf("\n---- DrawingEngine::drawFaceEdges --- \n");
 	if (currentFace->verticesVectorCount != 3) return;
 
 	VFLOAT x1 = drawingModel->verticesVector[currentFace->verticesVector[0]*4 + 0];
 	VFLOAT y1 = drawingModel->verticesVector[currentFace->verticesVector[0]*4 + 1];
+  printf("drawingModel->verticesVector[%d] is %f; \n",currentFace->verticesVector[0]*4 + 0, drawingModel->verticesVector[0]);
+
+  printf("x1,y1 is (%f,%f)\n", x1, y1);
+
+  if(isfinite(x1)==false)
+  {
+    printf("fatal error! invalid value of x.\n");
+    exit(-1);
+  }
 
 	VFLOAT x2 = drawingModel->verticesVector[currentFace->verticesVector[1]*4 + 0];
 	VFLOAT y2 = drawingModel->verticesVector[currentFace->verticesVector[1]*4 + 1];
@@ -276,10 +302,12 @@ void DrawingEngine::drawFaceEdges(ImageUChar *image, ModelFace* currentFace, Mod
 	DRAWLINE(image, x2, y2, x3, y3, color);
 	DRAWLINE(image, x1, y1, x3, y3, color);
 
+  printf("init extrems is (%d,%d,%d,%d)\n", extrems[0], extrems[1], extrems[2], extrems[3]);
 	extrems[0] = (VINT) x1;
 	extrems[1] = (VINT) y1;
 	extrems[2] = (VINT) x1;
 	extrems[3] = (VINT) y1;
+  printf("1st extrems is (%d,%d,%d,%d)\n", extrems[0], extrems[1], extrems[2], extrems[3]);
 
 	extrems[0] = (VINT) MIN(extrems[0], x2);
 	extrems[1] = (VINT) MIN(extrems[1], y2);

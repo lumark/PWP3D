@@ -40,6 +40,7 @@ namespace PerseusLib
 				{
 					perseusSafeCall(cudaMallocHost((void**)&pixels, totalSize));
 					perseusSafeCall(cudaMalloc((void**)&pixelsGPU, totalSizeGPU));
+//          printf("use device alloc\n");
 				}
 				else
 				{ pixels = new T[width * height]; }

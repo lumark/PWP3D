@@ -72,18 +72,18 @@ int main(void)
     {
     case 0:
       iterConfig->useCUDAEF = false;
-      iterConfig->useCUDARender = true;
+      iterConfig->useCUDARender = false;
       break;
     case 1:
       iterConfig->useCUDAEF = false;
       iterConfig->useCUDARender = false;
       break;
     case 2:
-      iterConfig->useCUDAEF = true;
-      iterConfig->useCUDARender = true;
+      iterConfig->useCUDAEF = false;
+      iterConfig->useCUDARender = false;
       break;
     case 3:
-      iterConfig->useCUDAEF = true;
+      iterConfig->useCUDAEF = false;
       iterConfig->useCUDARender = false;
       break;
     }

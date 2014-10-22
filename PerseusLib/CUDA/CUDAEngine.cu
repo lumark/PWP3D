@@ -37,29 +37,31 @@ void registerObjectImage(Object3D* object, View3D* view, bool renderingFromGPU, 
 	int *roiGenerated = object->roiGenerated[viewId];
 	int *roiNormalised = object->roiNormalised[viewId];
 
+  printf("roiGenerated is %d, %d, %d, %d, %d, %d; \n", roiGenerated[0], roiGenerated[1], roiGenerated[2], roiGenerated[3], roiGenerated[4], roiGenerated[5]);
+
 	int widthROI, heightROI, widthFull;
 	widthROI = roiGenerated[4]; heightROI = roiGenerated[5];
 	widthFull = view->imageRenderAll->imageFill->width;
 
-	unsigned char *objects;
+  unsigned char *objects;
 	unsigned int *zbuffer, *zbufferInverse; 
 	cudaMemcpyKind renderingSource;
 	if (renderingFromGPU) 
 	{
-		objects = cudaData->objects;
+    objects = cudaData->objects;
 		zbuffer = cudaData->zbuffer;
 		zbufferInverse = cudaData->zbufferInverse;
 		renderingSource = cudaMemcpyDeviceToDevice;
 	}
 	else
 	{
-		objects = object->imageRender[viewId]->imageObjects->pixels;
+    objects = object->imageRender[viewId]->imageObjects->pixels;
 		zbuffer = object->imageRender[viewId]->imageZBuffer->pixels;
 		zbufferInverse = object->imageRender[viewId]->imageZBufferInverse->pixels;
 		renderingSource = cudaMemcpyHostToDevice;
 	}
 
-	unsigned char *objectsGPUROI = object->imageRender[viewId]->imageObjects->pixelsGPU;
+  unsigned char *objectsGPUROI = object->imageRender[viewId]->imageObjects->pixelsGPU;
 	unsigned int *zbufferGPUROI = object->imageRender[viewId]->imageZBuffer->pixelsGPU;
 	unsigned int *zbufferInverseGPUROI = object->imageRender[viewId]->imageZBufferInverse->pixelsGPU;
 
@@ -70,15 +72,25 @@ void registerObjectImage(Object3D* object, View3D* view, bool renderingFromGPU, 
 	roiNormalised[2] = roiGenerated[4]; roiNormalised[3] = roiGenerated[5]; 
 	roiNormalised[4] = roiGenerated[4]; roiNormalised[5] = roiGenerated[5];
 
-	perseusSafeCall(cudaMemcpy2D(objectsGPUROI, widthROI, objects + roiGenerated[0] + roiGenerated[1] * widthFull, 
-		widthFull, widthROI, heightROI, renderingSource));
-	perseusSafeCall(cudaMemcpy2D(zbufferGPUROI, widthROI * sizeof(uint1), zbuffer + roiGenerated[0] + roiGenerated[1] * widthFull, 
-		widthFull * sizeof(uint1), widthROI * sizeof(uint1), heightROI, renderingSource));
-	perseusSafeCall(cudaMemcpy2D(zbufferInverseGPUROI, widthROI * sizeof(uint1), zbufferInverse + roiGenerated[0] + roiGenerated[1] * widthFull, 
+//  perseusSafeCall(cudaMemcpy2D(objectsGPUROI, widthROI, objects + roiGenerated[0] + roiGenerated[1] * widthFull,
+//    widthFull, widthROI, heightROI, renderingSource));
+
+  printf("offset is: %d\n",roiGenerated[0] + roiGenerated[1] * widthFull);
+  printf("roiGenerated[0] is: %d\n",roiGenerated[0]);
+  printf("roiGenerated[1] * widthFull is: %d\n", roiGenerated[1] * widthFull);
+
+  perseusSafeCall(cudaMemcpy2D(objectsGPUROI, widthROI* sizeof(uchar1), objects + roiGenerated[0] + roiGenerated[1] * widthFull,
+      widthFull * sizeof(uchar1), widthROI * sizeof(uchar1), heightROI, renderingSource));
+
+  perseusSafeCall(cudaMemcpy2D(zbufferGPUROI, widthROI * sizeof(uint1), zbuffer + roiGenerated[0] + roiGenerated[1] * widthFull,
+    widthFull * sizeof(uint1), widthROI * sizeof(uint1), heightROI, renderingSource));
+
+  perseusSafeCall(cudaMemcpy2D(zbufferInverseGPUROI, widthROI * sizeof(uint1), zbufferInverse + roiGenerated[0] + roiGenerated[1] * widthFull,
 		widthFull * sizeof(uint1), widthROI * sizeof(uint1), heightROI, renderingSource));
 
 	perseusSafeCall(cudaMemcpy2D(cameraGPUROI, widthROI * sizeof(uchar4), cameraGPU + roiGenerated[0] + roiGenerated[1] * widthFull,
 		widthFull * sizeof(uchar4), widthROI * sizeof(uchar4), heightROI, cudaMemcpyDeviceToDevice));
+  perseusSafeCall(cudaDeviceSynchronize());
 
 	if (isMultobject)
 	{
@@ -91,6 +103,7 @@ void registerObjectImage(Object3D* object, View3D* view, bool renderingFromGPU, 
 		perseusSafeCall(cudaMemcpy2D(objectsAllGPUROI, widthROI, objectsAll + roiGenerated[0] + roiGenerated[1] * widthFull, 
 			widthFull, widthROI, heightROI, renderingSource));
 	}
+  printf("finish registerObjectImage;\n");
 }
 
 void registerObjectAndViewGeometricData(Object3D* object, View3D* view)
@@ -146,9 +159,10 @@ void processAndGetEFFirstDerivatives(Object3D* object, View3D* view, bool isMult
 	float *dtDXGPUROI = object->dtDX[viewId]->pixelsGPU;
 	float *dtDYGPUROI = object->dtDY[viewId]->pixelsGPU;
 
-	processEFD1(dpose, roiNormalised, roiGenerated, histogram, cameraGPUROI, objectsGPUROI, isMultiobject, zbufferGPUROI, zbufferInverseGPUROI, 
-		dtGPUROI, dtPosXGPUROI, dtPosYGPUROI, dtDXGPUROI, dtDYGPUROI, object->objectId);
+  processEFD1(dpose, roiNormalised, roiGenerated, histogram, cameraGPUROI, objectsGPUROI, isMultiobject, zbufferGPUROI, zbufferInverseGPUROI,
+    dtGPUROI, dtPosXGPUROI, dtPosYGPUROI, dtDXGPUROI, dtDYGPUROI, object->objectId);
 
+  printf("finish process EFD1\n");
 	object->dpose[view->viewId]->SetFrom(dpose, 7);
 }
 

@@ -88,7 +88,7 @@ int Model::createFromFile(FILE *file)
 
 			face->verticesVectorCount = face->vertices.size();
 			face->verticesVector = new int[face->verticesVectorCount];
-			for (i=0; i<face->verticesVectorCount; i++)
+      for (i=0; i<face->verticesVectorCount; i++)
 				face->verticesVector[i] = face->vertices[i];
 
 			group->faces.push_back(face);

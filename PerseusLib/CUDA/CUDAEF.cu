@@ -96,7 +96,7 @@ __host__ void processEFD1(float* dpose, int *roiNormalised, int *roiGenerated, f
   }
 
   perseusSafeCall(cudaUnbindTexture(texHeaviside));
-//  perseusSafeCall(cudaDeviceSynchronize());
+  perseusSafeCall(cudaDeviceSynchronize());
   perseusSafeCall(cudaThreadSynchronize());
 
   cudaMemcpy(cudaData->dfxResultTranslation, cudaData->dfxTranslation, blockSize.x * blockSize.y * sizeof(float3), cudaMemcpyDeviceToHost);
@@ -112,6 +112,8 @@ __host__ void processEFD1(float* dpose, int *roiNormalised, int *roiGenerated, f
   }
 }
 
+__device__ float3 sdataTranslation[256];
+__device__ float4 sdataRotation[256];
 
 __global__ void processEFD1_global(
     float3 *dfxTranslation, float4 *dfxRotation, float2 *histogram, uchar4 *imageRegistered, unsigned char *imageObjects,
@@ -119,8 +121,7 @@ __global__ void processEFD1_global(
     float *dt, int *dtPosX, int *dtPosY, float *dtDX, float *dtDY,
     int minX, int minY, int widthROI, int heightROI, int objectId)
 {
-  __shared__ float3 sdataTranslation[256];
-  __shared__ float4 sdataRotation[256];
+
 
   int offsetX = threadIdx.x + blockIdx.x * blockDim.x;
   int offsetY = threadIdx.y + blockIdx.y * blockDim.y;
@@ -297,8 +298,10 @@ __global__ void processEFD1_global(
           sdataTranslation[offsetInBlock].y = dfPPTranslation.y;
           sdataTranslation[offsetInBlock].z = dfPPTranslation.z;
 
-          sdataRotation[offsetInBlock].x = dfPPRotation.x; sdataRotation[offsetInBlock].y = dfPPRotation.y;
-          sdataRotation[offsetInBlock].z = dfPPRotation.z; sdataRotation[offsetInBlock].w = dfPPRotation.w;
+          sdataRotation[offsetInBlock].x = dfPPRotation.x;
+          sdataRotation[offsetInBlock].y = dfPPRotation.y;
+          sdataRotation[offsetInBlock].z = dfPPRotation.z;
+          sdataRotation[offsetInBlock].w = dfPPRotation.w;
         }
       }
     }
