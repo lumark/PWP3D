@@ -52,11 +52,8 @@ void EFStandard::GetFirstDerivativeValues(Object3D ***objects, int *objectCount,
 			object = objects[viewIdx][objectIdx]; view = views[viewIdx];
 
 			registerObjectAndViewGeometricData(object, view);
-      printf("finish registerObjectAndViewGeometricData\n");
 
 			processAndGetEFFirstDerivatives(object, view, (objectCount[viewIdx] > 1));
-      printf("finish processAndGetEFFirstDerivatives\n");
-
 		}
 		return;
 	}

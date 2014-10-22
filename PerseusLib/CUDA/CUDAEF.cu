@@ -90,6 +90,10 @@ __host__ void processEFD1(float* dpose, int *roiNormalised, int *roiGenerated, f
 
   processEFD1_global<<<blockSize, threadSize>>>(cudaData->dfxTranslation, cudaData->dfxRotation, histogram, imageRegistered, imageObjects, isMultiobject,
                                                 imageZBuffer, imageZBufferInverse, dt, dtPosX, dtPosY, dtDX, dtDY, roiGenerated[0], roiGenerated[1], roiGenerated[4], roiGenerated[5], objectId);
+  cudaError cudaStatus = cudaDeviceSynchronize();
+  if (cudaStatus != cudaSuccess) {
+    printf("Something was wrong! Error code: %d", cudaStatus);
+  }
 
   perseusSafeCall(cudaUnbindTexture(texHeaviside));
   perseusSafeCall(cudaDeviceSynchronize());
