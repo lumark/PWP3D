@@ -58,7 +58,7 @@ int main(void)
 	objects[objectIdx]->stepSize[viewIdx] = new StepSize3D(0.2f, 0.5f, 0.5f, 10.0f);
 
 	//initial pose per object and view
-	objects[objectIdx]->initialPose[viewIdx]->SetFrom(-1.98f, -2.90f, 37.47f, -40.90f, -207.77f, 27.48f);
+  objects[objectIdx]->initialPose[viewIdx]->SetFrom(-1.98f, -2.90f, 37.47f, -40.90f, -207.77f, 27.48f);
 
 	//primary initilisation
 	OptimisationEngine::Instance()->Initialise(width, height);
@@ -71,19 +71,19 @@ int main(void)
     switch (i)
     {
     case 0:
-      iterConfig->useCUDAEF = true;
+      iterConfig->useCUDAEF = false;
       iterConfig->useCUDARender = true;
       break;
     case 1:
-      iterConfig->useCUDAEF = true;
+      iterConfig->useCUDAEF = false;
       iterConfig->useCUDARender = false;
       break;
     case 2:
-      iterConfig->useCUDAEF = false;
+      iterConfig->useCUDAEF = true;
       iterConfig->useCUDARender = true;
       break;
     case 3:
-      iterConfig->useCUDAEF = false;
+      iterConfig->useCUDAEF = true;
       iterConfig->useCUDARender = false;
       break;
     }
@@ -95,10 +95,10 @@ int main(void)
     OptimisationEngine::Instance()->Minimise(objects, views, iterConfig);
     t.check("Iteration");
 
-//    //result plot
+    //result plot
     VisualisationEngine::Instance()->GetImage(result, GETIMAGE_PROXIMITY, objects[objectIdx], views[viewIdx], objects[objectIdx]->pose[viewIdx]);
 
-//    //result save to file
+    //result save to file
     ImageUtils::Instance()->SaveImageToFile(result, str);
 
     printf("%f %f %f %f %f %f %f\n",

@@ -96,7 +96,8 @@ __host__ void processEFD1(float* dpose, int *roiNormalised, int *roiGenerated, f
   }
 
   perseusSafeCall(cudaUnbindTexture(texHeaviside));
-  perseusSafeCall(cudaDeviceSynchronize());
+//  perseusSafeCall(cudaDeviceSynchronize());
+  perseusSafeCall(cudaThreadSynchronize());
 
   cudaMemcpy(cudaData->dfxResultTranslation, cudaData->dfxTranslation, blockSize.x * blockSize.y * sizeof(float3), cudaMemcpyDeviceToHost);
   cudaMemcpy(cudaData->dfxResultRotation, cudaData->dfxRotation, blockSize.x * blockSize.y * sizeof(float4), cudaMemcpyDeviceToHost);

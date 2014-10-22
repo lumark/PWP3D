@@ -45,18 +45,18 @@ void EFStandard::GetFirstDerivativeValues(Object3D ***objects, int *objectCount,
 	int objectIdx, viewIdx;
 	Object3D* object; View3D* view;
 
-	if (iterConfig->useCUDAEF)
-	{
-		for (viewIdx = 0; viewIdx < viewCount; viewIdx++) for (objectIdx = 0; objectIdx < objectCount[viewIdx]; objectIdx++)
-		{
-			object = objects[viewIdx][objectIdx]; view = views[viewIdx];
+  if (iterConfig->useCUDAEF)
+  {
+    for (viewIdx = 0; viewIdx < viewCount; viewIdx++) for (objectIdx = 0; objectIdx < objectCount[viewIdx]; objectIdx++)
+    {
+      object = objects[viewIdx][objectIdx]; view = views[viewIdx];
 
-			registerObjectAndViewGeometricData(object, view);
+      registerObjectAndViewGeometricData(object, view);
 
-			processAndGetEFFirstDerivatives(object, view, (objectCount[viewIdx] > 1));
-		}
-		return;
-	}
+      processAndGetEFFirstDerivatives(object, view, (objectCount[viewIdx] > 1));
+    }
+    return;
+  }
 
 	this->GetFirstDerivativeValues_CPU_6DoF(objects, objectCount, views, viewCount, iterConfig);
 }
