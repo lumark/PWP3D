@@ -4,7 +4,6 @@
 #include <math.h>
 
 using namespace PerseusLib::Utils;
-#include <FreeImage.h>
 
 ImageUtils* ImageUtils::instance;
 

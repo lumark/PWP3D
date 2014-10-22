@@ -1,11 +1,5 @@
 #pragma once
 
-#ifdef NDEBUG
-#pragma comment( lib, "C:\\SDK\\FreeImage\\x64\\lib\\FreeImage.lib" )
-#else
-#pragma comment( lib, "C:\\SDK\\FreeImage\\x64\\lib\\FreeImage.lib" )
-#endif
-
 #ifndef SUPPORTED_GETIMAGE_TYPES
 #define SUPPORTED_GETIMAGE_TYPES
 enum GetImageType

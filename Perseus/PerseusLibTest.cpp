@@ -15,8 +15,6 @@ int main(void)
 
 	Timer t;
 
-  std::cout<<"pass 1"<<std::endl;
-
 	//result visualisation
 	ImageUChar4* result = new ImageUChar4(width, height);
 
@@ -25,19 +23,14 @@ int main(void)
 	ImageUChar4* camera = new ImageUChar4(width, height);
   ImageUtils::Instance()->LoadImageFromFile(camera, "/Users/luma/Code/Luma/PWP3D/Files/Images/Red.png");
 
-  std::cout<<"pass 2"<<std::endl;
 
 	//objects allocation + initialisation: 3d model in obj required
 	Object3D **objects = new Object3D*[objectCount];
   objects[objectIdx] = new Object3D(objectId, viewCount, "/Users/luma/Code/Luma/PWP3D/Files/Models/Renderer/long.obj", width, height);
 
-  std::cout<<"pass 3"<<std::endl;
-
 	//views allocation + initialisation: camera calibration (artoolkit format) required
 	View3D **views = new View3D*[viewCount];
   views[viewIdx] = new View3D(0, "/Users/luma/Code/Luma/PWP3D/Files/CameraCalibration/900nc.cal", width, height);
-
-  std::cout<<"pass 3.5"<<std::endl;
 
 
 	//histogram initialisation
@@ -50,8 +43,6 @@ int main(void)
 	HistogramEngine::Instance()->UpdateVarBinHistogram(objects[objectIdx], views[viewIdx], objects[objectIdx]->histSources[viewIdx], 
 		objects[objectIdx]->histMasks[viewIdx], views[viewIdx]->videoMask);
 
-  std::cout<<"pass 4"<<std::endl;
-
 
 	//iteration configuration for one object
 	IterationConfiguration *iterConfig = new IterationConfiguration();
@@ -62,8 +53,6 @@ int main(void)
 	iterConfig->iterObjectIds[viewIdx][objectIdx] = 0;
 	iterConfig->iterViewCount = 1;
 	iterConfig->iterCount = 1;
-
-  std::cout<<"pass 5"<<std::endl;
 
 	//step size per object and view
 	objects[objectIdx]->stepSize[viewIdx] = new StepSize3D(0.2f, 0.5f, 0.5f, 10.0f);
@@ -107,10 +96,10 @@ int main(void)
     t.check("Iteration");
 
 //    //result plot
-//    VisualisationEngine::Instance()->GetImage(result, GETIMAGE_PROXIMITY, objects[objectIdx], views[viewIdx], objects[objectIdx]->pose[viewIdx]);
+    VisualisationEngine::Instance()->GetImage(result, GETIMAGE_PROXIMITY, objects[objectIdx], views[viewIdx], objects[objectIdx]->pose[viewIdx]);
 
 //    //result save to file
-//    ImageUtils::Instance()->SaveImageToFile(result, str);
+    ImageUtils::Instance()->SaveImageToFile(result, str);
 
     printf("%f %f %f %f %f %f %f\n",
       objects[objectIdx]->pose[viewIdx]->translation->x, objects[objectIdx]->pose[viewIdx]->translation->y, objects[objectIdx]->pose[viewIdx]->translation->z,
@@ -133,6 +122,8 @@ int main(void)
 	delete views;
 
 	delete result;
+
+  std::cout<<"exit pwp3D success"<<std::endl;
 
 	return 0;
 }

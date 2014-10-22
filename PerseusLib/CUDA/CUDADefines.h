@@ -1,8 +1,5 @@
 #pragma once
 
-#pragma comment( lib, "C:\\CUDA\\v4.0\\lib\\x64\\cuda.lib" )
-#pragma comment( lib, "C:\\CUDA\\v4.0\\lib\\x64\\cudart.lib" )
-
 #include <cuda.h>
 #include <cuda_runtime_api.h>
 #include <stdio.h>

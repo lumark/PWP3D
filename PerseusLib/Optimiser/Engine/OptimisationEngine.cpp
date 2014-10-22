@@ -92,7 +92,7 @@ void OptimisationEngine::Minimise(Object3D **objects, View3D **views, IterationC
 
 	energyFunction = energyFunction_standard;
 
-	for (iterIdx=0; iterIdx<iterConfig->iterCount; iterIdx++) this->RunOneMultiIteration(iterConfig);
+  for (iterIdx=0; iterIdx<iterConfig->iterCount; iterIdx++) this->RunOneMultiIteration(iterConfig);
 }
 
 void OptimisationEngine::RunOneMultiIteration(IterationConfiguration* iterConfig)
@@ -111,10 +111,12 @@ void OptimisationEngine::RunOneMultiIteration(IterationConfiguration* iterConfig
 
 void OptimisationEngine::RunOneSingleIteration(StepSize3D* presetStepSize, IterationConfiguration* iterConfig)
 {
-	energyFunction->PrepareIteration(objects, objectCount, views, viewCount, iterConfig);
-	energyFunction->GetFirstDerivativeValues(objects, objectCount, views, viewCount, iterConfig);
+  energyFunction->PrepareIteration(objects, objectCount, views, viewCount, iterConfig);
+  printf("finish PrepareIteration\n");
 
-	this->DescendWithGradient(presetStepSize, iterConfig);
+  energyFunction->GetFirstDerivativeValues(objects, objectCount, views, viewCount, iterConfig);
+
+  this->DescendWithGradient(presetStepSize, iterConfig);
 }
 
 void OptimisationEngine::DescendWithGradient(StepSize3D *presetStepSize, IterationConfiguration *iterConfig)

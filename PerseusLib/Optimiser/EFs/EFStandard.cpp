@@ -24,19 +24,19 @@ void EFStandard::PrepareIteration(Object3D ***objects, int *objectCount, View3D*
 	{
 		view = views[viewIdx];
 
-		if (objectCount[viewIdx] > 1) DrawingEngine::Instance()->DrawAllInView(objects[viewIdx], objectCount[viewIdx], view, iterConfig->useCUDARender, true);
+    if (objectCount[viewIdx] > 1) DrawingEngine::Instance()->DrawAllInView(objects[viewIdx], objectCount[viewIdx], view, iterConfig->useCUDARender, true);
 
-		for (objectIdx = 0; objectIdx < objectCount[viewIdx]; objectIdx++)
-		{
-			object = objects[viewIdx][objectIdx];
+    for (objectIdx = 0; objectIdx < objectCount[viewIdx]; objectIdx++)
+    {
+      object = objects[viewIdx][objectIdx];
 
-			DrawingEngine::Instance()->Draw(object, view, iterConfig->useCUDARender, !iterConfig->useCUDAEF);
-			DrawingEngine::Instance()->ChangeROIWithBand(object, view, iterConfig->levelSetBandSize, iterConfig->width, iterConfig->height);
+      DrawingEngine::Instance()->Draw(object, view, iterConfig->useCUDARender, !iterConfig->useCUDAEF);
+      DrawingEngine::Instance()->ChangeROIWithBand(object, view, iterConfig->levelSetBandSize, iterConfig->width, iterConfig->height);
 
-			registerObjectImage(object, view, iterConfig->useCUDARender, (objectCount[viewIdx] > 1));
+      registerObjectImage(object, view, iterConfig->useCUDARender, (objectCount[viewIdx] > 1));
 
-			processDTSihluetteLSDXDY(object, view, iterConfig->levelSetBandSize);
-		}
+      processDTSihluetteLSDXDY(object, view, iterConfig->levelSetBandSize);
+    }
 	}
 }
 
@@ -52,7 +52,11 @@ void EFStandard::GetFirstDerivativeValues(Object3D ***objects, int *objectCount,
 			object = objects[viewIdx][objectIdx]; view = views[viewIdx];
 
 			registerObjectAndViewGeometricData(object, view);
+      printf("finish registerObjectAndViewGeometricData\n");
+
 			processAndGetEFFirstDerivatives(object, view, (objectCount[viewIdx] > 1));
+      printf("finish processAndGetEFFirstDerivatives\n");
+
 		}
 		return;
 	}
