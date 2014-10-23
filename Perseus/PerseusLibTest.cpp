@@ -101,6 +101,7 @@ int main(void)
     //result save to file
     ImageUtils::Instance()->SaveImageToFile(result, str);
 
+    printf("mode: useCUDAAEF: %d, use CUDARender %d;\n", iterConfig->useCUDAEF, iterConfig->useCUDARender);
     printf("final pose result %f %f %f %f %f %f %f\n",
       objects[objectIdx]->pose[viewIdx]->translation->x, objects[objectIdx]->pose[viewIdx]->translation->y, objects[objectIdx]->pose[viewIdx]->translation->z,
       objects[objectIdx]->pose[viewIdx]->rotation->vector4d.x, objects[objectIdx]->pose[viewIdx]->rotation->vector4d.y,
