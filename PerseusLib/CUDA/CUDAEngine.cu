@@ -32,7 +32,7 @@ void shutdownCUDA()
 
 void registerObjectImage(Object3D* object, View3D* view, bool renderingFromGPU, bool isMultobject)
 {
-  printf("\n== registerObjectImage ==\n");
+//  printf("\n== registerObjectImage ==\n");
 	int viewId = view->viewId;
 
 	int *roiGenerated = object->roiGenerated[viewId];
@@ -76,9 +76,9 @@ void registerObjectImage(Object3D* object, View3D* view, bool renderingFromGPU, 
 //  perseusSafeCall(cudaMemcpy2D(objectsGPUROI, widthROI, objects + roiGenerated[0] + roiGenerated[1] * widthFull,
 //    widthFull, widthROI, heightROI, renderingSource));
 
-  printf("[registerObjectImage] offset is: %d\n",roiGenerated[0] + roiGenerated[1] * widthFull);
-  printf("[registerObjectImage] roiGenerated[0] is: %d\n",roiGenerated[0]);
-  printf("[registerObjectImage] roiGenerated[1] * widthFull is: %d\n", roiGenerated[1] * widthFull);
+//  printf("[registerObjectImage] offset is: %d\n",roiGenerated[0] + roiGenerated[1] * widthFull);
+//  printf("[registerObjectImage] roiGenerated[0] is: %d\n",roiGenerated[0]);
+//  printf("[registerObjectImage] roiGenerated[1] * widthFull is: %d\n", roiGenerated[1] * widthFull);
 
   perseusSafeCall(cudaMemcpy2D(objectsGPUROI, widthROI* sizeof(uchar1), objects + roiGenerated[0] + roiGenerated[1] * widthFull,
       widthFull * sizeof(uchar1), widthROI * sizeof(uchar1), heightROI, renderingSource));
@@ -104,13 +104,13 @@ void registerObjectImage(Object3D* object, View3D* view, bool renderingFromGPU, 
 		perseusSafeCall(cudaMemcpy2D(objectsAllGPUROI, widthROI, objectsAll + roiGenerated[0] + roiGenerated[1] * widthFull, 
 			widthFull, widthROI, heightROI, renderingSource));
 	}
-  printf("[registerObjectImage] finish \n");
+//  printf("[registerObjectImage] finish \n");
 }
 
 void registerObjectAndViewGeometricData(Object3D* object, View3D* view)
 {
 	float rotationParameters[7];
-
+//  printf("[registerObjectAndViewGeometricData] change rotation.\n");
 	object->pose[view->viewId]->rotation->Get(rotationParameters);
 	registerObjectGeometricData(rotationParameters, object->invPMMatrix[view->viewId]);
 
@@ -163,8 +163,7 @@ void processAndGetEFFirstDerivatives(Object3D* object, View3D* view, bool isMult
   processEFD1(dpose, roiNormalised, roiGenerated, histogram, cameraGPUROI, objectsGPUROI, isMultiobject, zbufferGPUROI, zbufferInverseGPUROI,
     dtGPUROI, dtPosXGPUROI, dtPosYGPUROI, dtDXGPUROI, dtDYGPUROI, object->objectId);
 
-  printf("finish process EFD1\n");
-	object->dpose[view->viewId]->SetFrom(dpose, 7);
+  object->dpose[view->viewId]->SetFrom(dpose, 7);
 }
 
 void getProcessedDataDTSihluetteLSDXDY(Object3D* object, View3D* view)

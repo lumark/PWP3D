@@ -88,7 +88,6 @@ int main(void)
       break;
     }
 
-    printf("============== starting loop ============ \n");
     sprintf(str, "/Users/luma/Code/Luma/PWP3D/Files/Results/result%04d.png", i);
 
     t.restart();
@@ -124,7 +123,7 @@ int main(void)
 
 	delete result;
 
-  std::cout<<"exit pwp3D success"<<std::endl;
+  std::cout<<"Exit pwp3D success"<<std::endl;
 
 	return 0;
 }

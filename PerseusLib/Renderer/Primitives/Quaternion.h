@@ -65,7 +65,9 @@ namespace Renderer
 			void SetFromMatrix(VFLOAT *matrix) { FromMatrix(matrix); }
 
 			void GetMatrix(VFLOAT *output) { this->ToOpenGLMatrix(output); }
-			void Get(VFLOAT* parameters) { 
+      void Get(VFLOAT* parameters) {
+//        printf("[Quaternion/Get] \n");
+
 				parameters[0] = vector4d.x; 
 				parameters[1] = vector4d.y; 
 				parameters[2] = vector4d.z;

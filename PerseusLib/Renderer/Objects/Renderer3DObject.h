@@ -48,7 +48,9 @@ namespace Renderer
 			}
 
 			void GetModelViewMatrix(float* modelViewMatrix, int viewId)
-			{ this->objectCoordinateTransform[viewId]->GetModelViewMatrix(modelViewMatrix); }
+      {
+        this->objectCoordinateTransform[viewId]->GetModelViewMatrix(modelViewMatrix);
+      }
 
 			~Renderer3DObject(void) {
 				delete model;

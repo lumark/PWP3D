@@ -18,7 +18,7 @@ EFStandard::~EFStandard(void)
 
 void EFStandard::PrepareIteration(Object3D ***objects, int *objectCount, View3D** views, int viewCount, IterationConfiguration* iterConfig)
 {
-  printf("== [PrepareIteration] Start == \n");
+//  printf("== [PrepareIteration] Start == \n");
 	Object3D* object; View3D* view; int objectIdx, viewIdx;
 
 	for (viewIdx = 0; viewIdx<viewCount; viewIdx++) 
@@ -39,12 +39,13 @@ void EFStandard::PrepareIteration(Object3D ***objects, int *objectCount, View3D*
       processDTSihluetteLSDXDY(object, view, iterConfig->levelSetBandSize);
     }
 	}
-  printf("== [PrepareIteration] finish == \n");
+//  printf("== [PrepareIteration] finish == \n");
 
 }
 
 void EFStandard::GetFirstDerivativeValues(Object3D ***objects, int *objectCount, View3D** views, int viewCount, IterationConfiguration* iterConfig)
 {
+//  printf("[GetFirstDerivativeValues]\n");
 	int objectIdx, viewIdx;
 	Object3D* object; View3D* view;
 
@@ -66,12 +67,13 @@ void EFStandard::GetFirstDerivativeValues(Object3D ***objects, int *objectCount,
 
 void EFStandard::GetFirstDerivativeValues_CPU_6DoF(Object3D ***objects, int *objectCount, View3D** views, int viewCount, IterationConfiguration* iterConfig)
 {
+//  printf("[GetFirstDerivativeValues_CPU_6DoF]\n");
 	int objectIdx, viewIdx, objectId, viewId;
 	Object3D* object; View3D* view;
 
 	int width = iterConfig->width, height = iterConfig->height;
 
-	int i, j, k, idx, icX, icY, icZ, hidx; 
+  int i, j, k, idx, icX, icY, icZ, nhidx;
 	float pYB, pYF, dtIdx, dfPPGeneric, dirac, heaviside;
 	unsigned char r, b, g;
 	int *dtPosX, *dtPosY;
@@ -108,25 +110,28 @@ void EFStandard::GetFirstDerivativeValues_CPU_6DoF(Object3D ***objects, int *obj
 						((view->imageRenderAll->imageObjects->pixels[i + j * width] - 1) != objectId && (view->imageRenderAll->imageObjects->pixels[i + j * width] - 1) != -1 ))
 						continue;
 
-				hidx = int(4096 + 512 * dtIdx);
-				if (hidx >= 0 && hidx < MathUtils::Instance()->heavisideSize)
+        nhidx = int(4096 + 512 * dtIdx);
+        if (nhidx >= 0 && nhidx < MathUtils::Instance()->heavisideSize)
 				{
-					heaviside = MathUtils::Instance()->heavisideFunction[hidx];
+          heaviside = MathUtils::Instance()->heavisideFunction[nhidx];
 
 					r = view->imageRegistered->pixels[idx].x; g = view->imageRegistered->pixels[idx].y; b = view->imageRegistered->pixels[idx].z;
 
 					object->histogramVarBin[viewId]->GetValue(&pYF, &pYB, r, g, b, i, j);
+//          printf("pYF - pYB :%f\n", pYF - pYB);
 
 					pYF += 0.0000001f; pYB += 0.0000001f;
 
-					dirac = (1.0f / float(PI)) * (1 / (dtIdx * dtIdx + 1.0f) + float(1e-3));
+          dirac = (1.0f / float(PI)) * (1.0f / (dtIdx * dtIdx + 1.0f) + float(1e-3));
+
+//          printf("pYF - pYB :%f\n", pYF - pYB);
 					dfPPGeneric = dirac * (pYF - pYB) / (heaviside * (pYF - pYB) + pYB);
 
 					// run 1
-					xProjected[0] = (float) 2 * (icX - view->renderView->view[0]) / view->renderView->view[2] - 1;
-					xProjected[1] = (float) 2 * (icY - view->renderView->view[1]) / view->renderView->view[3] - 1;
-					xProjected[2] = (float) 2 * ((float)object->imageRender[viewId]->imageZBuffer->pixels[icZ] / (float)MAX_INT) - 1;
-					xProjected[3] = 1;
+          xProjected[0] = (float) 2 * (icX - view->renderView->view[0]) / view->renderView->view[2] - 1.0f;
+          xProjected[1] = (float) 2 * (icY - view->renderView->view[1]) / view->renderView->view[3] - 1.0f;
+          xProjected[2] = (float) 2 * ((float)object->imageRender[viewId]->imageZBuffer->pixels[icZ] / (float)MAX_INT) - 1.0f;
+          xProjected[3] = 1.0f;
 
 					MathUtils::Instance()->MatrixVectorProduct4(view->renderView->invP, xProjected, xUnprojected);
 					MathUtils::Instance()->MatrixVectorProduct4(object->invPMMatrix[viewId], xProjected, xUnrotated);
@@ -144,10 +149,12 @@ void EFStandard::GetFirstDerivativeValues_CPU_6DoF(Object3D ***objects, int *obj
 					for (k=0; k<7; k++) { dfPP[k] *= dfPPGeneric; dpose[k] += dfPP[k]; }
 
 					// run 2
-					xProjected[0] = (float) 2 * (icX - view->renderView->view[0]) / view->renderView->view[2] - 1;
-					xProjected[1] = (float) 2 * (icY - view->renderView->view[1]) / view->renderView->view[3] - 1;
-					xProjected[2] = (float) 2 * ((float)object->imageRender[viewId]->imageZBufferInverse->pixels[icZ] / (float)MAX_INT) - 1;
-					xProjected[3] = 1;
+          xProjected[0] = (float) 2 * (icX - view->renderView->view[0]) / view->renderView->view[2] - 1.0f;
+          xProjected[1] = (float) 2 * (icY - view->renderView->view[1]) / view->renderView->view[3] - 1.0f;
+          xProjected[2] = (float) 2 * ((float)object->imageRender[viewId]->imageZBufferInverse->pixels[icZ] / (float)MAX_INT) - 1.0f;
+          xProjected[3] = 1.0f;
+
+//          printf("xProjected (%f,%f,%f,%f) \n", xProjected[0],xProjected[1],xProjected[2],xProjected[3] );
 
 					MathUtils::Instance()->MatrixVectorProduct4(view->renderView->invP, xProjected, xUnprojected);
 					MathUtils::Instance()->MatrixVectorProduct4(object->invPMMatrix[viewId], xProjected, xUnrotated);
@@ -159,15 +166,33 @@ void EFStandard::GetFirstDerivativeValues_CPU_6DoF(Object3D ***objects, int *obj
 					dfPP[1] = -otherInfo[1] / xUnprojected[2];
 					dfPP[2] = (otherInfo[0] * xUnprojected[0] + otherInfo[1] * xUnprojected[1]) / (xUnprojected[2] * xUnprojected[2]);
 
-					object->renderObject->objectCoordinateTransform[viewId]->rotation->GetDerivatives(dfPP + 3, xUnprojected, xUnrotated, 
+//          printf("dfPP (%f,%f,%f) \n", dfPP[0],dfPP[1],dfPP[2] );
+
+          object->renderObject->objectCoordinateTransform[viewId]->rotation->GetDerivatives(dfPP + 3, xUnprojected, xUnrotated,
 						view->renderView->projectionParams.all, otherInfo);
 
-					for (k=0; k<7; k++) { dfPP[k] *= dfPPGeneric; dpose[k] += dfPP[k]; }
+          for (k=0; k<7; k++) {
+            dfPP[k] *= dfPPGeneric;
+            dpose[k] += dfPP[k];
+          }
+
+//          printf("dpose (%f,%f,%f,f) \n", dpose[0],dpose[1],dpose[2], dpose[3] );
+
 				}
 			}
 		}
 
+//    printf("  before set pose, rotation (%f,%f,%f)\n",
+//           object->dpose[viewId]->rotation->vector4d.x,
+//           object->dpose[viewId]->rotation->vector4d.y,
+//           object->dpose[viewId]->rotation->vector4d.z);
+
 		object->dpose[viewId]->SetFrom(dpose, 7);
+
+//    printf("  after set pose, rotation (%f,%f,%f)\n",
+//           object->dpose[viewId]->rotation->vector4d.x,
+//           object->dpose[viewId]->rotation->vector4d.y,
+//           object->dpose[viewId]->rotation->vector4d.z);
 
 		//char rez[200];
 		//sprintf(rez, "%4.5f %4.5f %4.5f %4.5f %4.5f %4.5f %4.5f", object->dpose[viewId]->translation->x, object->dpose[viewId]->translation->y,

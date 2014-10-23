@@ -20,6 +20,7 @@ namespace PerseusLib
 				noVarBinHistogramBins[3] = 64;
 				noVarBinHistograms = 4;
 				numberOfOptimizedVariables = 7;
+//        printf("Finish init Object3DParams, noVarBinHistograms %d \n", noVarBinHistogramBins);
 			}
 			~Object3DParams(void) 
 			{ 

@@ -52,16 +52,13 @@ namespace PerseusLib
 			View3D(int viewIdx, char* cameraCalibFileName, int width, int height, View3DParams* params = NULL) {
         if (params == NULL)
         {
-          View3DParams params_c = View3DParams();
-          params = &params_c;
-        }
-        else
-        {
-          printf("Does not support non-Null params yet. please fix bug in Objects/View3D.h first!\n");
-          exit(-1);
+          params = new View3DParams();
         }
 
-        params->Init();
+        if(params->zFar <0 || params->zNear<0)
+        {
+          printf("error! invalid zFar value. \n");
+        }
 
 				this->viewId = viewIdx;
 				this->zBufferOffset = params->zBufferOffset;

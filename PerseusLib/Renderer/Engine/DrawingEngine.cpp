@@ -30,7 +30,7 @@ inline T max3(T t1, T t2, T t3)
 
 void DrawingEngine::drawWireframe(ImageUChar* imageWireframe, ModelH* drawingModel, int* roiGenerated)
 {
-  printf("\n  == [DrawingEngine/drawWireframe] ==");
+//  printf("\n  == [DrawingEngine/drawWireframe] ==");
 	size_t i, j;
 	int localExtrems[4];
   localExtrems[0] = 0;
@@ -152,33 +152,46 @@ void DrawingEngine::ComputeAndSetPMMatrices(Object3D *object, View3D *view, Pose
 	float pmMatrix[16], invPMMatrix[16];
 	float modelViewMatrixFull[16];
 
-	if (pose != NULL) pose->GetModelViewMatrix(modelViewMatrixFull);
-	else object->renderObject->GetModelViewMatrix(modelViewMatrixFull, view->viewId);
+  if (pose != NULL)
+  {
+    pose->GetModelViewMatrix(modelViewMatrixFull);
+  }
+  else
+  {
+    object->renderObject->GetModelViewMatrix(modelViewMatrixFull, view->viewId);
+//    printf("pose is not null, try to GetModelViewMatrix; \n");
+  }
+
+//  for(int i=0;i!=16;i++)
+//  {
+//    printf("ModelViewMatrix[%d]:%f, ",i, modelViewMatrixFull[i]);
+//  }
 
 	view->renderView->cameraCoordinateTransform->GetProjectionMatrix(projectionMatrix);
 
-	MathUtils::Instance()->SquareMatrixProduct(pmMatrix, projectionMatrix, modelViewMatrixFull, 4);
+
+  MathUtils::Instance()->SquareMatrixProduct(pmMatrix, projectionMatrix, modelViewMatrixFull, 4);
 	MathUtils::Instance()->InvertMatrix4(invPMMatrix, pmMatrix);
 
-  printf("before copy pmMatrix;\n");
-  for(int i=0;i!=16;i++)
-  {
-     printf("pmMatrix[%d]:%f; ", i, object->pmMatrix[view->viewId][i]);
-  }
+//  printf("before copy pmMatrix;\n");
+//  for(int i=0;i!=16;i++)
+//  {
+//     printf("pmMatrix[%d]:%f; ", i, object->pmMatrix[view->viewId][i]);
+//  }
 
   memcpy(object->pmMatrix[view->viewId], pmMatrix, 16 * sizeof(float));
 	memcpy(object->invPMMatrix[view->viewId], invPMMatrix, 16 * sizeof(float));
 
-  printf("\n after copy\n");
-  for(int i=0;i!=16;i++)
-  {
-     printf("pmMatrix[%d]:%f; ", i, object->pmMatrix[view->viewId][i]);
-  }
+//  printf("\n after copy\n");
+//  for(int i=0;i!=16;i++)
+//  {
+//     printf("pmMatrix[%d]:%f; ", i, object->pmMatrix[view->viewId][i]);
+//  }
 }
 
 void DrawingEngine::DrawAllInView(Object3D** objects, int objectCount, View3D* view, bool useCUDA, bool getBackData)
 {
-  printf("\n== DrawAllInView ==");
+//  printf("\n== DrawAllInView ==");
 	int objectIdx;
 
 	Object3D* object;
@@ -217,7 +230,7 @@ void DrawingEngine::DrawAllInView(Object3D** objects, int objectCount, View3D* v
 
 void DrawingEngine::Draw(Object3D* object, View3D* view, bool useCUDA, bool getBackData)
 {
-  printf("\n== [DrawingEngine/Draw] ==\n");
+//  printf("\n== [DrawingEngine/Draw] ==\n");
 	Renderer3DObject *renderObject = object->renderObject;
 	Renderer3DView *renderView = view->renderView;
   int objectId = object->objectId;
@@ -243,10 +256,10 @@ void DrawingEngine::Draw(Object3D* object, View3D* view, bool useCUDA, bool getB
     object->roiGenerated[viewId][4] = 0; object->roiGenerated[viewId][5] = 0;
 
     int *roiGenerated = object->roiGenerated[0];
-    printf("[DrawingEngine/Draw] init roiGenerated value is (%d,%d,%d,%d,%d,%d)\n", roiGenerated[0],roiGenerated[1] ,roiGenerated[2] ,roiGenerated[3] ,roiGenerated[4] ,roiGenerated[5]   );
-    printf("[DrawingEngine/Draw] viewId is %d; view->viewId is %d\n",viewId, view->viewId );
+//    printf("[DrawingEngine/Draw] init roiGenerated value is (%d,%d,%d,%d,%d,%d)\n", roiGenerated[0],roiGenerated[1] ,roiGenerated[2] ,roiGenerated[3] ,roiGenerated[4] ,roiGenerated[5]   );
+//    printf("[DrawingEngine/Draw] viewId is %d; view->viewId is %d\n",viewId, view->viewId );
     drawWireframe(object->imageWireframe[viewId], renderObject->drawingModel[view->viewId], object->roiGenerated[viewId]);
-    printf("[DrawingEngine/Draw] roiGenerated value after drawWireframe is (%d,%d,%d,%d,%d,%d)\n", roiGenerated[0],roiGenerated[1] ,roiGenerated[2] ,roiGenerated[3] ,roiGenerated[4] ,roiGenerated[5]   );
+//    printf("[DrawingEngine/Draw] roiGenerated value after drawWireframe is (%d,%d,%d,%d,%d,%d)\n", roiGenerated[0],roiGenerated[1] ,roiGenerated[2] ,roiGenerated[3] ,roiGenerated[4] ,roiGenerated[5]   );
 
     drawFilled(object->imageRender[viewId], renderObject->drawingModel[view->viewId], objectId);
   }
@@ -254,16 +267,16 @@ void DrawingEngine::Draw(Object3D* object, View3D* view, bool useCUDA, bool getB
 
 void DrawingEngine::ChangeROIWithBand(Object3D* object, View3D *view, int bandSize, int width, int height)
 {
-  printf("\n== ChangeROIWithBand == \n");
+//  printf("\n== ChangeROIWithBand == \n");
 
 	int *roiGenerated = object->roiGenerated[view->viewId];
-  printf("[ChangeROIWithBand] roiGenerated value is (%d,%d,%d,%d,%d,%d)\n",
-         roiGenerated[0],roiGenerated[1] ,roiGenerated[2] ,roiGenerated[3] ,roiGenerated[4] ,roiGenerated[5]   );
+//  printf("[ChangeROIWithBand] roiGenerated value is (%d,%d,%d,%d,%d,%d)\n",
+//         roiGenerated[0],roiGenerated[1] ,roiGenerated[2] ,roiGenerated[3] ,roiGenerated[4] ,roiGenerated[5]   );
 
 	int roiTest[6];
 	memcpy(roiTest, roiGenerated, 6 * sizeof(int));
 
-  printf("[ChangeROIWithBand] bandSize:%d,width:%d,height:%d\n",bandSize, width, height);
+//  printf("[ChangeROIWithBand] bandSize:%d,width:%d,height:%d\n",bandSize, width, height);
   roiGenerated[0] = CLAMP(roiGenerated[0] - bandSize, 0, width);
 	roiGenerated[1] = CLAMP(roiGenerated[1] - bandSize, 0, height);
 	roiGenerated[2] = CLAMP(roiGenerated[2] + bandSize, 0, width);
@@ -272,7 +285,7 @@ void DrawingEngine::ChangeROIWithBand(Object3D* object, View3D *view, int bandSi
 	roiGenerated[4] = roiGenerated[2] - roiGenerated[0];
 	roiGenerated[5] = roiGenerated[3] - roiGenerated[1];
 
-  printf("[ChangeROIWithBand] change roiGenerated value to (%d,%d,%d,%d,%d,%d)\n", roiGenerated[0],roiGenerated[1] ,roiGenerated[2] ,roiGenerated[3] ,roiGenerated[4] ,roiGenerated[5]   );
+//  printf("[ChangeROIWithBand] change roiGenerated value to (%d,%d,%d,%d,%d,%d)\n", roiGenerated[0],roiGenerated[1] ,roiGenerated[2] ,roiGenerated[3] ,roiGenerated[4] ,roiGenerated[5]   );
 }
 
 void DrawingEngine::ChangeROIWithBand(View3D *view3D, int bandSize, int width, int height)
@@ -293,19 +306,16 @@ void DrawingEngine::ChangeROIWithBand(View3D *view3D, int bandSize, int width, i
 
 void DrawingEngine::drawFaceEdges(ImageUChar *image, ModelFace* currentFace, ModelH* drawingModel, VBYTE color, int* extrems)
 {
-  printf("\n  ---- DrawingEngine::drawFaceEdges --- \n");
+//  printf("\n  ---- DrawingEngine::drawFaceEdges --- \n");
   if (currentFace->verticesVectorCount != 3)
   {
     return;
   }
 
-  printf("  [drawFaceEdges] currentFace->verticesVectorCount is %d \n", static_cast<int>(currentFace->verticesVectorCount) );
-
 	VFLOAT x1 = drawingModel->verticesVector[currentFace->verticesVector[0]*4 + 0];
 	VFLOAT y1 = drawingModel->verticesVector[currentFace->verticesVector[0]*4 + 1];
-  printf("  [drawFaceEdges] drawingModel->verticesVector[%d] is %f; \n",currentFace->verticesVector[0]*4 + 0, drawingModel->verticesVector[0]);
-
-  printf("  [drawFaceEdges] x1,y1 is (%f,%f)\n", x1, y1);
+//  printf("  [drawFaceEdges] drawingModel->verticesVector[%d] is %f; \n",currentFace->verticesVector[0]*4 + 0, drawingModel->verticesVector[0]);
+//  printf("  [drawFaceEdges] x1,y1 is (%f,%f)\n", x1, y1);
 
   if(isfinite(x1)==false)
   {
@@ -323,12 +333,12 @@ void DrawingEngine::drawFaceEdges(ImageUChar *image, ModelFace* currentFace, Mod
 	DRAWLINE(image, x2, y2, x3, y3, color);
 	DRAWLINE(image, x1, y1, x3, y3, color);
 
-  printf("  [drawFaceEdges] init extrems is (%d,%d,%d,%d)\n", extrems[0], extrems[1], extrems[2], extrems[3]);
+//  printf("  [drawFaceEdges] init extrems is (%d,%d,%d,%d)\n", extrems[0], extrems[1], extrems[2], extrems[3]);
 	extrems[0] = (VINT) x1;
 	extrems[1] = (VINT) y1;
 	extrems[2] = (VINT) x1;
 	extrems[3] = (VINT) y1;
-  printf("  [drawFaceEdges] 1st extrems is (%d,%d,%d,%d)\n", extrems[0], extrems[1], extrems[2], extrems[3]);
+//  printf("  [drawFaceEdges] 1st extrems is (%d,%d,%d,%d)\n", extrems[0], extrems[1], extrems[2], extrems[3]);
 
 	extrems[0] = (VINT) MIN(extrems[0], x2);
 	extrems[1] = (VINT) MIN(extrems[1], y2);
@@ -535,7 +545,7 @@ void DrawingEngine::drawFaceFilled(ImageUChar *imageRender, ModelFace* currentFa
 
 void DrawingEngine::applyCoordinateTransform(Renderer3DView* view, Renderer3DObject* object, float *pmMatrix)
 {
-  printf("[applyCoordinateTransform] \n");
+//  printf("[applyCoordinateTransform] \n");
 	size_t i;
 
 	object->model->ToModelH(object->drawingModel[view->viewId]);
@@ -543,27 +553,27 @@ void DrawingEngine::applyCoordinateTransform(Renderer3DView* view, Renderer3DObj
 
 	for (i=0; i < object->drawingModel[view->viewId]->verticesVectorSize; i++)
   {
-    printf("[applyCoordinateTransform] before change: %f,%f,%f \n",
-           object->drawingModel[view->viewId]->verticesVector[0],
-        object->drawingModel[view->viewId]->verticesVector[1],
-        object->drawingModel[view->viewId]->verticesVector[2]);
+//    printf("[applyCoordinateTransform] before change: %f,%f,%f \n",
+//           object->drawingModel[view->viewId]->verticesVector[0],
+//        object->drawingModel[view->viewId]->verticesVector[1],
+//        object->drawingModel[view->viewId]->verticesVector[2]);
 
     VFLOAT* originalVertexAsDouble = &object->drawingModel[view->viewId]->originalVerticesVector[i*4];
     VFLOAT* vertexAsDouble = &object->drawingModel[view->viewId]->verticesVector[i*4];
 
-    printf("[applyCoordinateTransform] 1st vertexAsDouble %f,%f,%f,%f \n",vertexAsDouble[0],vertexAsDouble[1],vertexAsDouble[2],vertexAsDouble[3]);
+//    printf("[applyCoordinateTransform] 1st vertexAsDouble %f,%f,%f,%f \n",vertexAsDouble[0],vertexAsDouble[1],vertexAsDouble[2],vertexAsDouble[3]);
 
     MathUtils::Instance()->MatrixVectorProduct4(pmMatrix, originalVertexAsDouble, vertexAsDouble);
 
-    printf("[applyCoordinateTransform] 2nd vertexAsDouble %f,%f,%f,%f \n",vertexAsDouble[0],vertexAsDouble[1],vertexAsDouble[2],vertexAsDouble[3]);
+//    printf("[applyCoordinateTransform] 2nd vertexAsDouble %f,%f,%f,%f \n",vertexAsDouble[0],vertexAsDouble[1],vertexAsDouble[2],vertexAsDouble[3]);
 
     vertexAsDouble[0] = view->view[0] + view->view[2] * (vertexAsDouble[0] + 1.f)/2.f;
     vertexAsDouble[1] = view->view[1] + view->view[3] * (vertexAsDouble[1] + 1.f)/2.f;
     vertexAsDouble[2] = (vertexAsDouble[2] + 1)/2;
 
-    printf("[applyCoordinateTransform] after change: %f,%f,%f \n",
-           object->drawingModel[view->viewId]->verticesVector[0],
-        object->drawingModel[view->viewId]->verticesVector[1],
-        object->drawingModel[view->viewId]->verticesVector[2]);
+//    printf("[applyCoordinateTransform] after change: %f,%f,%f \n",
+//           object->drawingModel[view->viewId]->verticesVector[0],
+//        object->drawingModel[view->viewId]->verticesVector[1],
+//        object->drawingModel[view->viewId]->verticesVector[2]);
 	}
 }

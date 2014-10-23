@@ -86,11 +86,11 @@ void OptimisationEngine::Minimise(Object3D **objects, View3D **views, IterationC
 	for (viewIdx=0; viewIdx<viewCount; viewIdx++) for (objectIdx=0; objectIdx<objectCount[viewIdx]; objectIdx++) 
 	{
 		this->objects[viewIdx][objectIdx] = objects[iterConfig->iterObjectIds[viewIdx][objectIdx]];
-		this->objects[viewIdx][objectIdx]->initialPose[viewIdx]->CopyInto(this->objects[viewIdx][objectIdx]->pose[viewIdx]);
+    this->objects[viewIdx][objectIdx]->initialPose[viewIdx]->CopyInto(this->objects[viewIdx][objectIdx]->pose[viewIdx]);
 		this->objects[viewIdx][objectIdx]->UpdateRendererFromPose(views[viewIdx]);
 	}
 
-	energyFunction = energyFunction_standard;
+  energyFunction = energyFunction_standard;
 
   for (iterIdx=0; iterIdx<iterConfig->iterCount; iterIdx++) this->RunOneMultiIteration(iterConfig);
 }
@@ -111,7 +111,6 @@ void OptimisationEngine::RunOneMultiIteration(IterationConfiguration* iterConfig
 
 void OptimisationEngine::RunOneSingleIteration(StepSize3D* presetStepSize, IterationConfiguration* iterConfig)
 {
-  printf("================== run one Single Iteration ==================== \n\n");
   energyFunction->PrepareIteration(objects, objectCount, views, viewCount, iterConfig);
 
   energyFunction->GetFirstDerivativeValues(objects, objectCount, views, viewCount, iterConfig);
@@ -121,12 +120,20 @@ void OptimisationEngine::RunOneSingleIteration(StepSize3D* presetStepSize, Itera
 
 void OptimisationEngine::DescendWithGradient(StepSize3D *presetStepSize, IterationConfiguration *iterConfig)
 {
+//  printf("[DescendWithGradient]\n");
 	int objectIdx, viewIdx;
 
 	StepSize3D actualStepSize;
 
 	for (viewIdx = 0; viewIdx < viewCount; viewIdx++) for (objectIdx = 0; objectIdx < objectCount[viewIdx]; objectIdx++)
 	{
+//    printf("object step size (%f,%f,%f)\n",
+//           objects[viewIdx][objectIdx]->stepSize[viewIdx]->tX,
+//           objects[viewIdx][objectIdx]->stepSize[viewIdx]->tX,
+//           objects[viewIdx][objectIdx]->stepSize[viewIdx]->tX );
+
+//    printf("presetStepSize (%f,%f,%f)\n",presetStepSize->tX,presetStepSize->tY, presetStepSize->tZ );
+
 		actualStepSize.r = presetStepSize->r * objects[viewIdx][objectIdx]->stepSize[viewIdx]->r;
 		actualStepSize.tX = presetStepSize->tX * objects[viewIdx][objectIdx]->stepSize[viewIdx]->tX;
 		actualStepSize.tY = presetStepSize->tY * objects[viewIdx][objectIdx]->stepSize[viewIdx]->tY;
@@ -135,8 +142,10 @@ void OptimisationEngine::DescendWithGradient(StepSize3D *presetStepSize, Iterati
 		switch (iterConfig->iterTarget[0])
 		{
 		case ITERATIONTARGET_BOTH:
-			AdvanceTranslation(objects[viewIdx][objectIdx], views[viewIdx], &actualStepSize); 
+      AdvanceTranslation(objects[viewIdx][objectIdx], views[viewIdx], &actualStepSize);
+
 			AdvanceRotation(objects[viewIdx][objectIdx], views[viewIdx], &actualStepSize);
+
 			break;
 		case ITERATIONTARGET_TRANSLATION:
 			AdvanceTranslation(objects[viewIdx][objectIdx], views[viewIdx], &actualStepSize);
@@ -151,16 +160,16 @@ void OptimisationEngine::DescendWithGradient(StepSize3D *presetStepSize, Iterati
 }
 void OptimisationEngine::AdvanceTranslation(Object3D* object, View3D* view, StepSize3D* stepSize)
 {
-	object->pose[view->viewId]->translation->x -= stepSize->tX * object->dpose[view->viewId]->translation->x;
-	object->pose[view->viewId]->translation->y -= stepSize->tY * object->dpose[view->viewId]->translation->y;
-	object->pose[view->viewId]->translation->z -= stepSize->tZ * object->dpose[view->viewId]->translation->z;
+  object->pose[view->viewId]->translation->x -= stepSize->tX * object->dpose[view->viewId]->translation->x;
+  object->pose[view->viewId]->translation->y -= stepSize->tY * object->dpose[view->viewId]->translation->y;
+  object->pose[view->viewId]->translation->z -= stepSize->tZ * object->dpose[view->viewId]->translation->z;
 }
 void OptimisationEngine::AdvanceRotation(Object3D* object, View3D* view, StepSize3D* stepSize)
 {
-	object->pose[view->viewId]->rotation->vector4d.x -= stepSize->r * object->dpose[view->viewId]->rotation->vector4d.x;
-	object->pose[view->viewId]->rotation->vector4d.y -= stepSize->r * object->dpose[view->viewId]->rotation->vector4d.y;
-	object->pose[view->viewId]->rotation->vector4d.z -= stepSize->r * object->dpose[view->viewId]->rotation->vector4d.z;
-	object->pose[view->viewId]->rotation->vector4d.w -= stepSize->r * object->dpose[view->viewId]->rotation->vector4d.w;
+  object->pose[view->viewId]->rotation->vector4d.x -= stepSize->r * object->dpose[view->viewId]->rotation->vector4d.x;
+  object->pose[view->viewId]->rotation->vector4d.y -= stepSize->r * object->dpose[view->viewId]->rotation->vector4d.y;
+  object->pose[view->viewId]->rotation->vector4d.z -= stepSize->r * object->dpose[view->viewId]->rotation->vector4d.z;
+  object->pose[view->viewId]->rotation->vector4d.w -= stepSize->r * object->dpose[view->viewId]->rotation->vector4d.w;
 }
 
 void OptimisationEngine::NormaliseRotation()

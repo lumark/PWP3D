@@ -35,17 +35,26 @@ namespace PerseusLib
 
 			void Set(int noHistograms, int *noBins)
 			{
+        if(noHistograms<=0)
+        {
+          printf("fatal error! noHistograms must >0\n");
+          exit(-1);
+        }
+
 				if (!isAllocated)
 				{
+//          printf("alloc HistogramVarBin, noHistograms %d\n", noHistograms);
 					this->isAllocated = true;
 					this->noHistograms = noHistograms;
 
 					fullHistSize = 0;
 					this->noBins = new int[noHistograms];
 					this->histOffsets = new int[noHistograms];
+
 					for (int i=0; i<noHistograms; i++)
 					{
 						this->noBins[i] = noBins[i];
+//            printf("set noBins[%d] %d;",i,noBins[i]);
 						histOffsets[i] = fullHistSize;
 						fullHistSize += noBins[i] * noBins[i] * noBins[i];
 					}
@@ -73,7 +82,7 @@ namespace PerseusLib
 
 				int greyVal = int(float(r) * 0.3f + float(g) * 0.59f + float(b) * 0.11f);
 
-				currentHistogram = 0;
+        currentHistogram = 0;
 				if (greyVal < 128) currentHistogram = 3;
 				else if (greyVal < 192) currentHistogram = 2;
 				else if (greyVal < 224) currentHistogram = 1;
@@ -85,7 +94,7 @@ namespace PerseusLib
 				bu = (b >> factor[currentHistogram]) & (noBins[currentHistogram] - 1);
 				pidx = (ru + gu * noBins[currentHistogram]) * noBins[currentHistogram] + bu;
 
-				*foreground = normalised[histOffsets[currentHistogram] + pidx].x;
+        *foreground = normalised[histOffsets[currentHistogram] + pidx].x;
 				*background = normalised[histOffsets[currentHistogram] + pidx].y;
 			}
 

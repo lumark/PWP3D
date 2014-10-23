@@ -31,6 +31,8 @@ namespace Renderer
 			}
 
 			void SetFrom(VECTOR3DA* translation, Quaternion* rotation){
+//        printf("[SetFrom/1] \n");
+
 				this->rotation->Set(rotation);
 				this->translation->x = translation->x;
 				this->translation->y = translation->y;
@@ -58,6 +60,8 @@ namespace Renderer
 			{
 				VFLOAT matrixFromSource[16]; 
 				rotation->GetMatrix(matrixFromSource);
+
+//        printf("[etModelViewMatrix] rotation is %f,%f,%f,%f\n",rotation->vector4d.x,rotation->vector4d.y, rotation->vector4d.z,rotation->vector4d.w);
 
 				returnMatrix[0] = matrixFromSource[0];
 				returnMatrix[1] = matrixFromSource[1];

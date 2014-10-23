@@ -177,8 +177,8 @@ void MathUtils::InvertMatrix4Pose(float *out, float *in)
 	int i, j;
 	for (i=0; i<3; i++) for (j=0; j<3; j++) out[i + j * size] = in[j + i * size];
 	j=3; for (i=0; i<3; i++) out[i + j * size] = -in[i+j*size];
-	i=3; for (j=0; j<3; j++) out[i + j * size] = 0;
-	out[15] = 1;
+  i=3; for (j=0; j<3; j++) out[i + j * size] = 0.f;
+  out[15] = 1.0f;
 }
 
 //ftp://download.intel.com/design/PentiumIII/sml/24504301.pdf
@@ -257,7 +257,7 @@ void MathUtils::InvertMatrix4(float *dst, float *mat)
 
 	det=src[0]*dst[0]+src[1]*dst[1]+src[2]*dst[2]+src[3]*dst[3];
 
-	det = 1/det;
+  det = 1.f/det;
 	for (int j = 0; j < 16; j++) dst[j] *= det;
 }
 
@@ -356,7 +356,7 @@ void MathUtils::InvertMatrix4(double *dst, double *mat)
 
 	det=src[0]*dst[0]+src[1]*dst[1]+src[2]*dst[2]+src[3]*dst[3];
 
-	det = 1/det;
+  det = static_cast<double>(1)/det;
 	for (int j = 0; j < 16; j++) dst[j] *= det;
 }
 
@@ -435,7 +435,7 @@ void MathUtils::InvertMatrix4(long double *dst, long double *mat)
 
 	det=src[0]*dst[0]+src[1]*dst[1]+src[2]*dst[2]+src[3]*dst[3];
 
-	det = 1/det;
+  det = static_cast<long double>(1)/det;
 	for (int j = 0; j < 16; j++) dst[j] *= det;
 }
 

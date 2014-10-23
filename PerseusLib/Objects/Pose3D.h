@@ -18,12 +18,17 @@ namespace PerseusLib
 
 			void SetFrom(float *pose, int poseSize) 
 			{
+//        printf("[Pose3D/SetFrom] 1 \n");
+//        printf("  pose is (%f,%f,%f,%f)\n", pose[0], pose[1], pose[2], pose[3]);
+
 				if (poseSize == 4) this->SetFrom(pose[0], pose[1], pose[2], pose[3], 0.0f, 0.0f);
 				if (poseSize == 6) this->SetFrom(pose[0], pose[1], pose[2], pose[3], pose[4], pose[5]);
 				if (poseSize == 7) this->SetFrom(pose[0], pose[1], pose[2], pose[3], pose[4], pose[5], pose[6]); 
 			}
 
 			void SetFrom(Pose3D *pose) { 
+//        printf("[Pose3D/SetFrom] 2 \n");
+
 				this->translation->x = pose->translation->x;
 				this->translation->y = pose->translation->y;
 				this->translation->z = pose->translation->z;
@@ -34,6 +39,8 @@ namespace PerseusLib
 			}
 
 			void SetFrom(VECTOR3DA* translation, Quaternion* rotation){
+//        printf("[Pose3D/SetFrom] 3 \n");
+
 				this->rotation->Set(rotation);
 				this->translation->x = translation->x;
 				this->translation->y = translation->y;
@@ -41,6 +48,8 @@ namespace PerseusLib
 			}
 
 			void SetFrom(VFLOAT tX, VFLOAT tY, VFLOAT tZ, VFLOAT rX, VFLOAT rY, VFLOAT rZ) {
+//        printf("[Pose3D/SetFrom] 4 \n");
+
 				this->translation->x = tX;
 				this->translation->y = tY;
 				this->translation->z = tZ;
@@ -48,6 +57,8 @@ namespace PerseusLib
 			}	
 
 			void SetFrom(VFLOAT tX, VFLOAT tY, VFLOAT tZ, VFLOAT rX, VFLOAT rY, VFLOAT rZ, VFLOAT rW) {
+//        printf("[Pose3D/SetFrom] 5 \n");
+
 				this->translation->x = tX;
 				this->translation->y = tY;
 				this->translation->z = tZ;
@@ -59,6 +70,8 @@ namespace PerseusLib
 
 			void GetModelViewMatrix(float *returnMatrix)
 			{
+//        printf("[Pose3D/GetModelViewMatrix] \n");
+
 				VFLOAT matrixFromSource[16]; 
 				rotation->GetMatrix(matrixFromSource);
 
@@ -85,6 +98,8 @@ namespace PerseusLib
 			}
 
 			void CopyInto(Pose3D *targetPose) {
+//        printf("[Pose3D/CopyInto] \n");
+
 				targetPose->translation->x = this->translation->x;
 				targetPose->translation->y = this->translation->y;
 				targetPose->translation->z = this->translation->z;
