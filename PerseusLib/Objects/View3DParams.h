@@ -16,6 +16,13 @@ namespace PerseusLib
 				zNear = 0.01f;
 			}
 			~View3DParams(void) {}
+
+     void Init()
+      {
+        zBufferOffset = 0.0001f;
+        zFar = 50.0f;
+        zNear = 0.01f;
+      }
 		};
 	}
 }

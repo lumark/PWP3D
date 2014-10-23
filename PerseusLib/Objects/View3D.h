@@ -50,12 +50,23 @@ namespace PerseusLib
 			ImageUChar *videoMask;
 
 			View3D(int viewIdx, char* cameraCalibFileName, int width, int height, View3DParams* params = NULL) {
-				if (params == NULL) { View3DParams params_c = View3DParams(); params = &params_c; }
-				
+        if (params == NULL)
+        {
+          View3DParams params_c = View3DParams();
+          params = &params_c;
+        }
+        else
+        {
+          printf("Does not support non-Null params yet. please fix bug in Objects/View3D.h first!\n");
+          exit(-1);
+        }
+
+        params->Init();
+
 				this->viewId = viewIdx;
 				this->zBufferOffset = params->zBufferOffset;
 
-				renderView = new Renderer3DView(width, height, cameraCalibFileName, params->zNear, params->zFar, viewIdx);
+        renderView = new Renderer3DView(width, height, cameraCalibFileName, params->zNear, params->zFar, viewIdx);
 
 				imageRenderAll = new ImageRender(width, height, true);
 

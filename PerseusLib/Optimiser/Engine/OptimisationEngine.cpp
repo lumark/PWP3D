@@ -111,6 +111,7 @@ void OptimisationEngine::RunOneMultiIteration(IterationConfiguration* iterConfig
 
 void OptimisationEngine::RunOneSingleIteration(StepSize3D* presetStepSize, IterationConfiguration* iterConfig)
 {
+  printf("================== run one Single Iteration ==================== \n\n");
   energyFunction->PrepareIteration(objects, objectCount, views, viewCount, iterConfig);
 
   energyFunction->GetFirstDerivativeValues(objects, objectCount, views, viewCount, iterConfig);

@@ -23,7 +23,7 @@ namespace Renderer
 			VBOOL isVisible;
 
 			ModelFace(void) {}
-			~ModelFace(void) { delete verticesVector; }
+      ~ModelFace(void) { delete verticesVector; }
 		};
 	}
 }

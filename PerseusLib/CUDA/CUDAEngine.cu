@@ -32,12 +32,13 @@ void shutdownCUDA()
 
 void registerObjectImage(Object3D* object, View3D* view, bool renderingFromGPU, bool isMultobject)
 {
+  printf("\n== registerObjectImage ==\n");
 	int viewId = view->viewId;
 
 	int *roiGenerated = object->roiGenerated[viewId];
 	int *roiNormalised = object->roiNormalised[viewId];
 
-  printf("roiGenerated is %d, %d, %d, %d, %d, %d; \n", roiGenerated[0], roiGenerated[1], roiGenerated[2], roiGenerated[3], roiGenerated[4], roiGenerated[5]);
+//  printf("roiGenerated is %d, %d, %d, %d, %d, %d; \n", roiGenerated[0], roiGenerated[1], roiGenerated[2], roiGenerated[3], roiGenerated[4], roiGenerated[5]);
 
 	int widthROI, heightROI, widthFull;
 	widthROI = roiGenerated[4]; heightROI = roiGenerated[5];
@@ -75,9 +76,9 @@ void registerObjectImage(Object3D* object, View3D* view, bool renderingFromGPU, 
 //  perseusSafeCall(cudaMemcpy2D(objectsGPUROI, widthROI, objects + roiGenerated[0] + roiGenerated[1] * widthFull,
 //    widthFull, widthROI, heightROI, renderingSource));
 
-  printf("offset is: %d\n",roiGenerated[0] + roiGenerated[1] * widthFull);
-  printf("roiGenerated[0] is: %d\n",roiGenerated[0]);
-  printf("roiGenerated[1] * widthFull is: %d\n", roiGenerated[1] * widthFull);
+  printf("[registerObjectImage] offset is: %d\n",roiGenerated[0] + roiGenerated[1] * widthFull);
+  printf("[registerObjectImage] roiGenerated[0] is: %d\n",roiGenerated[0]);
+  printf("[registerObjectImage] roiGenerated[1] * widthFull is: %d\n", roiGenerated[1] * widthFull);
 
   perseusSafeCall(cudaMemcpy2D(objectsGPUROI, widthROI* sizeof(uchar1), objects + roiGenerated[0] + roiGenerated[1] * widthFull,
       widthFull * sizeof(uchar1), widthROI * sizeof(uchar1), heightROI, renderingSource));
@@ -103,7 +104,7 @@ void registerObjectImage(Object3D* object, View3D* view, bool renderingFromGPU, 
 		perseusSafeCall(cudaMemcpy2D(objectsAllGPUROI, widthROI, objectsAll + roiGenerated[0] + roiGenerated[1] * widthFull, 
 			widthFull, widthROI, heightROI, renderingSource));
 	}
-  printf("finish registerObjectImage;\n");
+  printf("[registerObjectImage] finish \n");
 }
 
 void registerObjectAndViewGeometricData(Object3D* object, View3D* view)

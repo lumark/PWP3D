@@ -36,6 +36,7 @@ namespace Renderer
 			{
 				this->camera3D = camera;
 				cameraCoordinateTransform = new CameraCoordinateTransform();
+        printf("[Renderer3DView] Set zNear %f, zFar %f; \n", zNear, zFar);
 				cameraCoordinateTransform->SetProjectionMatrix(camera, zNear, zFar);
 
 				this->viewId = viewId;
@@ -48,6 +49,8 @@ namespace Renderer
 				camera3D = new Camera3D(cameraCalibrationFile);
 
 				cameraCoordinateTransform = new CameraCoordinateTransform();
+        printf("[Renderer3DView] Set zNear %f, zFar %f; \n", zNear, zFar);
+
 				cameraCoordinateTransform->SetProjectionMatrix(cameraCalibrationFile, zNear, zFar);
 				cameraCoordinateTransform->GetProjectionParameters(&projectionParams);
 

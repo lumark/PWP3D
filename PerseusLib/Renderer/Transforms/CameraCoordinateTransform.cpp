@@ -131,6 +131,13 @@ void CameraCoordinateTransform::SetProjectionMatrix(Camera3D* camera, VFLOAT zNe
 {
 	int i,j;
 
+  if(zNear<=0 || zFar<=0)
+  {
+    printf("Set projection matrix to:  zNear:%f, zFar:%f \n", zNear, zFar);
+    printf("Error! Invalid projectionMatrix.\n");
+    exit(-1);
+  }
+
 	VFLOAT icpara[3][4];
 	VFLOAT trans[3][4];
 	VFLOAT p[3][3];

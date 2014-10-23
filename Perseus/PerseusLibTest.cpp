@@ -72,22 +72,23 @@ int main(void)
     {
     case 0:
       iterConfig->useCUDAEF = false;
-      iterConfig->useCUDARender = false;
+      iterConfig->useCUDARender = true;
       break;
     case 1:
       iterConfig->useCUDAEF = false;
       iterConfig->useCUDARender = false;
       break;
     case 2:
-      iterConfig->useCUDAEF = false;
+      iterConfig->useCUDAEF = true;
       iterConfig->useCUDARender = false;
       break;
     case 3:
-      iterConfig->useCUDAEF = false;
-      iterConfig->useCUDARender = false;
+      iterConfig->useCUDAEF = true;
+      iterConfig->useCUDARender = true;
       break;
     }
 
+    printf("============== starting loop ============ \n");
     sprintf(str, "/Users/luma/Code/Luma/PWP3D/Files/Results/result%04d.png", i);
 
     t.restart();
@@ -101,7 +102,7 @@ int main(void)
     //result save to file
     ImageUtils::Instance()->SaveImageToFile(result, str);
 
-    printf("%f %f %f %f %f %f %f\n",
+    printf("final pose result %f %f %f %f %f %f %f\n",
       objects[objectIdx]->pose[viewIdx]->translation->x, objects[objectIdx]->pose[viewIdx]->translation->y, objects[objectIdx]->pose[viewIdx]->translation->z,
       objects[objectIdx]->pose[viewIdx]->rotation->vector4d.x, objects[objectIdx]->pose[viewIdx]->rotation->vector4d.y,
       objects[objectIdx]->pose[viewIdx]->rotation->vector4d.z, objects[objectIdx]->pose[viewIdx]->rotation->vector4d.w);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <PerseusLib/Others/PerseusLibDefines.h>
+#include <string>
 
 #define MATH_USE_OPENMP 1
 //#define MATH_USE_DIRECTX 2

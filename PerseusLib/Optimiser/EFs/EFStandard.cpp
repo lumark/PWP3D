@@ -18,6 +18,7 @@ EFStandard::~EFStandard(void)
 
 void EFStandard::PrepareIteration(Object3D ***objects, int *objectCount, View3D** views, int viewCount, IterationConfiguration* iterConfig)
 {
+  printf("== [PrepareIteration] Start == \n");
 	Object3D* object; View3D* view; int objectIdx, viewIdx;
 
 	for (viewIdx = 0; viewIdx<viewCount; viewIdx++) 
@@ -38,6 +39,8 @@ void EFStandard::PrepareIteration(Object3D ***objects, int *objectCount, View3D*
       processDTSihluetteLSDXDY(object, view, iterConfig->levelSetBandSize);
     }
 	}
+  printf("== [PrepareIteration] finish == \n");
+
 }
 
 void EFStandard::GetFirstDerivativeValues(Object3D ***objects, int *objectCount, View3D** views, int viewCount, IterationConfiguration* iterConfig)
