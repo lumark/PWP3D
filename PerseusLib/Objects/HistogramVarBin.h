@@ -2,6 +2,7 @@
 
 #include <string.h>
 #include <PerseusLib/Others/PerseusLibDefines.h>
+#include <PerseusLib/CUDA/CUDADefines.h>
 
 namespace PerseusLib
 {
@@ -35,7 +36,7 @@ namespace PerseusLib
 
 			void Set(int noHistograms, int *noBins)
 			{
-        if(noHistograms<=0)
+        if(noHistograms <= 0)
         {
           printf("fatal error! noHistograms must >0\n");
           exit(-1);
@@ -43,7 +44,6 @@ namespace PerseusLib
 
 				if (!isAllocated)
 				{
-//          printf("alloc HistogramVarBin, noHistograms %d\n", noHistograms);
 					this->isAllocated = true;
 					this->noHistograms = noHistograms;
 
@@ -54,7 +54,6 @@ namespace PerseusLib
 					for (int i=0; i<noHistograms; i++)
 					{
 						this->noBins[i] = noBins[i];
-//            printf("set noBins[%d] %d;",i,noBins[i]);
 						histOffsets[i] = fullHistSize;
 						fullHistSize += noBins[i] * noBins[i] * noBins[i];
 					}
@@ -62,9 +61,9 @@ namespace PerseusLib
 					normalised = new float2[fullHistSize];
 					notnormalised = new float2[fullHistSize];
 
-					cudaMalloc((void**)&normalisedGPU, fullHistSize * sizeof(float2));
+          cudaMalloc((void**)&normalisedGPU, fullHistSize * sizeof(float2));
 
-					//TODO MAKE NICER
+          // TODO MAKE NICER
 					factor = new int[noHistograms];
 					factor[0] = 5;
 					factor[1] = 4;
@@ -167,7 +166,8 @@ namespace PerseusLib
 
 			void UpdateGPUFromCPU()
 			{
-				cudaMemcpy(normalisedGPU, normalised, sizeof(float2) * fullHistSize, cudaMemcpyHostToDevice);
+        printf("update GPUFromCPU (%f,%f,%f); size %d\n", normalised[0].x, normalised[1].x, normalised[2].x, fullHistSize);
+        cudaMemcpy(normalisedGPU, normalised, sizeof(float2) * fullHistSize, cudaMemcpyHostToDevice);
 			}
 
 			void Free()

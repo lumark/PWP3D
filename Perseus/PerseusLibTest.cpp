@@ -68,6 +68,7 @@ int main(void)
 
   for (i=0; i<4; i++)
   {
+
     switch (i)
     {
     case 0:
@@ -88,6 +89,8 @@ int main(void)
       break;
     }
 
+    printf("===== mode: useCUDAAEF: %d, use CUDARender %d =====;\n", iterConfig->useCUDAEF, iterConfig->useCUDARender);
+
     sprintf(str, "/Users/luma/Code/Luma/PWP3D/Files/Results/result%04d.png", i);
 
     t.restart();
@@ -101,9 +104,10 @@ int main(void)
     //result save to file
     ImageUtils::Instance()->SaveImageToFile(result, str);
 
-    printf("mode: useCUDAAEF: %d, use CUDARender %d;\n", iterConfig->useCUDAEF, iterConfig->useCUDARender);
-    printf("final pose result %f %f %f %f %f %f %f\n",
-      objects[objectIdx]->pose[viewIdx]->translation->x, objects[objectIdx]->pose[viewIdx]->translation->y, objects[objectIdx]->pose[viewIdx]->translation->z,
+    printf("final pose result %f %f %f %f %f %f %f\n\n",
+      objects[objectIdx]->pose[viewIdx]->translation->x,
+           objects[objectIdx]->pose[viewIdx]->translation->y,
+           objects[objectIdx]->pose[viewIdx]->translation->z,
       objects[objectIdx]->pose[viewIdx]->rotation->vector4d.x, objects[objectIdx]->pose[viewIdx]->rotation->vector4d.y,
       objects[objectIdx]->pose[viewIdx]->rotation->vector4d.z, objects[objectIdx]->pose[viewIdx]->rotation->vector4d.w);
   }
@@ -124,7 +128,7 @@ int main(void)
 
 	delete result;
 
-  std::cout<<"Exit pwp3D success"<<std::endl;
+  std::cout<<"Exit pwp3D app successfully."<<std::endl;
 
 	return 0;
 }

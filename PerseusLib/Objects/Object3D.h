@@ -67,13 +67,11 @@ namespace PerseusLib
 			StepSize3D **stepSize;
 
 			void UpdatePoseFromRenderer(View3D* view) {
-//        printf("[UpdatePoseFromRenderer] set rotation to (%f,%f,%f)\n", pose[view->viewId]->rotation->vector4d.x, pose[view->viewId]->rotation->vector4d.y, pose[view->viewId]->rotation->vector4d.z);
 				pose[view->viewId]->SetFrom(renderObject->objectCoordinateTransform[view->viewId]->translation, 
 					renderObject->objectCoordinateTransform[view->viewId]->rotation);
 			}
 
 			void UpdateRendererFromPose(View3D* view) {
-//        printf("[UpdateRendererFromPose] set rotation to (%f,%f,%f)\n", pose[view->viewId]->rotation->vector4d.x, pose[view->viewId]->rotation->vector4d.y, pose[view->viewId]->rotation->vector4d.z);
 				renderObject->objectCoordinateTransform[view->viewId]->SetFrom(pose[view->viewId]->translation, pose[view->viewId]->rotation);
 			}
 

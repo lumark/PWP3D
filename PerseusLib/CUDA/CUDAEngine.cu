@@ -11,6 +11,7 @@ CUDAData *cudaData;
 
 void initialiseCUDA(int width, int height, float* heavisideFunction, int heavisideFunctionSize)
 {
+  printf("init cuda, heaviside Function size is %d\n", heavisideFunctionSize);
 	cudaData = new CUDAData();
 
 	initialiseRenderer(width, height);
@@ -18,7 +19,6 @@ void initialiseCUDA(int width, int height, float* heavisideFunction, int heavisi
 	initialiseDT(width, height);
 	initialiseConvolution(width, height);
 	initialiseEF(width, height, heavisideFunction, heavisideFunctionSize);
-
 }
 
 void shutdownCUDA()
@@ -160,10 +160,12 @@ void processAndGetEFFirstDerivatives(Object3D* object, View3D* view, bool isMult
 	float *dtDXGPUROI = object->dtDX[viewId]->pixelsGPU;
 	float *dtDYGPUROI = object->dtDY[viewId]->pixelsGPU;
 
+  // launch cuda kernel to compute the pose
   processEFD1(dpose, roiNormalised, roiGenerated, histogram, cameraGPUROI, objectsGPUROI, isMultiobject, zbufferGPUROI, zbufferInverseGPUROI,
     dtGPUROI, dtPosXGPUROI, dtPosYGPUROI, dtDXGPUROI, dtDYGPUROI, object->objectId);
 
   object->dpose[view->viewId]->SetFrom(dpose, 7);
+  printf("[processAndGetEFFirstDerivatives] Get EstPose : (%f,%f,%f,%f,%f,%f)\n", dpose[0],dpose[1],dpose[2],dpose[3],dpose[4],dpose[5]);
 }
 
 void getProcessedDataDTSihluetteLSDXDY(Object3D* object, View3D* view)

@@ -29,6 +29,8 @@ void OptimisationEngine::Initialise(int width, int height)
 	MathUtils::Instance()->ReadAndAllocateHeaviside(8192, "/Users/luma/Code/Luma/PWP3D/Files/Others/heaviside.txt");
 
 	initialiseCUDA(width, height, MathUtils::Instance()->heavisideFunction, MathUtils::Instance()->heavisideSize);
+
+  printf("init cuda success.\n");
 }
 
 void OptimisationEngine::Shutdown()
@@ -120,20 +122,13 @@ void OptimisationEngine::RunOneSingleIteration(StepSize3D* presetStepSize, Itera
 
 void OptimisationEngine::DescendWithGradient(StepSize3D *presetStepSize, IterationConfiguration *iterConfig)
 {
-//  printf("[DescendWithGradient]\n");
+  //  printf("[DescendWithGradient]\n");
 	int objectIdx, viewIdx;
 
 	StepSize3D actualStepSize;
 
 	for (viewIdx = 0; viewIdx < viewCount; viewIdx++) for (objectIdx = 0; objectIdx < objectCount[viewIdx]; objectIdx++)
 	{
-//    printf("object step size (%f,%f,%f)\n",
-//           objects[viewIdx][objectIdx]->stepSize[viewIdx]->tX,
-//           objects[viewIdx][objectIdx]->stepSize[viewIdx]->tX,
-//           objects[viewIdx][objectIdx]->stepSize[viewIdx]->tX );
-
-//    printf("presetStepSize (%f,%f,%f)\n",presetStepSize->tX,presetStepSize->tY, presetStepSize->tZ );
-
 		actualStepSize.r = presetStepSize->r * objects[viewIdx][objectIdx]->stepSize[viewIdx]->r;
 		actualStepSize.tX = presetStepSize->tX * objects[viewIdx][objectIdx]->stepSize[viewIdx]->tX;
 		actualStepSize.tY = presetStepSize->tY * objects[viewIdx][objectIdx]->stepSize[viewIdx]->tY;
