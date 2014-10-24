@@ -30,7 +30,7 @@ void OptimisationEngine::Initialise(int width, int height)
 
 	initialiseCUDA(width, height, MathUtils::Instance()->heavisideFunction, MathUtils::Instance()->heavisideSize);
 
-  printf("init cuda success.\n");
+  printf("[OptimisationEngine::Initialise] init cuda success.\n");
 }
 
 void OptimisationEngine::Shutdown()
@@ -123,7 +123,6 @@ void OptimisationEngine::RunOneSingleIteration(StepSize3D* presetStepSize, Itera
 
 void OptimisationEngine::DescendWithGradient(StepSize3D *presetStepSize, IterationConfiguration *iterConfig)
 {
-  //  printf("[DescendWithGradient]\n");
 	int objectIdx, viewIdx;
 
 	StepSize3D actualStepSize;

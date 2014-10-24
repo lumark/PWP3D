@@ -120,7 +120,6 @@ void EFStandard::GetFirstDerivativeValues_CPU_6DoF(Object3D ***objects, int *obj
           dirac = (1.0f / float(PI)) * (1.0f / (dtIdx * dtIdx + 1.0f) + float(1e-3));
 
 					dfPPGeneric = dirac * (pYF - pYB) / (heaviside * (pYF - pYB) + pYB);
-//          printf("fPPGeneric %f,", dfPPGeneric);
 
           // run 1
           xProjected[0] = (float) 2 * (icX - view->renderView->view[0]) / view->renderView->view[2] - 1.0f;
@@ -172,9 +171,6 @@ void EFStandard::GetFirstDerivativeValues_CPU_6DoF(Object3D ***objects, int *obj
 		}
 
 		object->dpose[viewId]->SetFrom(dpose, 7);
-
-    printf("[GetFirstDerivativeValues_CPU_6DoF] GetEstPose : (%f,%f,%f,%f,%f,%f)\n", dpose[0],dpose[1],dpose[2],dpose[3],dpose[4],dpose[5]);
-
 
 		//char rez[200];
 		//sprintf(rez, "%4.5f %4.5f %4.5f %4.5f %4.5f %4.5f %4.5f", object->dpose[viewId]->translation->x, object->dpose[viewId]->translation->y,

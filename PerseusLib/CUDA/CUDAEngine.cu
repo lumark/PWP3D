@@ -165,7 +165,6 @@ void processAndGetEFFirstDerivatives(Object3D* object, View3D* view, bool isMult
     dtGPUROI, dtPosXGPUROI, dtPosYGPUROI, dtDXGPUROI, dtDYGPUROI, object->objectId);
 
   object->dpose[view->viewId]->SetFrom(dpose, 7);
-  printf("[processAndGetEFFirstDerivatives] Get EstPose : (%f,%f,%f,%f,%f,%f)\n", dpose[0],dpose[1],dpose[2],dpose[3],dpose[4],dpose[5]);
 }
 
 void getProcessedDataDTSihluetteLSDXDY(Object3D* object, View3D* view)

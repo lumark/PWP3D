@@ -1,6 +1,7 @@
 #include "../PerseusLib/PerseusLib.h"
 
 #include "Utils/Timer.h"
+#include <opencv2/opencv.hpp>
 
 using namespace Perseus::Utils;
 
@@ -66,17 +67,21 @@ int main(void)
 	//register camera image with main engine
 	OptimisationEngine::Instance()->RegisterViewImage(views[viewIdx], camera);
 
-  for (i=0; i<2; i++)
-  {
+  VisualisationEngine::Instance()->GetImage(result, GETIMAGE_PROXIMITY, objects[objectIdx], views[viewIdx], objects[objectIdx]->initialPose[viewIdx]);
+  cv::Mat ResultMat(height,width,CV_8UC4, result->pixels);
+  cv::imshow("initial pose", ResultMat);
+  cv::waitKey(1000);
 
+  for (i=0; i<1; i++)
+  {
     switch (i)
     {
     case 0:
-      iterConfig->useCUDAEF = false;
+      iterConfig->useCUDAEF = true;
       iterConfig->useCUDARender = true;
       break;
     case 1:
-      iterConfig->useCUDAEF = true;
+      iterConfig->useCUDAEF = false;
       iterConfig->useCUDARender = true;
       break;
     case 2:
@@ -93,8 +98,8 @@ int main(void)
 
     sprintf(str, "/Users/luma/Code/Luma/PWP3D/Files/Results/result%04d.png", i);
 
-    t.restart();
     //main processing
+    t.restart();
     OptimisationEngine::Instance()->Minimise(objects, views, iterConfig);
     t.check("Iteration");
 
@@ -103,6 +108,9 @@ int main(void)
 
     //result save to file
     ImageUtils::Instance()->SaveImageToFile(result, str);
+    cv::Mat ResultMat(height,width,CV_8UC4, result->pixels);
+    cv::imshow("result", ResultMat);
+    cv::waitKey(10000);
 
     printf("final pose result %f %f %f %f %f %f %f\n\n",
       objects[objectIdx]->pose[viewIdx]->translation->x,

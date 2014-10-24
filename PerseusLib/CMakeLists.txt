@@ -30,7 +30,6 @@ Objects/View3DParams.h
 
 Optimiser/EFs/EFStandard.h
 Optimiser/EFs/IEnergyFunction.h
-
 Optimiser/Engine/OptimisationEngine.h
 
 Others/PerseusLibDefines.h
@@ -51,13 +50,10 @@ Renderer/Model/ModelFace.h
 Renderer/Model/ModelGroup.h
 Renderer/Model/ModelH.h
 Renderer/Model/ModelVertex.h
-
 Renderer/Objects/Renderer3DObject.h
 Renderer/Objects/Renderer3DView.h
-
 Renderer/Primitives/Camera3D.h
 Renderer/Primitives/Quaternion.h
-
 Renderer/Transforms/CameraCoordinateTransform.h
 Renderer/Transforms/CoordinateTransform.h
 Renderer/Transforms/ObjectCoordinateTransform.h
@@ -69,8 +65,6 @@ Utils/ImageUtils.h
 Utils/MathUtils.h
 Utils/VisualisationEngine.h
 )
-
-
 
 
 list(APPEND SRC_CU
@@ -87,13 +81,10 @@ Optimiser/Engine/OptimisationEngine.cpp
 
 Renderer/Engine/DrawingEngine.cpp
 Renderer/Engine/DrawingPrimitives.cpp
-
 Renderer/Model/Model.cpp
 Renderer/Model/ModelGroup.cpp
 Renderer/Model/ModelH.cpp
-
 Renderer/Primitives/Quaternion.cpp
-
 Renderer/Transforms/CameraCoordinateTransform.cpp
 Renderer/Transforms/CoordinateTransform.cpp
 
@@ -147,6 +138,13 @@ if(FREEIMAGE_FOUND)
     set(HAVE_FREEIMAGE 1)
     list(APPEND USER_INC ${FREEIMAGE_INCLUDE_DIRS} )
     list(APPEND LINK_LIBS ${FREEIMAGE_LIBRARIES} )
+endif()
+
+find_package( OpenCV REQUIRED )
+if(FREEIMAGE_FOUND)
+    set(HAVE_OpenCV 1)
+    list(APPEND USER_INC ${OpenCV_INCLUDE_DIRS} )
+    list(APPEND LINK_LIBS ${OpenCV_LIBRARIES} )
 endif()
 
 # So that we can find config.h
