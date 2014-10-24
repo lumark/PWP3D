@@ -23,6 +23,6 @@ include(SetPlatformVars)
 add_subdirectory(PerseusLib)
 
 if(BUILD_APPLICATIONS)
-  add_subdirectory(Perseus)
+  add_subdirectory(Application)
 endif()
 
