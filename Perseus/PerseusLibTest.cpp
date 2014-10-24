@@ -107,7 +107,7 @@ int main(void)
     VisualisationEngine::Instance()->GetImage(result, GETIMAGE_PROXIMITY, objects[objectIdx], views[viewIdx], objects[objectIdx]->pose[viewIdx]);
 
     //result save to file
-    ImageUtils::Instance()->SaveImageToFile(result, str);
+    //    ImageUtils::Instance()->SaveImageToFile(result, str);
     cv::Mat ResultMat(height,width,CV_8UC4, result->pixels);
     cv::imshow("result", ResultMat);
     cv::waitKey(10000);
