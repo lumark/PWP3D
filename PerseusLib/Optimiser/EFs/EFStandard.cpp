@@ -24,12 +24,14 @@ void EFStandard::PrepareIteration(Object3D ***objects, int *objectCount, View3D*
 	{
 		view = views[viewIdx];
 
+    // draw all in the view
     if (objectCount[viewIdx] > 1) DrawingEngine::Instance()->DrawAllInView(objects[viewIdx], objectCount[viewIdx], view, iterConfig->useCUDARender, true);
 
     for (objectIdx = 0; objectIdx < objectCount[viewIdx]; objectIdx++)
     {
       object = objects[viewIdx][objectIdx];
 
+      // render object
       DrawingEngine::Instance()->Draw(object, view, iterConfig->useCUDARender, !iterConfig->useCUDAEF);
       DrawingEngine::Instance()->ChangeROIWithBand(object, view, iterConfig->levelSetBandSize, iterConfig->width, iterConfig->height);
 
@@ -99,7 +101,6 @@ void EFStandard::GetFirstDerivativeValues_CPU_6DoF(Object3D ***objects, int *obj
 				if (dtIdx < 0) { icX = dtPosX[idx] + object->roiGenerated[viewId][0]; icY = dtPosY[idx] + object->roiGenerated[viewId][1]; }
 				icZ = icX + icY * width;
 
-
 				if (objectCount[viewIdx] > 1) 
 					if (((view->imageRenderAll->imageObjects->pixels[icZ]-1) != objectId) ||
 						((view->imageRenderAll->imageObjects->pixels[i + j * width] - 1) != objectId && (view->imageRenderAll->imageObjects->pixels[i + j * width] - 1) != -1 ))
@@ -119,6 +120,7 @@ void EFStandard::GetFirstDerivativeValues_CPU_6DoF(Object3D ***objects, int *obj
           dirac = (1.0f / float(PI)) * (1.0f / (dtIdx * dtIdx + 1.0f) + float(1e-3));
 
 					dfPPGeneric = dirac * (pYF - pYB) / (heaviside * (pYF - pYB) + pYB);
+//          printf("fPPGeneric %f,", dfPPGeneric);
 
           // run 1
           xProjected[0] = (float) 2 * (icX - view->renderView->view[0]) / view->renderView->view[2] - 1.0f;

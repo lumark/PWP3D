@@ -66,7 +66,7 @@ int main(void)
 	//register camera image with main engine
 	OptimisationEngine::Instance()->RegisterViewImage(views[viewIdx], camera);
 
-  for (i=0; i<4; i++)
+  for (i=0; i<2; i++)
   {
 
     switch (i)
@@ -76,8 +76,8 @@ int main(void)
       iterConfig->useCUDARender = true;
       break;
     case 1:
-      iterConfig->useCUDAEF = false;
-      iterConfig->useCUDARender = false;
+      iterConfig->useCUDAEF = true;
+      iterConfig->useCUDARender = true;
       break;
     case 2:
       iterConfig->useCUDAEF = true;

@@ -115,6 +115,7 @@ void OptimisationEngine::RunOneSingleIteration(StepSize3D* presetStepSize, Itera
 {
   energyFunction->PrepareIteration(objects, objectCount, views, viewCount, iterConfig);
 
+  // update the pose of the object
   energyFunction->GetFirstDerivativeValues(objects, objectCount, views, viewCount, iterConfig);
 
   this->DescendWithGradient(presetStepSize, iterConfig);

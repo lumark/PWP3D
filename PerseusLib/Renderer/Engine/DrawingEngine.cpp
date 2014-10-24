@@ -159,34 +159,15 @@ void DrawingEngine::ComputeAndSetPMMatrices(Object3D *object, View3D *view, Pose
   else
   {
     object->renderObject->GetModelViewMatrix(modelViewMatrixFull, view->viewId);
-//    printf("pose is not null, try to GetModelViewMatrix; \n");
   }
 
-//  for(int i=0;i!=16;i++)
-//  {
-//    printf("ModelViewMatrix[%d]:%f, ",i, modelViewMatrixFull[i]);
-//  }
-
 	view->renderView->cameraCoordinateTransform->GetProjectionMatrix(projectionMatrix);
-
 
   MathUtils::Instance()->SquareMatrixProduct(pmMatrix, projectionMatrix, modelViewMatrixFull, 4);
 	MathUtils::Instance()->InvertMatrix4(invPMMatrix, pmMatrix);
 
-//  printf("before copy pmMatrix;\n");
-//  for(int i=0;i!=16;i++)
-//  {
-//     printf("pmMatrix[%d]:%f; ", i, object->pmMatrix[view->viewId][i]);
-//  }
-
   memcpy(object->pmMatrix[view->viewId], pmMatrix, 16 * sizeof(float));
 	memcpy(object->invPMMatrix[view->viewId], invPMMatrix, 16 * sizeof(float));
-
-//  printf("\n after copy\n");
-//  for(int i=0;i!=16;i++)
-//  {
-//     printf("pmMatrix[%d]:%f; ", i, object->pmMatrix[view->viewId][i]);
-//  }
 }
 
 void DrawingEngine::DrawAllInView(Object3D** objects, int objectCount, View3D* view, bool useCUDA, bool getBackData)
@@ -230,8 +211,7 @@ void DrawingEngine::DrawAllInView(Object3D** objects, int objectCount, View3D* v
 
 void DrawingEngine::Draw(Object3D* object, View3D* view, bool useCUDA, bool getBackData)
 {
-//  printf("\n== [DrawingEngine/Draw] ==\n");
-	Renderer3DObject *renderObject = object->renderObject;
+  Renderer3DObject *renderObject = object->renderObject;
 	Renderer3DView *renderView = view->renderView;
   int objectId = object->objectId;
   int viewId = view->viewId;
@@ -253,14 +233,8 @@ void DrawingEngine::Draw(Object3D* object, View3D* view, bool useCUDA, bool getB
 
     object->roiGenerated[viewId][0] = 0xFFFF; object->roiGenerated[viewId][1] = 0xFFFF;
 		object->roiGenerated[viewId][2] = -1; object->roiGenerated[viewId][3] = -1;
-    object->roiGenerated[viewId][4] = 0; object->roiGenerated[viewId][5] = 0;
 
-    int *roiGenerated = object->roiGenerated[0];
-//    printf("[DrawingEngine/Draw] init roiGenerated value is (%d,%d,%d,%d,%d,%d)\n", roiGenerated[0],roiGenerated[1] ,roiGenerated[2] ,roiGenerated[3] ,roiGenerated[4] ,roiGenerated[5]   );
-//    printf("[DrawingEngine/Draw] viewId is %d; view->viewId is %d\n",viewId, view->viewId );
     drawWireframe(object->imageWireframe[viewId], renderObject->drawingModel[view->viewId], object->roiGenerated[viewId]);
-//    printf("[DrawingEngine/Draw] roiGenerated value after drawWireframe is (%d,%d,%d,%d,%d,%d)\n", roiGenerated[0],roiGenerated[1] ,roiGenerated[2] ,roiGenerated[3] ,roiGenerated[4] ,roiGenerated[5]   );
-
     drawFilled(object->imageRender[viewId], renderObject->drawingModel[view->viewId], objectId);
   }
 }
@@ -306,7 +280,6 @@ void DrawingEngine::ChangeROIWithBand(View3D *view3D, int bandSize, int width, i
 
 void DrawingEngine::drawFaceEdges(ImageUChar *image, ModelFace* currentFace, ModelH* drawingModel, VBYTE color, int* extrems)
 {
-//  printf("\n  ---- DrawingEngine::drawFaceEdges --- \n");
   if (currentFace->verticesVectorCount != 3)
   {
     return;
@@ -314,8 +287,6 @@ void DrawingEngine::drawFaceEdges(ImageUChar *image, ModelFace* currentFace, Mod
 
 	VFLOAT x1 = drawingModel->verticesVector[currentFace->verticesVector[0]*4 + 0];
 	VFLOAT y1 = drawingModel->verticesVector[currentFace->verticesVector[0]*4 + 1];
-//  printf("  [drawFaceEdges] drawingModel->verticesVector[%d] is %f; \n",currentFace->verticesVector[0]*4 + 0, drawingModel->verticesVector[0]);
-//  printf("  [drawFaceEdges] x1,y1 is (%f,%f)\n", x1, y1);
 
   if(isfinite(x1)==false)
   {
@@ -333,12 +304,10 @@ void DrawingEngine::drawFaceEdges(ImageUChar *image, ModelFace* currentFace, Mod
 	DRAWLINE(image, x2, y2, x3, y3, color);
 	DRAWLINE(image, x1, y1, x3, y3, color);
 
-//  printf("  [drawFaceEdges] init extrems is (%d,%d,%d,%d)\n", extrems[0], extrems[1], extrems[2], extrems[3]);
 	extrems[0] = (VINT) x1;
 	extrems[1] = (VINT) y1;
 	extrems[2] = (VINT) x1;
 	extrems[3] = (VINT) y1;
-//  printf("  [drawFaceEdges] 1st extrems is (%d,%d,%d,%d)\n", extrems[0], extrems[1], extrems[2], extrems[3]);
 
 	extrems[0] = (VINT) MIN(extrems[0], x2);
 	extrems[1] = (VINT) MIN(extrems[1], y2);

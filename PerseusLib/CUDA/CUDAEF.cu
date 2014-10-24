@@ -114,8 +114,7 @@ __host__ void processEFD1(float* dpose, int *roiNormalised, int *roiGenerated, f
   }
 }
 
-__device__ float3 sdataTranslation[256];
-__device__ float4 sdataRotation[256];
+
 
 __global__ void processEFD1_global(
     float3 *dfxTranslation, float4 *dfxRotation, float2 *histogram, uchar4 *imageRegistered, unsigned char *imageObjects,
@@ -123,6 +122,9 @@ __global__ void processEFD1_global(
     float *dt, int *dtPosX, int *dtPosY, float *dtDX, float *dtDY,
     int minX, int minY, int widthROI, int heightROI, int objectId)
 {
+  __shared__ float3 sdataTranslation[256];
+  __shared__ float4 sdataRotation[256];
+
   int offsetX = threadIdx.x + blockIdx.x * blockDim.x;
   int offsetY = threadIdx.y + blockIdx.y * blockDim.y;
   int offset = offsetX + offsetY * widthROI;
@@ -184,7 +186,6 @@ __global__ void processEFD1_global(
           else if (n_greyPixel < 224) n_currentHistogram = 1;
 
           //currentHistogram = 2;
-
           imagePixel.x = (imagePixel.x >> histFactors[n_currentHistogram]) & (histNoBins[n_currentHistogram] - 1);
           imagePixel.y = (imagePixel.y >> histFactors[n_currentHistogram]) & (histNoBins[n_currentHistogram] - 1);
           imagePixel.z = (imagePixel.z >> histFactors[n_currentHistogram]) & (histNoBins[n_currentHistogram] - 1);
@@ -194,25 +195,35 @@ __global__ void processEFD1_global(
 
           f_pYF = histogramPixel.x + 0.0000001f; f_pYB = histogramPixel.y + 0.0000001f;
 
-          f_dirac = (1.0f / float(PI)) * (1 / (f_dtIdx * f_dtIdx + 1.0f) + float(1e-3));
+          f_dirac = (1.0f / float(PI)) * (1.0f / (f_dtIdx * f_dtIdx + 1.0f) + float(1e-3));
           f_fPPGeneric = f_dirac * (f_pYF - f_pYB) / (f_heaviside * (f_pYF - f_pYB) + f_pYB);
 
-          f_xProjected[0] = 2 * (n_icX + minX - (float) viewTransform[0]) / (float) viewTransform[2] - 1;
-          f_xProjected[1] = 2 * (n_icY + minY - (float) viewTransform[1]) / (float) viewTransform[3] - 1;
-          f_xProjected[2] = 2 * ((float)imageZBuffer[n_icZ] / (float)MAX_INT) - 1;
-          f_xProjected[3] = 1;
+          f_xProjected[0] = 2.0f * (n_icX + minX - (float) viewTransform[0]) / (float) viewTransform[2] - 1.0f;
+          f_xProjected[1] = 2.0f * (n_icY + minY - (float) viewTransform[1]) / (float) viewTransform[3] - 1.0f;
+          f_xProjected[2] = 2.0f * ((float)imageZBuffer[n_icZ] / (float)MAX_INT) - 1.0f;
+          f_xProjected[3] = 1.0f;
 
           f_xUnprojected[0] = invP[0] * f_xProjected[0] + invP[4] * f_xProjected[1] + invP[8] * f_xProjected[2] + invP[12] * f_xProjected[3];
           f_xUnprojected[1] = invP[1] * f_xProjected[0] + invP[5] * f_xProjected[1] + invP[9] * f_xProjected[2] + invP[13] * f_xProjected[3];
           f_xUnprojected[2] = invP[2] * f_xProjected[0] + invP[6] * f_xProjected[1] + invP[10] * f_xProjected[2] + invP[14] * f_xProjected[3];
           f_xUnprojected[3] = invP[3] * f_xProjected[0] + invP[7] * f_xProjected[1] + invP[11] * f_xProjected[2] + invP[15] * f_xProjected[3];
-          f_norm = 1.0f/f_xUnprojected[3]; f_xUnprojected[0] *= f_norm; f_xUnprojected[1] *= f_norm; f_xUnprojected[2] *= f_norm; f_xUnprojected[3] *= f_norm;
+          f_norm = 1.0f/f_xUnprojected[3];
+
+          f_xUnprojected[0] *= f_norm;
+          f_xUnprojected[1] *= f_norm;
+          f_xUnprojected[2] *= f_norm;
+          f_xUnprojected[3] *= f_norm;
 
           f_xUnrotated[0] = invPM[0] * f_xProjected[0] + invPM[4] * f_xProjected[1] + invPM[8] * f_xProjected[2] + invPM[12] * f_xProjected[3];
           f_xUnrotated[1] = invPM[1] * f_xProjected[0] + invPM[5] * f_xProjected[1] + invPM[9] * f_xProjected[2] + invPM[13] * f_xProjected[3];
           f_xUnrotated[2] = invPM[2] * f_xProjected[0] + invPM[6] * f_xProjected[1] + invPM[10] * f_xProjected[2] + invPM[14] * f_xProjected[3];
           f_xUnrotated[3] = invPM[3] * f_xProjected[0] + invPM[7] * f_xProjected[1] + invPM[11] * f_xProjected[2] + invPM[15] * f_xProjected[3];
-          f_norm = 1.0f/f_xUnrotated[3];	f_xUnrotated[0] *= f_norm; f_xUnrotated[1] *= f_norm; f_xUnrotated[2] *= f_norm; f_xUnrotated[3] *= f_norm;
+
+          f_norm = 1.0f/f_xUnrotated[3];
+          f_xUnrotated[0] *= f_norm;
+          f_xUnrotated[1] *= f_norm;
+          f_xUnrotated[2] *= f_norm;
+          f_xUnrotated[3] *= f_norm;
 
           f_otherInfo[0] = projectionParams[0] * dtDX[offset]; f_otherInfo[1] = projectionParams[1] * dtDY[offset];
 
@@ -248,10 +259,10 @@ __global__ void processEFD1_global(
               d_precalcY * (f_xUnprojected[2] * (q[2]*f_xUnrotated[0] - q[0]*f_xUnrotated[2]) -
               f_xUnprojected[1] * (q[0]*f_xUnrotated[1] - q[1]*f_xUnrotated[0]));
 
-          f_xProjected[0] = 2 * (n_icX + minX - (float) viewTransform[0]) / (float) viewTransform[2] - 1;
-          f_xProjected[1] = 2 * (n_icY + minY - (float) viewTransform[1]) / (float) viewTransform[3] - 1;
-          f_xProjected[2] = 2 * ((float)imageZBufferInverse[n_icZ] / (float)MAX_INT) - 1;
-          f_xProjected[3] = 1;
+          f_xProjected[0] = 2.0f * (n_icX + minX - (float) viewTransform[0]) / (float) viewTransform[2] - 1.0f;
+          f_xProjected[1] = 2.0f * (n_icY + minY - (float) viewTransform[1]) / (float) viewTransform[3] - 1.0f;
+          f_xProjected[2] = 2.0f * ((float)imageZBufferInverse[n_icZ] / (float)MAX_INT) - 1.0f;
+          f_xProjected[3] = 1.0f;
 
           f_xUnprojected[0] = invP[0] * f_xProjected[0] + invP[4] * f_xProjected[1] + invP[8] * f_xProjected[2] + invP[12] * f_xProjected[3];
           f_xUnprojected[1] = invP[1] * f_xProjected[0] + invP[5] * f_xProjected[1] + invP[9] * f_xProjected[2] + invP[13] * f_xProjected[3];
@@ -297,9 +308,14 @@ __global__ void processEFD1_global(
               d_precalcY * (f_xUnprojected[2] * (q[2]*f_xUnrotated[0] - q[0]*f_xUnrotated[2]) -
               f_xUnprojected[1] * (q[0]*f_xUnrotated[1] - q[1]*f_xUnrotated[0]));
 
-          dfPPTranslation.x *= f_fPPGeneric; dfPPTranslation.y *= f_fPPGeneric; dfPPTranslation.z *= f_fPPGeneric;
-          dfPPRotation.x *= f_fPPGeneric; dfPPRotation.y *= f_fPPGeneric;
-          dfPPRotation.z *= f_fPPGeneric; dfPPRotation.w *= f_fPPGeneric;
+          dfPPTranslation.x *= f_fPPGeneric;
+          dfPPTranslation.y *= f_fPPGeneric;
+          dfPPTranslation.z *= f_fPPGeneric;
+
+          dfPPRotation.x *= f_fPPGeneric;
+          dfPPRotation.y *= f_fPPGeneric;
+          dfPPRotation.z *= f_fPPGeneric;
+          dfPPRotation.w *= f_fPPGeneric;
 
           sdataTranslation[offsetInBlock].x = dfPPTranslation.x;
           sdataTranslation[offsetInBlock].y = dfPPTranslation.y;
