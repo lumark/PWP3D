@@ -1,7 +1,7 @@
 #pragma once
 
+#include <iostream>
 #include <PerseusLib/Others/PerseusLibDefines.h>
-
 #include <PerseusLib/Renderer/Model/Model.h>
 #include <PerseusLib/Renderer/Model/ModelH.h>
 
@@ -31,6 +31,7 @@ namespace Renderer
 
 			Renderer3DObject(std::string fileName, int viewCount, int objectId) 
 			{
+        std::cout<<"[Renderer3DObject] Initializing.."<<std::endl;
 				this->viewCount = viewCount;
 				this->objectId = objectId;
 
@@ -40,6 +41,8 @@ namespace Renderer
 
         model = new Model( fileName );
 				drawingModel = new ModelH*[viewCount];
+
+        printf("viewCount is %d\n", viewCount);
 				for (int i=0; i<viewCount; i++)
 				{
 					drawingModel[i] = new ModelH();
