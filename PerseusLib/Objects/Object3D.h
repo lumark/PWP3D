@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <PerseusLib/Others/PerseusLibDefines.h>
 
 #include <PerseusLib/Renderer/Transforms/CoordinateTransform.h>
@@ -77,6 +78,7 @@ namespace PerseusLib
 
 			Object3D(int objectId, int viewCount, char *objectFileName, int width, int height, Object3DParams* objectParams = NULL)
 			{
+        std::cout<<"[Object3D] Initializing.."<<std::endl;
         if (objectParams == NULL) {
           objectParams = new Object3DParams();
         }
@@ -156,6 +158,8 @@ namespace PerseusLib
 
 					imagePosteriorsPFPB[i] = new ImageFloat(width, height, false);
 				}
+
+        std::cout<<"[Object3D] finish init object.."<<std::endl;
 			}
 
 			~Object3D(void)

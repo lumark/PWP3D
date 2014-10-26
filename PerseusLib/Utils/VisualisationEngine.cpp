@@ -49,7 +49,7 @@ void VisualisationEngine::GetImage(ImageUChar4* image, GetImageType getImageType
 		//DrawingEngine::Instance()->Draw(object, view, pose, object->imageWireframe[view->viewId], DrawingEngine::RENDERING_FILL);
 		break;
 	case GETIMAGE_PROXIMITY:
-		ImageUtils::Instance()->Copy(view->imageRegistered, image);
+    ImageUtils::Instance()->Copy(view->imageRegistered, image);
 		DrawingEngine::Instance()->Draw(object, view, pose, object->imageWireframe[view->viewId], DrawingEngine::RENDERING_WIREFRAME);
 		ImageUtils::Instance()->Overlay(object->imageWireframe[view->viewId], image);
 		break;
