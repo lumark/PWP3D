@@ -7,16 +7,31 @@ using namespace Perseus::Utils;
 
 int main(void)
 {
-//    std::string sModelPath = "/Users/luma/Code/Luma/PWP3D/Files/Models/Renderer/long.obj";
-//  std::string sModelPath = "/Users/luma/Code/DataSet/Mesh/BlueCar.obj";
-    std::string sModelPath = "/Users/luma/Code/DataSet/Mesh/RedCan.obj";
+  //  std::string sModelPath = "/Users/luma/Code/Luma/PWP3D/Files/Models/Renderer/long.obj";
+  //  std::string sSrcImage = "/Users/luma/Code/Luma/PWP3D/Files/Images/Red.png";
+  //  std::string sCameraMatrix = "/Users/luma/Code/Luma/PWP3D/Files/CameraCalibration/900nc.cal";
+  //  std::string sTargetMask = "/Users/luma/Code/Luma/PWP3D/Files/Masks/480p_All_VideoMask.png";
+  //  std::string sHistSrc = "/Users/luma/Code/Luma/PWP3D/Files/Masks/Red_Source.png";
+  //  std::string sHistMask = "/Users/luma/Code/Luma/PWP3D/Files/Masks/Red_Mask.png";
 
-  std::string sSrcImage = "/Users/luma/Code/Luma/PWP3D/Files/Images/Red.png";
+
+  // blue car demo
+  //  std::string sModelPath = "/Users/luma/Code/DataSet/Mesh/BlueCar.obj";
+  //  std::string sSrcImage = "/Users/luma/Code/Luma/PWP3D/Files/Images/248-LiveRGB.png";
+  //  std::string sCameraMatrix = "/Users/luma/Code/Luma/PWP3D/Files/CameraCalibration/900nc.cal";
+  //  std::string sTargetMask = "/Users/luma/Code/Luma/PWP3D/Files/Masks/480p_All_VideoMask.png";
+  //  std::string sHistSrc = "/Users/luma/Code/Luma/PWP3D/Files/Images/248-LiveRGB.png";
+  //  std::string sHistMask = "/Users/luma/Code/Luma/PWP3D/Files/Masks/248-ID-3-LiveImage.png";
+
+  // red can demo
+  std::string sModelPath = "/Users/luma/Code/DataSet/Mesh/RedCan.obj";
+  std::string sSrcImage = "/Users/luma/Code/Luma/PWP3D/Files/Images/248-LiveRGB.png";
   std::string sCameraMatrix = "/Users/luma/Code/Luma/PWP3D/Files/CameraCalibration/900nc.cal";
   std::string sTargetMask = "/Users/luma/Code/Luma/PWP3D/Files/Masks/480p_All_VideoMask.png";
-  std::string sHistSrc = "/Users/luma/Code/Luma/PWP3D/Files/Masks/Red_Source.png";
-  std::string sHistMask = "/Users/luma/Code/Luma/PWP3D/Files/Masks/Red_Mask.png";
+  std::string sHistSrc = "/Users/luma/Code/Luma/PWP3D/Files/Images/248-LiveRGB.png";
+  std::string sHistMask = "/Users/luma/Code/Luma/PWP3D/Files/Masks/248-ID-1-LiveImage.png";
 
+  // ---------------------------------------------------------------------------
   char str[100];
   int i;
 
@@ -54,7 +69,8 @@ int main(void)
   //mask = 24 bit black/white png - white represents object
   //videoMask = 24 bit black/white png - white represents parts of the image that are usable
   std::cout<<"\n==[APP] Init Target ROI =="<<std::endl;
-  ImageUtils::Instance()->LoadImageFromFile(views[viewIdx]->videoMask,(char*)sTargetMask.c_str());
+  ImageUtils::Instance()->LoadImageFromFile(views[viewIdx]->videoMask,
+                                            (char*)sTargetMask.c_str());
 
   ImageUtils::Instance()->LoadImageFromFile(objects[objectIdx]->histSources[viewIdx],
                                             (char*)sHistSrc.c_str());
@@ -82,8 +98,15 @@ int main(void)
   objects[objectIdx]->stepSize[viewIdx] = new StepSize3D(0.2f, 0.5f, 0.5f, 10.0f);
 
   //initial pose per object and view
+  //  objects[objectIdx]->initialPose[viewIdx]->SetFrom(
+  //        -1.98f, -2.90f, 37.47f, -40.90f, -207.77f, 27.48f);
+
+  // for blue car demo
+  //  objects[objectIdx]->initialPose[viewIdx]->SetFrom( -3.0f,-4.5f,28.f, -220.90f, -207.77f, 87.48f);
+
+  // for red can demo
   objects[objectIdx]->initialPose[viewIdx]->SetFrom(
-        -1.98f, -2.90f, 37.47f, -40.90f, -207.77f, 27.48f);
+        1.0f, 1.f, 40.f, 180.f, 80.f, 60.f);
 
   //primary initilisation
   OptimisationEngine::Instance()->Initialise(width, height);
@@ -100,7 +123,7 @@ int main(void)
 
   cv::Mat ResultMat(height,width,CV_8UC4, ResultImage->pixels);
   cv::imshow("initial pose", ResultMat);
-  cv::waitKey(2000);
+  cv::waitKey(1000);
 
   std::cout<<"[App] Finish Rendered object initial pose."<<std::endl;
 
@@ -145,7 +168,7 @@ int main(void)
     //    ImageUtils::Instance()->SaveImageToFile(result, str);
     cv::Mat ResultMat(height,width,CV_8UC4, ResultImage->pixels);
     cv::imshow("result", ResultMat);
-    cv::waitKey(10000);
+    cv::waitKey(3000);
 
     printf("final pose result %f %f %f %f %f %f %f\n\n",
            objects[objectIdx]->pose[viewIdx]->translation->x,

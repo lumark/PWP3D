@@ -54,7 +54,6 @@ void DrawingEngine::drawWireframe(ImageUChar* imageWireframe, ModelH* drawingMod
 
       //      if (currentFace->isVisible)
       //      {
-      printf("check if draw face;\n");
       this->drawFaceEdges(imageWireframe, currentFace, drawingModel, currentColor, localExtrems);
       roiGenerated[0] = MIN(roiGenerated[0], localExtrems[0]);
       roiGenerated[1] = MIN(roiGenerated[1], localExtrems[1]);
@@ -154,7 +153,7 @@ void DrawingEngine::Draw(Object3D* object, View3D* view, Pose3D *pose, ImageRend
 
 void DrawingEngine::GetPMMatrices(Object3D *object, View3D *view, Pose3D* pose, float *projectionMatrix, float *modelViewMatrix, float *pmMatrix)
 {
-  Renderer3DObject *renderObject = object->renderObject;
+  //  Renderer3DObject *renderObject = object->renderObject;
   Renderer3DView *renderView = view->renderView;
 
   pose->GetModelViewMatrix(modelViewMatrix);
@@ -188,7 +187,6 @@ void DrawingEngine::ComputeAndSetPMMatrices(Object3D *object, View3D *view, Pose
 
 void DrawingEngine::DrawAllInView(Object3D** objects, int objectCount, View3D* view, bool useCUDA, bool getBackData)
 {
-  //  printf("\n== DrawAllInView ==");
   int objectIdx;
 
   Object3D* object;
@@ -257,16 +255,12 @@ void DrawingEngine::Draw(Object3D* object, View3D* view, bool useCUDA, bool getB
 
 void DrawingEngine::ChangeROIWithBand(Object3D* object, View3D *view, int bandSize, int width, int height)
 {
-  //  printf("\n== ChangeROIWithBand == \n");
 
   int *roiGenerated = object->roiGenerated[view->viewId];
-  //  printf("[ChangeROIWithBand] roiGenerated value is (%d,%d,%d,%d,%d,%d)\n",
-  //         roiGenerated[0],roiGenerated[1] ,roiGenerated[2] ,roiGenerated[3] ,roiGenerated[4] ,roiGenerated[5]   );
 
   int roiTest[6];
   memcpy(roiTest, roiGenerated, 6 * sizeof(int));
 
-  //  printf("[ChangeROIWithBand] bandSize:%d,width:%d,height:%d\n",bandSize, width, height);
   roiGenerated[0] = CLAMP(roiGenerated[0] - bandSize, 0, width);
   roiGenerated[1] = CLAMP(roiGenerated[1] - bandSize, 0, height);
   roiGenerated[2] = CLAMP(roiGenerated[2] + bandSize, 0, width);
@@ -274,8 +268,6 @@ void DrawingEngine::ChangeROIWithBand(Object3D* object, View3D *view, int bandSi
 
   roiGenerated[4] = roiGenerated[2] - roiGenerated[0];
   roiGenerated[5] = roiGenerated[3] - roiGenerated[1];
-
-  //  printf("[ChangeROIWithBand] change roiGenerated value to (%d,%d,%d,%d,%d,%d)\n", roiGenerated[0],roiGenerated[1] ,roiGenerated[2] ,roiGenerated[3] ,roiGenerated[4] ,roiGenerated[5]   );
 }
 
 void DrawingEngine::ChangeROIWithBand(View3D *view3D, int bandSize, int width, int height)
@@ -335,8 +327,8 @@ void DrawingEngine::drawFaceEdges(ImageUChar *image, ModelFace* currentFace, Mod
   extrems[2] = (VINT) MAX(extrems[2], x3);
   extrems[3] = (VINT) MAX(extrems[3], y3);
 
-  printf("extrems (%d,%d,%d,%d)\n",extrems[0], extrems[1], extrems[2], extrems[3] );
-  std::cout<<"finish draw face "<<std::endl;
+  //  printf("extrems (%d,%d,%d,%d)\n",extrems[0], extrems[1], extrems[2], extrems[3] );
+  //  std::cout<<"finish draw face "<<std::endl;
 }
 
 void DrawingEngine::drawFaceFilled(ImageRender *imageRender, ModelFace* currentFace, ModelH* drawingModel, int objectId, VBYTE color, VINT meshId)
