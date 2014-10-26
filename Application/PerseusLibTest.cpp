@@ -7,9 +7,9 @@ using namespace Perseus::Utils;
 
 int main(void)
 {
-  //  std::string sModelPath = "/Users/luma/Code/Luma/PWP3D/Files/Models/Renderer/long.obj";
-  std::string sModelPath = "/Users/luma/Code/DataSet/Mesh/BlueCar.obj";
-  //  std::string sModelPath = "/Users/luma/Code/DataSet/Mesh/RedCan.obj";
+//    std::string sModelPath = "/Users/luma/Code/Luma/PWP3D/Files/Models/Renderer/long.obj";
+//  std::string sModelPath = "/Users/luma/Code/DataSet/Mesh/BlueCar.obj";
+    std::string sModelPath = "/Users/luma/Code/DataSet/Mesh/RedCan.obj";
 
   std::string sSrcImage = "/Users/luma/Code/Luma/PWP3D/Files/Images/Red.png";
   std::string sCameraMatrix = "/Users/luma/Code/Luma/PWP3D/Files/CameraCalibration/900nc.cal";

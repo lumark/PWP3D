@@ -187,7 +187,13 @@ void Model::ToModelHInit(ModelH* newModel)
   newModel->verticesVectorPreP = new VFLOAT[newModel->verticesVectorSize * 4];
   newModel->minZ = this->minZ;
 
-  printf(" Groups %d\n", newModel->groups);
+  printf(" Groups size is: %d\n", newModel->groups->size());
+
+  if(newModel->groups->size()<=0)
+  {
+    std::cerr<<"[Model::ToModelHInit] Fail init 3D model. exit."<<std::endl;
+    exit(-1);
+  }
 
   newModel->verticesGPUBuff = (float*) new float4[faceCount * 4];
   perseusSafeCall(cudaMalloc((void**)&newModel->verticesGPU, this->faceCount * 4 * sizeof(float4)));

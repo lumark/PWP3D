@@ -61,7 +61,7 @@ namespace Renderer
 			void DrawAllInView(Object3D** objects, int objectCount, View3D* view, bool useCUDA, bool getBackData);
 
 			void Draw(Object3D* object, View3D *view, bool useCUDA, bool getBackData);
-			void Draw(Object3D* object, View3D* view, Pose3D *pose, ImageUChar *image, RenderingType renderingType, bool clearImage = true);
+      void Draw(Object3D* object, View3D* view, Pose3D *pose, ImageUChar *pImageRender, RenderingType renderingType, bool clearImage = true);
 			void Draw(Object3D* object, View3D* view, Pose3D *pose, ImageRender *imageRender, bool clearImage = true);
 
 			void ChangeROIWithBand(Object3D* object, View3D *view, int bandSize, int width, int height);

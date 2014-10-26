@@ -106,29 +106,28 @@ void DrawingEngine::drawFilled(ImageUChar* imageRender, ModelH* drawingModel, in
   }
 }
 
-void DrawingEngine::Draw(Object3D* object, View3D* view, Pose3D *pose, ImageUChar *imageRender, RenderingType renderingType, bool clearImage)
+void DrawingEngine::Draw(Object3D* pObject, View3D* pView, Pose3D *pPose, ImageUChar *pImageRender, RenderingType renderingType, bool clearImage)
 {
   int roi[6];
 
-  Renderer3DObject *renderObject = object->renderObject;
-  Renderer3DView *renderView = view->renderView;
+  Renderer3DObject *pRenderObject = pObject->renderObject;
+  Renderer3DView *pRenderView = pView->renderView;
 
-  this->ComputeAndSetPMMatrices(object, view, pose);
+  this->ComputeAndSetPMMatrices(pObject, pView, pPose);
 
-  this->applyCoordinateTransform(renderView, renderObject, object->pmMatrix[view->viewId]);
-  std::cout<<"[DrawingEngine::Draw] applyCoordinateTransform"<<std::endl;
+  this->applyCoordinateTransform(pRenderView, pRenderObject, pObject->pmMatrix[pView->viewId]);
 
-  if (clearImage) imageRender->Clear();
+  if (clearImage) pImageRender->Clear();
 
   if (renderingType == RENDERING_FILL)
   {
     std::cout<<"[DrawingEngine::Draw] use drawFilled."<<std::endl;
-    drawFilled(imageRender, renderObject->drawingModel[view->viewId], object->objectId);
+    drawFilled(pImageRender, pRenderObject->drawingModel[pView->viewId], pObject->objectId);
   }
   else
   {
     std::cout<<"[DrawingEngine::Draw] use drawWireframe."<<std::endl;
-    drawWireframe(imageRender, renderObject->drawingModel[view->viewId], roi);
+    drawWireframe(pImageRender, pRenderObject->drawingModel[pView->viewId], roi);
   }
 }
 
