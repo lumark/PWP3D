@@ -149,7 +149,7 @@ int main(void)
       break;
     }
 
-    printf("===== mode: useCUDAAEF: %d, use CUDARender %d =====;\n",
+    printf("======= mode: useCUDAAEF: %d, use CUDARender %d ========;\n",
            iterConfig->useCUDAEF, iterConfig->useCUDARender);
 
     sprintf(str, "/Users/luma/Code/Luma/PWP3D/Files/Results/result%04d.png", i);
@@ -168,7 +168,7 @@ int main(void)
     //    ImageUtils::Instance()->SaveImageToFile(result, str);
     cv::Mat ResultMat(height,width,CV_8UC4, ResultImage->pixels);
     cv::imshow("result", ResultMat);
-    cv::waitKey(3000);
+    cv::waitKey(2000);
 
     printf("final pose result %f %f %f %f %f %f %f\n\n",
            objects[objectIdx]->pose[viewIdx]->translation->x,
