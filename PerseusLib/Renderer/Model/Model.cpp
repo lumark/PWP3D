@@ -99,6 +99,12 @@ int Model::createFromFile(FILE *file)
       this->groups.push_back(group);
       buf[strlen(buf)-1] = '\0';
       break;
+    case 'o': //group, temp function
+      fgets(buf, sizeof(buf), file);
+      group = new ModelGroup(buf);
+      this->groups.push_back(group);
+      buf[strlen(buf)-1] = '\0';
+      break;
     case 'f': //face
       fscanf(file, "%s", buf);
       sscanf(buf, "%d", &v);
