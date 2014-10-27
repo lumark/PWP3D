@@ -18,7 +18,7 @@ int main(void)
   // blue car demo
   //  std::string sModelPath = "/Users/luma/Code/DataSet/Mesh/BlueCar.obj";
   //  std::string sSrcImage = "/Users/luma/Code/Luma/PWP3D/Files/Images/248-LiveRGB.png";
-  //  std::string sCameraMatrix = "/Users/luma/Code/Luma/PWP3D/Files/CameraCalibration/900nc.cal";
+  //  std::string sCameraMatrix = "/Users/luma/Code/Luma/PWP3D/Files/CameraCalibration/Kinect.cal";
   //  std::string sTargetMask = "/Users/luma/Code/Luma/PWP3D/Files/Masks/480p_All_VideoMask.png";
   //  std::string sHistSrc = "/Users/luma/Code/Luma/PWP3D/Files/Images/248-LiveRGB.png";
   //  std::string sHistMask = "/Users/luma/Code/Luma/PWP3D/Files/Masks/248-ID-3-LiveImage.png";
@@ -26,7 +26,7 @@ int main(void)
   // red can demo
   std::string sModelPath = "/Users/luma/Code/DataSet/Mesh/RedCan.obj";
   std::string sSrcImage = "/Users/luma/Code/Luma/PWP3D/Files/Images/248-LiveRGB.png";
-  std::string sCameraMatrix = "/Users/luma/Code/Luma/PWP3D/Files/CameraCalibration/900nc.cal";
+  std::string sCameraMatrix = "/Users/luma/Code/Luma/PWP3D/Files/CameraCalibration/Kinect.cal";
   std::string sTargetMask = "/Users/luma/Code/Luma/PWP3D/Files/Masks/480p_All_VideoMask.png";
   std::string sHistSrc = "/Users/luma/Code/Luma/PWP3D/Files/Images/248-LiveRGB.png";
   std::string sHistMask = "/Users/luma/Code/Luma/PWP3D/Files/Masks/248-ID-1-LiveImage.png";
@@ -106,7 +106,7 @@ int main(void)
 
   // for red can demo
   objects[objectIdx]->initialPose[viewIdx]->SetFrom(
-        1.0f, 1.f, 40.f, 180.f, 80.f, 60.f);
+        1.0f, 3.0f, 30.f, 180.f, 80.f, 60.f);
 
   //primary initilisation
   OptimisationEngine::Instance()->Initialise(width, height);
