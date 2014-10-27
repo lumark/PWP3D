@@ -1,7 +1,7 @@
 #pragma once
 
+#include <opencv2/opencv.hpp>
 #include <PerseusLib/Others/PerseusLibDefines.h>
-
 #include <PerseusLib/Primitives/ImagePerseus.h>
 #include <PerseusLib/Primitives/PixelUCHAR4.h>
 
@@ -27,8 +27,12 @@ namespace PerseusLib
 			void FlipColours(ImageUChar4 *image);
 
 			void SaveImageToFile(ImageUChar4* image, char* fileName);
+
 			void LoadImageFromFile(ImageUChar4* image, char* fileName);
 			void LoadImageFromFile(ImageUChar* image, char* fileName, int fixedValue = -1);
+
+      void LoadImageFromCVMat(ImageUChar4* image, cv::Mat& rMat);
+      void LoadImageFromCVMat(ImageUChar* image, cv::Mat& rMat, int fixedValue = -1);
 
 			void Copy(ImageUChar4 *src, ImageUChar4* dst);
 			void Copy(ImageUChar *src, ImageUChar* dst);
