@@ -58,7 +58,7 @@ Model::Model(std::string fileName)
 
 Model::Model(aiMesh* pMesh)
 {
-
+  faceCount = createFromMesh(pMesh);
 }
 
 Model::Model(FILE *f)
@@ -155,66 +155,41 @@ int Model::createFromMesh(aiMesh* pMesh)
 {
   std::cout<<"[createFromFile] init Model from mesh.."<<std::endl;
 
-  int v;
   size_t i, j;
   float f[3];
-  char buf[128];
   ModelGroup* group = new ModelGroup("default");
-  ModelVertex vertex;
   ModelFace* face;
   int faceCount = 0;
 
-//  while(fscanf(file, "%s", buf) != EOF)
-//  {
-//    switch(buf[0])
-//    {
-//    case '#': fgets(buf, sizeof(buf), file); break;
-//    case 'v':
-//      switch (buf[1])
-//      {
-//      case '\0': // vertex
-//        fscanf(file, "%f %f %f", &f[0], &f[1], &f[2]);
-//        //vertex = new ModelVertex(f);
-//        vertices.push_back(ModelVertex(f));
-//        break;
-//      case 'n': fgets(buf, sizeof(buf), file); break;
-//      case 't': fgets(buf, sizeof(buf), file); break;
-//      }
-//      break;
-//    case 'm': fgets(buf, sizeof(buf), file); break;
-//    case 'u': fgets(buf, sizeof(buf), file); break;
-//    case 'g': //group
-//      fgets(buf, sizeof(buf), file);
-//      group = new ModelGroup(buf);
-//      this->groups.push_back(group);
-//      buf[strlen(buf)-1] = '\0';
-//      break;
-//    case 'o': //group, temp function
-//      fgets(buf, sizeof(buf), file);
-//      group = new ModelGroup(buf);
-//      this->groups.push_back(group);
-//      buf[strlen(buf)-1] = '\0';
-//      break;
-//    case 'f': //face
-//      fscanf(file, "%s", buf);
-//      sscanf(buf, "%d", &v);
-//      face = new ModelFace();
-//      face->vertices.push_back(v-1);
-//      while(fscanf(file, "%d", &v) > 0)
-//        face->vertices.push_back(v-1);
+  // init group
+  group = new ModelGroup("DefaultGroup");
+  this->groups.push_back(group);
 
-//      face->verticesVectorCount = face->vertices.size();
-//      face->verticesVector = new int[face->verticesVectorCount];
-//      for (i=0; i<face->verticesVectorCount; i++)
-//        face->verticesVector[i] = face->vertices[i];
+  // init vertex
+  for(unsigned int i=0; i!=pMesh->mNumVertices; i++)
+  {
+    f[0] = pMesh->mVertices[i].x;
+    f[1] = pMesh->mVertices[i].y;
+    f[2] = pMesh->mVertices[i].z;
+    vertices.push_back(ModelVertex(f));
+  }
 
-//      group->faces.push_back(face);
+  // init face
+  face = new ModelFace();
+  for(unsigned int i=0;i!=pMesh->mNumFaces;i++)
+  {
+    face->vertices.push_back( pMesh->mFaces->mIndices[i] -1);
+  }
 
-//      faceCount++;
-//      break;
-//    default: fgets(buf, sizeof(buf), file); break;
-//    }
-//  }
+  face->verticesVectorCount = face->vertices.size();
+  face->verticesVector = new int[face->verticesVectorCount];
+
+  for (i=0; i<face->verticesVectorCount; i++)
+  {
+    face->verticesVector[i] = face->vertices[i];
+    faceCount++;
+  }
+  group->faces.push_back(face);
 
   j = 0;
   verticesVector = new VFLOAT[vertices.size()*4];
@@ -268,6 +243,9 @@ void Model::ToModelH(ModelH* newModel)
 {
   newModel->originalVerticesVector = this->verticesVector;
 }
+
+
+
 
 void Model::ToModelHInit(ModelH* newModel)
 {
