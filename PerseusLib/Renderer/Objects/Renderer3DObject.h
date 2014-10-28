@@ -50,6 +50,28 @@ namespace Renderer
 				}
 			}
 
+      Renderer3DObject(aiMesh* pMesh, int viewCount, int objectId)
+      {
+        std::cout<<"[Renderer3DObject] Initializing.."<<std::endl;
+        this->viewCount = viewCount;
+        this->objectId = objectId;
+
+        objectCoordinateTransform = new ObjectCoordinateTransform*[viewCount];
+
+        for (int i=0; i<viewCount; i++) objectCoordinateTransform[i] = new ObjectCoordinateTransform();
+
+        model = new Model( pMesh );
+        drawingModel = new ModelH*[viewCount];
+
+        printf("viewCount is %d\n", viewCount);
+        for (int i=0; i<viewCount; i++)
+        {
+          drawingModel[i] = new ModelH();
+          model->ToModelHInit(drawingModel[i]);
+        }
+      }
+
+
 			void GetModelViewMatrix(float* modelViewMatrix, int viewId)
       {
         this->objectCoordinateTransform[viewId]->GetModelViewMatrix(modelViewMatrix);

@@ -56,6 +56,11 @@ Model::Model(std::string fileName)
   }
 }
 
+Model::Model(aiMesh* pMesh)
+{
+
+}
+
 Model::Model(FILE *f)
 {
   faceCount = createFromFile(f);

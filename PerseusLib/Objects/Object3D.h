@@ -162,6 +162,93 @@ namespace PerseusLib
         std::cout<<"[Object3D] finish init object.."<<std::endl;
 			}
 
+      Object3D(int objectId, int viewCount, aiMesh* pMesh, int width, int height, Object3DParams* objectParams = NULL)
+      {
+        std::cout<<"[Object3D] Initializing.."<<std::endl;
+        if (objectParams == NULL) {
+          objectParams = new Object3DParams();
+        }
+
+        int i;
+
+        this->objectId = objectId;
+        this->viewCount = viewCount;
+
+        renderObject = new Renderer3DObject(pMesh, viewCount, objectId);
+
+        histogramVarBin = new HistogramVarBin*[viewCount];
+
+        invPMMatrix = new VFLOAT*[viewCount];
+        pmMatrix = new VFLOAT*[viewCount];
+
+        roiGenerated = new VINT*[viewCount];
+        roiNormalised = new VINT*[viewCount];
+
+        pose = new Pose3D*[viewCount];
+        dpose = new Pose3D*[viewCount];
+        initialPose = new Pose3D*[viewCount];
+        stepSize = new StepSize3D*[viewCount];
+
+        imageRender = new ImageRender*[viewCount];
+        imageWireframe = new ImageUChar*[viewCount];
+        imageSihluette = new ImageUChar*[viewCount];
+        imageHistogramMask = new ImageUChar*[viewCount];
+
+        imageCamera = new ImageUChar4*[viewCount];
+
+        dt = new ImageFloat*[viewCount];
+        dtDX = new ImageFloat*[viewCount];
+        dtDY = new ImageFloat*[viewCount];
+
+        dtPosX = new ImageInt*[viewCount];
+        dtPosY = new ImageInt*[viewCount];
+
+        histMasks = new ImageUChar*[viewCount];
+        histSources = new ImageUChar4*[viewCount];
+
+        imagePosteriorsPFPB = new ImageFloat*[viewCount];
+
+        for (i=0; i<viewCount; i++)
+        {
+          histogramVarBin[i] = new HistogramVarBin();
+          histogramVarBin[i]->Set(objectParams->noVarBinHistograms, objectParams->noVarBinHistogramBins);
+
+          cudaMallocHost((void**)&invPMMatrix[i], sizeof(VFLOAT) * 16);
+          cudaMallocHost((void**)&pmMatrix[i], sizeof(VFLOAT) * 16);
+
+          roiGenerated[i] = new VINT[6];
+          roiNormalised[i] = new VINT[6];
+
+          pose[i] = new Pose3D();
+          dpose[i] = new Pose3D();
+          initialPose[i] = new Pose3D();
+          stepSize[i] = new StepSize3D();
+
+          imageRender[i] = new ImageRender(width, height, true);
+
+          imageWireframe[i] = new ImageUChar(width, height, false);
+          imageSihluette[i] = new ImageUChar(width, height, true);
+          imageHistogramMask[i] = new ImageUChar(width, height, false);
+
+          imageCamera[i] = new ImageUChar4(width, height, true);
+
+          dt[i] = new ImageFloat(width, height, true);
+          dtDX[i] = new ImageFloat(width, height, true);
+          dtDY[i] = new ImageFloat(width, height, true);
+
+          dtPosX[i] = new ImageInt(width, height, true);
+          dtPosY[i] = new ImageInt(width, height, true);
+
+          histMasks[i] = new ImageUChar(width, height, false);
+          histSources[i] = new ImageUChar4(width, height, false);
+
+          imagePosteriorsPFPB[i] = new ImageFloat(width, height, false);
+        }
+
+        std::cout<<"[Object3D] finish init object.."<<std::endl;
+      }
+
+
 			~Object3D(void)
 			{
 				delete renderObject;

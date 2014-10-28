@@ -35,6 +35,7 @@ namespace Renderer
 			Model(void);
 			Model(char* fileName);
       Model(std::string fileName);
+      Model(aiMesh* pMesh);
       Model(FILE* f);
 
 			Model* Clone();
