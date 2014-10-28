@@ -94,23 +94,23 @@ void ImageUtils::LoadImageFromFile(ImageUChar* image, char* fileName, int fixedV
 {
 	ImageUChar4* newImage = new ImageUChar4(image->width, image->height, false);
 	this->LoadImageFromFile(newImage, fileName);
-	this->Copy(newImage, image, fixedValue);
+  this->Copy(newImage, image, fixedValue);
 	delete newImage;
 }
 
-void ImageUtils::LoadImageFromCVMat(ImageUChar4* image, cv::Mat& rMat)
+void ImageUtils::LoadImageFromCVMat(ImageUChar4* image, cv::Mat& rMat8UC4)
 {
   ImageUChar4* newImage = new ImageUChar4(image->width, image->height, false);
-  memcpy(image->pixels, rMat.ptr(),  sizeof(unsigned char) * 4 * image->width * image->height);
+  memcpy(image->pixels, rMat8UC4.ptr(),  sizeof(unsigned char) * 4 * image->width * image->height);
   this->Copy(newImage, image);
   delete newImage;
 }
 
-void ImageUtils::LoadImageFromCVMat(ImageUChar* image, cv::Mat& rMat, int fixedValue)
+void ImageUtils::LoadImageFromCVMat(ImageUChar* image, cv::Mat& rMat8U)
 {
-  ImageUChar4* newImage = new ImageUChar4(image->width, image->height, false);
-  memcpy(image->pixels, rMat.ptr(),  sizeof(unsigned char) * 4 * image->width * image->height);
-  this->Copy(newImage, image, fixedValue);
+  ImageUChar* newImage = new ImageUChar(image->width, image->height, false);
+  memcpy(image->pixels, rMat8U.ptr(),  sizeof(unsigned char) * image->width * image->height);
+  this->Copy(newImage, image);
   delete newImage;
 }
 
