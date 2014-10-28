@@ -3,12 +3,11 @@
 #include <stdio.h>
 #include <vector>
 #include <string>
-#include <stdio.h>
 #include <PerseusLib/Others/PerseusLibDefines.h>
-
 #include <PerseusLib/Renderer/Model/ModelGroup.h>
 #include <PerseusLib/Renderer/Model/ModelVertex.h>
 #include <PerseusLib/Renderer/Model/ModelH.h>
+#include <assimp/mesh.h>
 
 using namespace Renderer::Model3D;
 
@@ -21,8 +20,9 @@ namespace Renderer
 		{
 		private:
 			int createFromFile(FILE *file);
-		public:
+      int createFromMesh(aiMesh* pMesh);
 
+		public:
 			std::vector<ModelGroup*> groups;
 			std::vector<ModelVertex> vertices;
 

@@ -146,6 +146,91 @@ int Model::createFromFile(FILE *file)
   return faceCount;
 }
 
+int Model::createFromMesh(aiMesh* pMesh)
+{
+  std::cout<<"[createFromFile] init Model from mesh.."<<std::endl;
+
+  int v;
+  size_t i, j;
+  float f[3];
+  char buf[128];
+  ModelGroup* group = new ModelGroup("default");
+  ModelVertex vertex;
+  ModelFace* face;
+  int faceCount = 0;
+
+//  while(fscanf(file, "%s", buf) != EOF)
+//  {
+//    switch(buf[0])
+//    {
+//    case '#': fgets(buf, sizeof(buf), file); break;
+//    case 'v':
+//      switch (buf[1])
+//      {
+//      case '\0': // vertex
+//        fscanf(file, "%f %f %f", &f[0], &f[1], &f[2]);
+//        //vertex = new ModelVertex(f);
+//        vertices.push_back(ModelVertex(f));
+//        break;
+//      case 'n': fgets(buf, sizeof(buf), file); break;
+//      case 't': fgets(buf, sizeof(buf), file); break;
+//      }
+//      break;
+//    case 'm': fgets(buf, sizeof(buf), file); break;
+//    case 'u': fgets(buf, sizeof(buf), file); break;
+//    case 'g': //group
+//      fgets(buf, sizeof(buf), file);
+//      group = new ModelGroup(buf);
+//      this->groups.push_back(group);
+//      buf[strlen(buf)-1] = '\0';
+//      break;
+//    case 'o': //group, temp function
+//      fgets(buf, sizeof(buf), file);
+//      group = new ModelGroup(buf);
+//      this->groups.push_back(group);
+//      buf[strlen(buf)-1] = '\0';
+//      break;
+//    case 'f': //face
+//      fscanf(file, "%s", buf);
+//      sscanf(buf, "%d", &v);
+//      face = new ModelFace();
+//      face->vertices.push_back(v-1);
+//      while(fscanf(file, "%d", &v) > 0)
+//        face->vertices.push_back(v-1);
+
+//      face->verticesVectorCount = face->vertices.size();
+//      face->verticesVector = new int[face->verticesVectorCount];
+//      for (i=0; i<face->verticesVectorCount; i++)
+//        face->verticesVector[i] = face->vertices[i];
+
+//      group->faces.push_back(face);
+
+//      faceCount++;
+//      break;
+//    default: fgets(buf, sizeof(buf), file); break;
+//    }
+//  }
+
+  j = 0;
+  verticesVector = new VFLOAT[vertices.size()*4];
+  this->minZ = vertices[0].vector3d.z;
+  for (i=0; (size_t)i < vertices.size(); i++ )
+  {
+    verticesVector[j] = vertices[i].vector3d.x;
+    verticesVector[j+1] = vertices[i].vector3d.y;
+    verticesVector[j+2] = vertices[i].vector3d.z;
+
+    if (this->minZ < vertices[i].vector3d.z)
+      this->minZ = vertices[i].vector3d.z;
+
+    verticesVector[j+3] = 1;
+    j += 4;
+  }
+
+  std::cout<<"[createFromFile] Finished. Got faceCount num "<<faceCount<<std::endl;
+  return faceCount;
+}
+
 Model* Model::Clone()
 {
   size_t i, j, k;
