@@ -154,35 +154,32 @@ int Model::createFromFile(FILE *file)
 
 int Model::createFromMesh(aiMesh* pMesh)
 {
-  std::cout<<"[createFromFile] init Model from mesh.."<<std::endl;
+  std::cout<<"[createFromFile] initializing Model from mesh."<<std::endl;
 
   size_t i, j;
-  float f[3];
   ModelGroup* group = new ModelGroup("default");
   ModelFace* face;
-  int faceCount = 0;
+  int nFaceCount = 0;
 
   // ---------------------------------------------------------------------------
   // init group
-  group = new ModelGroup("DefaultGroup");
   this->groups.push_back(group);
 
   // ---------------------------------------------------------------------------
   // init vertex
   for(unsigned int i=0; i!=pMesh->mNumVertices; i++)
   {
-    f[0] = pMesh->mVertices[i].x;
-    f[1] = pMesh->mVertices[i].y;
-    f[2] = pMesh->mVertices[i].z;
-    vertices.push_back(ModelVertex(f));
+    vertices.push_back(ModelVertex(pMesh->mVertices[i].x,
+                                   pMesh->mVertices[i].y,
+                                   pMesh->mVertices[i].z));
   }
 
   // ---------------------------------------------------------------------------
   // init face
-  for(unsigned int i=0;i!=pMesh->mNumFaces;i++)
+  for(unsigned int i=0; i!=pMesh->mNumFaces; i++)
   {
     face = new ModelFace();
-    for(unsigned int j=0;j!= pMesh->mFaces[i].mNumIndices; j++)
+    for(unsigned int j=0; j!= pMesh->mFaces[i].mNumIndices; j++)
     {
       face->vertices.push_back( pMesh->mFaces[i].mIndices[j] -1);
     }
@@ -195,7 +192,7 @@ int Model::createFromMesh(aiMesh* pMesh)
     }
 
     group->faces.push_back(face);
-    faceCount++;
+    nFaceCount++;
   }
 
   // ---------------------------------------------------------------------------
@@ -215,8 +212,8 @@ int Model::createFromMesh(aiMesh* pMesh)
     j += 4;
   }
 
-  std::cout<<"[createFromFile] Finished. Got faceCount num "<<faceCount<<std::endl;
-  return faceCount;
+  std::cout<<"[createFromMesh] Finished. Got faceCount num "<<nFaceCount<<std::endl;
+  return nFaceCount;
 }
 
 Model* Model::Clone()
@@ -269,7 +266,7 @@ void Model::ToModelHInit(ModelH* newModel)
   newModel->verticesVectorPreP = new VFLOAT[newModel->verticesVectorSize * 4];
   newModel->minZ = this->minZ;
 
-  printf(" Groups size is: %d\n", newModel->groups->size());
+  printf(" Groups size is: %d\n", static_cast<int>(newModel->groups->size()));
 
   if(newModel->groups->size()<=0)
   {

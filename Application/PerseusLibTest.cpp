@@ -181,7 +181,7 @@ int main(void)
   }
 
   //posteriors plot
-  sprintf(str, "/Users/luma/Code/Luma/PWP3D/iles/Results/posteriors.png");
+  sprintf(str, "/Users/luma/Code/Luma/PWP3D/Files/Results/posteriors.png");
   VisualisationEngine::Instance()->GetImage(
         ResultImage, GETIMAGE_POSTERIORS,
         objects[objectIdx], views[viewIdx], objects[objectIdx]->pose[viewIdx]);

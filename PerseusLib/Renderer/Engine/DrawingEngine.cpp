@@ -30,8 +30,9 @@ inline T max3(T t1, T t2, T t3)
 
 void DrawingEngine::drawWireframe(ImageUChar* imageWireframe, ModelH* drawingModel, int* roiGenerated)
 {
-  std::cout<<"[DrawingEngine/drawWireframe] start"<<endl;
+  std::cout<<"[DrawingEngine/drawWireframe] start. group num is "<<drawingModel->groups->size()<<endl;
   size_t i, j;
+
   int localExtrems[4];
   localExtrems[0] = 0;
   localExtrems[1] = 0;
@@ -43,7 +44,6 @@ void DrawingEngine::drawWireframe(ImageUChar* imageWireframe, ModelH* drawingMod
 
   roiGenerated[0] = 0xFFFF; roiGenerated[1] = 0xFFFF; roiGenerated[2] = -1; roiGenerated[3] = -1;
 
-  std::cout<<"drawingModel->groups->size() is "<<drawingModel->groups->size()<<std::endl;
   for (i=0; i<drawingModel->groups->size(); i++)
   {
     currentColor = 254;
@@ -291,6 +291,11 @@ void DrawingEngine::drawFaceEdges(ImageUChar *image, ModelFace* currentFace, Mod
   if (currentFace->verticesVectorCount != 3)
   {
     return;
+  }
+
+  if(currentFace->verticesVector[0]*4 >drawingModel->faceCount)
+  {
+    std::cerr<<"overflow!"<<std::endl;
   }
 
   VFLOAT x1 = drawingModel->verticesVector[currentFace->verticesVector[0]*4 + 0];
