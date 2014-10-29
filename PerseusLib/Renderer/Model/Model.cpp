@@ -179,23 +179,24 @@ int Model::createFromMesh(aiMesh* pMesh)
 
   // ---------------------------------------------------------------------------
   // init face
-  face = new ModelFace();
   for(unsigned int i=0;i!=pMesh->mNumFaces;i++)
   {
-    face->vertices.push_back( pMesh->mFaces[i].mIndices[0] -1);
-    face->vertices.push_back( pMesh->mFaces[i].mIndices[1] -1);
-    face->vertices.push_back( pMesh->mFaces[i].mIndices[2] -1);
-  }
+    face = new ModelFace();
+    for(unsigned int j=0;j!= pMesh->mFaces[i].mNumIndices; j++)
+    {
+      face->vertices.push_back( pMesh->mFaces[i].mIndices[j] -1);
+    }
 
-  face->verticesVectorCount = face->vertices.size();
-  face->verticesVector = new int[face->verticesVectorCount];
-  for (i=0; i<face->verticesVectorCount; i++)
-  {
-    face->verticesVector[i] = face->vertices[i];
+    face->verticesVectorCount = face->vertices.size();
+    face->verticesVector = new int[face->verticesVectorCount];
+    for (unsigned int k=0; k<face->verticesVectorCount; k++)
+    {
+      face->verticesVector[k] = face->vertices[k];
+    }
+
+    group->faces.push_back(face);
     faceCount++;
   }
-
-  group->faces.push_back(face);
 
   // ---------------------------------------------------------------------------
   j = 0;
