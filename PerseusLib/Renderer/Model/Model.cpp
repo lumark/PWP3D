@@ -134,6 +134,7 @@ int Model::createFromFile(FILE *file)
 
   j = 0;
   verticesVector = new VFLOAT[vertices.size()*4];
+  printf("init verticeVector size: %d \n", vertices.size()*4 );
   this->minZ = vertices[0].vector3d.z;
   for (i=0; (size_t)i < vertices.size(); i++ )
   {

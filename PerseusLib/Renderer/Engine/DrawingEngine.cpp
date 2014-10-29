@@ -293,9 +293,11 @@ void DrawingEngine::drawFaceEdges(ImageUChar *image, ModelFace* currentFace, Mod
     return;
   }
 
-  if(currentFace->verticesVector[0]*4 >drawingModel->faceCount)
+  if(currentFace->verticesVector[0]*4 >drawingModel->verticesVectorSize *4)
   {
-    std::cerr<<"overflow!"<<std::endl;
+    std::cerr<<"overflow! verticesVectorSize is "<<drawingModel->verticesVectorSize<<
+               ", desire pos is "<<currentFace->verticesVector[0]*4 + 0<<std::endl;
+    exit(-1);
   }
 
   VFLOAT x1 = drawingModel->verticesVector[currentFace->verticesVector[0]*4 + 0];
