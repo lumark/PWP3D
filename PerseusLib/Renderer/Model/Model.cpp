@@ -115,14 +115,15 @@ int Model::createFromFile(FILE *file)
       sscanf(buf, "%d", &v);
       face = new ModelFace();
       face->vertices.push_back(v-1);
-      while(fscanf(file, "%d", &v) > 0)
+      while(fscanf(file, "%d", &v) > 0){
         face->vertices.push_back(v-1);
+      }
 
       face->verticesVectorCount = face->vertices.size();
       face->verticesVector = new int[face->verticesVectorCount];
-      for (i=0; i<face->verticesVectorCount; i++)
+      for (i=0; i<face->verticesVectorCount; i++){
         face->verticesVector[i] = face->vertices[i];
-
+      }
       group->faces.push_back(face);
 
       faceCount++;
@@ -161,10 +162,12 @@ int Model::createFromMesh(aiMesh* pMesh)
   ModelFace* face;
   int faceCount = 0;
 
+  // ---------------------------------------------------------------------------
   // init group
   group = new ModelGroup("DefaultGroup");
   this->groups.push_back(group);
 
+  // ---------------------------------------------------------------------------
   // init vertex
   for(unsigned int i=0; i!=pMesh->mNumVertices; i++)
   {
@@ -174,23 +177,27 @@ int Model::createFromMesh(aiMesh* pMesh)
     vertices.push_back(ModelVertex(f));
   }
 
+  // ---------------------------------------------------------------------------
   // init face
   face = new ModelFace();
   for(unsigned int i=0;i!=pMesh->mNumFaces;i++)
   {
-    face->vertices.push_back( pMesh->mFaces->mIndices[i] -1);
+    face->vertices.push_back( pMesh->mFaces[i].mIndices[0] -1);
+    face->vertices.push_back( pMesh->mFaces[i].mIndices[1] -1);
+    face->vertices.push_back( pMesh->mFaces[i].mIndices[2] -1);
   }
 
   face->verticesVectorCount = face->vertices.size();
   face->verticesVector = new int[face->verticesVectorCount];
-
   for (i=0; i<face->verticesVectorCount; i++)
   {
     face->verticesVector[i] = face->vertices[i];
     faceCount++;
   }
+
   group->faces.push_back(face);
 
+  // ---------------------------------------------------------------------------
   j = 0;
   verticesVector = new VFLOAT[vertices.size()*4];
   this->minZ = vertices[0].vector3d.z;
