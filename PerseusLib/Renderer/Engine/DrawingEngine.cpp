@@ -255,7 +255,6 @@ void DrawingEngine::Draw(Object3D* object, View3D* view, bool useCUDA, bool getB
 
 void DrawingEngine::ChangeROIWithBand(Object3D* object, View3D *view, int bandSize, int width, int height)
 {
-
   int *roiGenerated = object->roiGenerated[view->viewId];
 
   int roiTest[6];
@@ -295,9 +294,9 @@ void DrawingEngine::drawFaceEdges(ImageUChar *image, ModelFace* currentFace, Mod
 
   if(currentFace->verticesVector[0]*4 >drawingModel->verticesVectorSize *4)
   {
-    std::cerr<<"overflow! verticesVectorSize is "<<drawingModel->verticesVectorSize<<
+    std::cerr<<"Fatal Error! overflow! verticesVectorSize is "<<drawingModel->verticesVectorSize<<
                ", desire pos is "<<currentFace->verticesVector[0]*4 + 0<<std::endl;
-    exit(-1);
+    return;
   }
 
   VFLOAT x1 = drawingModel->verticesVector[currentFace->verticesVector[0]*4 + 0];
@@ -341,6 +340,13 @@ void DrawingEngine::drawFaceEdges(ImageUChar *image, ModelFace* currentFace, Mod
 void DrawingEngine::drawFaceFilled(ImageRender *imageRender, ModelFace* currentFace, ModelH* drawingModel, int objectId, VBYTE color, VINT meshId)
 {
   if (currentFace->verticesVectorCount != 3) return;
+
+  if(currentFace->verticesVector[0]*4 >drawingModel->verticesVectorSize *4)
+  {
+    std::cerr<<"Fatal Error! overflow! verticesVectorSize is "<<drawingModel->verticesVectorSize<<
+               ", desire pos is "<<currentFace->verticesVector[0]*4 + 0<<std::endl;
+    return;
+  }
 
   size_t i;
   size_t index;
@@ -461,6 +467,13 @@ void DrawingEngine::drawFaceFilled(ImageRender *imageRender, ModelFace* currentF
 void DrawingEngine::drawFaceFilled(ImageUChar *imageRender, ModelFace* currentFace, ModelH* drawingModel, int objectId, VBYTE color, VINT meshId)
 {
   if (currentFace->verticesVectorCount != 3) return;
+
+  if(currentFace->verticesVector[0]*4 >drawingModel->verticesVectorSize *4)
+  {
+    std::cerr<<"Fatal Error! overflow! verticesVectorSize is "<<drawingModel->verticesVectorSize<<
+               ", desire pos is "<<currentFace->verticesVector[0]*4 + 0<<std::endl;
+    return;
+  }
 
   size_t i, index;
   VFLOAT dx1, dx2, dx3, dxa, dxb;
