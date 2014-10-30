@@ -167,7 +167,7 @@ int Model::createFromMesh(aiMesh* pMesh)
   this->groups.push_back(group);
 
   // ---------------------------------------------------------------------------
-  // init vertex
+  // init vertices
   for(unsigned int i=0; i!=pMesh->mNumVertices; i++)
   {
     vertices.push_back(ModelVertex(pMesh->mVertices[i].x,
