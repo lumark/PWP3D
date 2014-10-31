@@ -127,7 +127,7 @@ int main(void)
 
   std::cout<<"[App] Finish Rendered object initial pose."<<std::endl;
 
-  for (i=0; i<1; i++)
+  for (i=0; i<4; i++)
   {
     switch (i)
     {
@@ -144,8 +144,8 @@ int main(void)
       iterConfig->useCUDARender = false;
       break;
     case 3:
-      iterConfig->useCUDAEF = true;
-      iterConfig->useCUDARender = true;
+      iterConfig->useCUDAEF = false;
+      iterConfig->useCUDARender = false;
       break;
     }
 
