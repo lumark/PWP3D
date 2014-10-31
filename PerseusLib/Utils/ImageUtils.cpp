@@ -92,26 +92,26 @@ void ImageUtils::LoadImageFromFile(ImageUChar4* image, char* fileName)
 
 void ImageUtils::LoadImageFromFile(ImageUChar* image, char* fileName, int fixedValue)
 {
-	ImageUChar4* newImage = new ImageUChar4(image->width, image->height, false);
-	this->LoadImageFromFile(newImage, fileName);
-  this->Copy(newImage, image, fixedValue);
-	delete newImage;
+  ImageUChar4* TempImage = new ImageUChar4(image->width, image->height, false);
+  this->LoadImageFromFile(TempImage, fileName);
+  this->Copy(TempImage, image, fixedValue);
+  delete TempImage;
 }
 
 void ImageUtils::LoadImageFromCVMat(ImageUChar4* image, cv::Mat& rMat8UC4)
 {
-  ImageUChar4* newImage = new ImageUChar4(image->width, image->height, false);
-  memcpy(newImage->pixels, rMat8UC4.data,  sizeof(unsigned char) * 4 * image->width * image->height);
-  this->Copy(newImage, image);
-  delete newImage;
+  ImageUChar4* TempImage = new ImageUChar4(image->width, image->height, false);
+  memcpy(TempImage->pixels, rMat8UC4.data,  sizeof(unsigned char) * 4 * image->width * image->height);
+  this->Copy(TempImage, image);
+  delete TempImage;
 }
 
 void ImageUtils::LoadImageFromCVMat(ImageUChar* image, cv::Mat& rMat8U)
 {
-  ImageUChar* newImage = new ImageUChar(image->width, image->height, false);
-  memcpy(newImage->pixels, rMat8U.data,  sizeof(unsigned char) * image->width * image->height);
-  this->Copy(newImage, image);
-  delete newImage;
+  ImageUChar* TempImage = new ImageUChar(image->width, image->height, false);
+  memcpy(TempImage->pixels, rMat8U.data,  sizeof(unsigned char) * image->width * image->height);
+  this->Copy(TempImage, image);
+  delete TempImage;
 }
 
 void ImageUtils::Copy(ImageUChar4 *src, ImageUChar4* dst) { memcpy(dst->pixels, src->pixels, src->width * src->height * sizeof(PixelUCHAR4)); }

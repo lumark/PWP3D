@@ -70,6 +70,7 @@ void HistogramEngine::BuildHistogramVarBin(HistogramVarBin *histogram, ImageUCha
 		else 
 			histogram->AddPoint(0, 1, pixel.x, pixel.y, pixel.z, i, j); 
 	}
+  printf("BuildHistogramVarBin success.\n");
 }
 
 void HistogramEngine::BuildHistogramVarBin(HistogramVarBin *histogram, ImageUChar *mask, ImageUChar *videoMask, ImageUChar4* image, int objectId)

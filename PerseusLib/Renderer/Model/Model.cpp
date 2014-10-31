@@ -134,7 +134,7 @@ int Model::createFromFile(FILE *file)
 
   j = 0;
   verticesVector = new VFLOAT[vertices.size()*4];
-  printf("init verticeVector size: %d \n", vertices.size()*4 );
+
   this->minZ = vertices[0].vector3d.z;
   for (i=0; (size_t)i < vertices.size(); i++ )
   {
@@ -176,13 +176,14 @@ int Model::createFromMesh(aiMesh* pMesh)
   }
 
   // ---------------------------------------------------------------------------
-  // init face
+  // init face. When reading face from mesh, we need to do v instead of v-1
+  // which is difference from init face from file process.
   for(unsigned int i=0; i!=pMesh->mNumFaces; i++)
   {
     face = new ModelFace();
     for(unsigned int j=0; j!= pMesh->mFaces[i].mNumIndices; j++)
     {
-      face->vertices.push_back( pMesh->mFaces[i].mIndices[j] -1);
+      face->vertices.push_back( pMesh->mFaces[i].mIndices[j]);
     }
 
     face->verticesVectorCount = face->vertices.size();
@@ -288,6 +289,11 @@ void Model::ToModelHInit(ModelH* newModel)
     {
       for (k=0; k<3; k++)
       {
+        if(faceId * 4 + k > faceCount * 4 )
+        {
+          printf("error! overflow! Req: %d, Max %d;\n", faceId * 4 + k, faceCount * 4);
+        }
+
         vb[faceId * 4 + k].x = this->vertices[currentGroup->faces[j]->vertices[k]].vector3d.x;
         vb[faceId * 4 + k].y = this->vertices[currentGroup->faces[j]->vertices[k]].vector3d.y;
         vb[faceId * 4 + k].z = this->vertices[currentGroup->faces[j]->vertices[k]].vector3d.z;

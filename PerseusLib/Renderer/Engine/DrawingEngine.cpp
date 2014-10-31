@@ -30,7 +30,7 @@ inline T max3(T t1, T t2, T t3)
 
 void DrawingEngine::drawWireframe(ImageUChar* imageWireframe, ModelH* drawingModel, int* roiGenerated)
 {
-  std::cout<<"[DrawingEngine/drawWireframe] start. group num is "<<drawingModel->groups->size()<<endl;
+  //  std::cout<<"[DrawingEngine/drawWireframe] start. group num is "<<drawingModel->groups->size()<<endl;
   size_t i, j;
 
   int localExtrems[4];
@@ -72,7 +72,7 @@ void DrawingEngine::drawWireframe(ImageUChar* imageWireframe, ModelH* drawingMod
 
   this->drawFaceEdges(imageWireframe, currentFace, drawingModel, currentColor, localExtrems);
 
-  std::cout<<"[DrawingEngine/drawWireframe] Finish "<<endl;
+  //  std::cout<<"[DrawingEngine/drawWireframe] Finish "<<endl;
 }
 
 void DrawingEngine::drawFilled(ImageRender* imageRender, ModelH* drawingModel, int objectId)
@@ -292,7 +292,7 @@ void DrawingEngine::drawFaceEdges(ImageUChar *image, ModelFace* currentFace, Mod
     return;
   }
 
-  if(currentFace->verticesVector[0]*4 >drawingModel->verticesVectorSize *4)
+  if(currentFace->verticesVector[0]*4 > static_cast<int>(drawingModel->verticesVectorSize) *4)
   {
     std::cerr<<"Fatal Error! overflow! verticesVectorSize is "<<drawingModel->verticesVectorSize<<
                ", desire pos is "<<currentFace->verticesVector[0]*4 + 0<<std::endl;
@@ -341,7 +341,7 @@ void DrawingEngine::drawFaceFilled(ImageRender *imageRender, ModelFace* currentF
 {
   if (currentFace->verticesVectorCount != 3) return;
 
-  if(currentFace->verticesVector[0]*4 >drawingModel->verticesVectorSize *4)
+  if(currentFace->verticesVector[0]*4 > static_cast<int>(drawingModel->verticesVectorSize) *4)
   {
     std::cerr<<"Fatal Error! overflow! verticesVectorSize is "<<drawingModel->verticesVectorSize<<
                ", desire pos is "<<currentFace->verticesVector[0]*4 + 0<<std::endl;
