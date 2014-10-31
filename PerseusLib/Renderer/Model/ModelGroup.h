@@ -8,18 +8,18 @@
 
 namespace Renderer
 {
-	namespace Model3D
-	{
-		class ModelGroup
-		{
-		public:
+namespace Model3D
+{
+class ModelGroup
+{
+public:
 
-			std::vector<ModelFace*> faces;
-			char* groupName;
+  std::vector<ModelFace*> faces;
+  char* groupName;
 
-			ModelGroup(char* groupName);
-			ModelGroup(void);
-			~ModelGroup(void);
-		};
-	}
+  ModelGroup(char* groupName);
+  ModelGroup(void);
+  ~ModelGroup(void);
+};
+}
 }

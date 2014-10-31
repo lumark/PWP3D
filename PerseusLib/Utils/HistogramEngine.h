@@ -17,33 +17,33 @@ using namespace Renderer::Engine;
 
 namespace PerseusLib
 {
-	namespace Utils
-	{
-		class HistogramEngine
-		{
-		private:
-			static HistogramEngine* instance;
+namespace Utils
+{
+class HistogramEngine
+{
+private:
+  static HistogramEngine* instance;
 
-			void NormaliseHistogramVarBin(HistogramVarBin *histogram);
- 
-			void BuildHistogramVarBin(HistogramVarBin *histogram, ImageUChar *mask, ImageUChar4 *image, int objectId);
-			void BuildHistogramVarBin(HistogramVarBin *histogram, ImageUChar *mask, ImageUChar *videoMask, ImageUChar4* image, int objectId);
-		public:
-			static HistogramEngine* Instance(void) {
-				if (instance == NULL) instance = new HistogramEngine();
-				return instance;
-			}
+  void NormaliseHistogramVarBin(HistogramVarBin *histogram);
 
-			void UpdateVarBinHistogram(Object3D* object, View3D* view, ImageUChar4* originalImage, ImageUChar* mask);
-			void UpdateVarBinHistogram(Object3D* object, View3D* view, ImageUChar4* originalImage, ImageUChar* mask, ImageUChar* videoMask);
-			void UpdateVarBinHistogram(Object3D* object, View3D* view, ImageUChar4* originalImage, Pose3D* pose);
+  void BuildHistogramVarBin(HistogramVarBin *histogram, ImageUChar *mask, ImageUChar4 *image, int objectId);
+  void BuildHistogramVarBin(HistogramVarBin *histogram, ImageUChar *mask, ImageUChar *videoMask, ImageUChar4* image, int objectId);
+public:
+  static HistogramEngine* Instance(void) {
+    if (instance == NULL) instance = new HistogramEngine();
+    return instance;
+  }
 
-			void SetVarBinHistogram(Object3D* object, View3D* view, float2 *normalised);
+  void UpdateVarBinHistogram(Object3D* object, View3D* view, ImageUChar4* originalImage, ImageUChar* mask);
+  void UpdateVarBinHistogram(Object3D* object, View3D* view, ImageUChar4* originalImage, ImageUChar* mask, ImageUChar* videoMask);
+  void UpdateVarBinHistogram(Object3D* object, View3D* view, ImageUChar4* originalImage, Pose3D* pose);
 
-			void MergeHistograms(Object3D** objects, int objectCount, View3D** views, int viewCount, float mergeAlphaForeground, float mergeAlphaBackground);
+  void SetVarBinHistogram(Object3D* object, View3D* view, float2 *normalised);
 
-			HistogramEngine(void);
-			~HistogramEngine(void);
-		};
-	}
+  void MergeHistograms(Object3D** objects, int objectCount, View3D** views, int viewCount, float mergeAlphaForeground, float mergeAlphaBackground);
+
+  HistogramEngine(void);
+  ~HistogramEngine(void);
+};
+}
 }

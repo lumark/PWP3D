@@ -14,11 +14,11 @@
 
 inline void __perseusSafeCall( cudaError err, const char *file, const int line )
 {
-    if( cudaSuccess != err) {
-		printf("%s(%i) : cudaSafeCall() Runtime API error : %s.\n",
-                file, line, cudaGetErrorString(err) );
-        exit(-1);
-    }
+  if( cudaSuccess != err) {
+    printf("%s(%i) : cudaSafeCall() Runtime API error : %s.\n",
+           file, line, cudaGetErrorString(err) );
+    exit(-1);
+  }
 }
 
 #endif
@@ -29,20 +29,20 @@ inline void __perseusSafeCall( cudaError err, const char *file, const int line )
 
 #ifndef EXECUTYIN512THREADS
 #define EXECUTYIN512THREADS(counter, startPoint, func, params) \
-	startPoint = 0;\
-	if (counter / 512 > 0) \
-	{ \
-		while (counter / 512 > 0) \
-		{ \
-		func<<<1, 512>>> ## params; \
-			startPoint += 512; \
-			counter -= 512; \
-		} \
-		if (counter != 0) \
-		func<<<1, counter>>> ## params; \
-	} \
-	else \
-	func<<<1, counter>>> ## params;
+  startPoint = 0;\
+  if (counter / 512 > 0) \
+{ \
+  while (counter / 512 > 0) \
+{ \
+  func<<<1, 512>>> ## params; \
+  startPoint += 512; \
+  counter -= 512; \
+  } \
+  if (counter != 0) \
+  func<<<1, counter>>> ## params; \
+  } \
+  else \
+  func<<<1, counter>>> ## params;
 #endif
 
 #ifndef WARP_SIZE

@@ -15,80 +15,80 @@ using namespace Renderer::Primitives;
 
 namespace Renderer
 {
-	namespace Objects
-	{
-		class Renderer3DObject
-		{
-		public:
-			//contains R,t for object for each view
-			ObjectCoordinateTransform** objectCoordinateTransform;
+namespace Objects
+{
+class Renderer3DObject
+{
+public:
+  //contains R,t for object for each view
+  ObjectCoordinateTransform** objectCoordinateTransform;
 
-			int objectId;
-			int viewCount;
+  int objectId;
+  int viewCount;
 
-			Model* model;
-			ModelH** drawingModel;
+  Model* model;
+  ModelH** drawingModel;
 
-			Renderer3DObject(std::string fileName, int viewCount, int objectId) 
-			{
-        std::cout<<"[Renderer3DObject] Initializing.."<<std::endl;
-				this->viewCount = viewCount;
-				this->objectId = objectId;
+  Renderer3DObject(std::string fileName, int viewCount, int objectId)
+  {
+    std::cout<<"[Renderer3DObject] Initializing.."<<std::endl;
+    this->viewCount = viewCount;
+    this->objectId = objectId;
 
-				objectCoordinateTransform = new ObjectCoordinateTransform*[viewCount];
+    objectCoordinateTransform = new ObjectCoordinateTransform*[viewCount];
 
-				for (int i=0; i<viewCount; i++) objectCoordinateTransform[i] = new ObjectCoordinateTransform();
+    for (int i=0; i<viewCount; i++) objectCoordinateTransform[i] = new ObjectCoordinateTransform();
 
-        model = new Model( fileName );
-				drawingModel = new ModelH*[viewCount];
+    model = new Model( fileName );
+    drawingModel = new ModelH*[viewCount];
 
-        printf("viewCount is %d\n", viewCount);
-				for (int i=0; i<viewCount; i++)
-				{
-					drawingModel[i] = new ModelH();
-					model->ToModelHInit(drawingModel[i]);
-				}
-			}
+    printf("viewCount is %d\n", viewCount);
+    for (int i=0; i<viewCount; i++)
+    {
+      drawingModel[i] = new ModelH();
+      model->ToModelHInit(drawingModel[i]);
+    }
+  }
 
-      Renderer3DObject(aiMesh* pMesh, int viewCount, int objectId)
-      {
-        std::cout<<"[Renderer3DObject] Initializing.."<<std::endl;
-        this->viewCount = viewCount;
-        this->objectId = objectId;
+  Renderer3DObject(aiMesh* pMesh, int viewCount, int objectId)
+  {
+    std::cout<<"[Renderer3DObject] Initializing.."<<std::endl;
+    this->viewCount = viewCount;
+    this->objectId = objectId;
 
-        objectCoordinateTransform = new ObjectCoordinateTransform*[viewCount];
+    objectCoordinateTransform = new ObjectCoordinateTransform*[viewCount];
 
-        for (int i=0; i<viewCount; i++) objectCoordinateTransform[i] = new ObjectCoordinateTransform();
+    for (int i=0; i<viewCount; i++) objectCoordinateTransform[i] = new ObjectCoordinateTransform();
 
-        model = new Model( pMesh );
-        drawingModel = new ModelH*[viewCount];
+    model = new Model( pMesh );
+    drawingModel = new ModelH*[viewCount];
 
-        printf("viewCount is %d\n", viewCount);
-        for (int i=0; i<viewCount; i++)
-        {
-          drawingModel[i] = new ModelH();
-          model->ToModelHInit(drawingModel[i]);
-        }
-      }
+    printf("viewCount is %d\n", viewCount);
+    for (int i=0; i<viewCount; i++)
+    {
+      drawingModel[i] = new ModelH();
+      model->ToModelHInit(drawingModel[i]);
+    }
+  }
 
 
-			void GetModelViewMatrix(float* modelViewMatrix, int viewId)
-      {
-        this->objectCoordinateTransform[viewId]->GetModelViewMatrix(modelViewMatrix);
-      }
+  void GetModelViewMatrix(float* modelViewMatrix, int viewId)
+  {
+    this->objectCoordinateTransform[viewId]->GetModelViewMatrix(modelViewMatrix);
+  }
 
-			~Renderer3DObject(void) {
-				delete model;
+  ~Renderer3DObject(void) {
+    delete model;
 
-				for (int i=0; i<viewCount; i++)
-				{
-					delete objectCoordinateTransform[i];
-					delete drawingModel[i];
-				}
+    for (int i=0; i<viewCount; i++)
+    {
+      delete objectCoordinateTransform[i];
+      delete drawingModel[i];
+    }
 
-				delete objectCoordinateTransform;
-				delete drawingModel;
-			}
-		};
-	}
+    delete objectCoordinateTransform;
+    delete drawingModel;
+  }
+};
+}
 }

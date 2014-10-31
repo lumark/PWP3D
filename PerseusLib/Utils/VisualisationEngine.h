@@ -13,30 +13,30 @@ using namespace Renderer::Engine;
 
 namespace PerseusLib
 {
-	namespace Utils
-	{
-		class VisualisationEngine
-		{
-		private:
-			static VisualisationEngine* instance;
+namespace Utils
+{
+class VisualisationEngine
+{
+private:
+  static VisualisationEngine* instance;
 
-			ImageUChar *bufferGrey;
+  ImageUChar *bufferGrey;
 
-			void computePosteriors(Object3D* object, View3D* view);
-			
-		public:
-			static VisualisationEngine* Instance(void) {
-				if (instance == NULL) instance = new VisualisationEngine();
-				return instance;
-			}
+  void computePosteriors(Object3D* object, View3D* view);
 
-			void Initialise(int width, int height);
-			void Shutdown();
+public:
+  static VisualisationEngine* Instance(void) {
+    if (instance == NULL) instance = new VisualisationEngine();
+    return instance;
+  }
 
-			void GetImage(ImageUChar4* image, GetImageType getImageType, Object3D* object, View3D* view, Pose3D *pose);
+  void Initialise(int width, int height);
+  void Shutdown();
 
-			VisualisationEngine(void) { }
-			~VisualisationEngine(void) { }
-		};
-	}
+  void GetImage(ImageUChar4* image, GetImageType getImageType, Object3D* object, View3D* view, Pose3D *pose);
+
+  VisualisationEngine(void) { }
+  ~VisualisationEngine(void) { }
+};
+}
 }

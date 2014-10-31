@@ -9,27 +9,27 @@
 
 namespace Renderer
 {
-	namespace Model3D
-	{
-		class ModelH
-		{
-		public:
-			bool isAllocated;
-			std::vector<ModelGroup*>* groups;
-			
-			VFLOAT *verticesVector;
-			VFLOAT *verticesVectorPreP;
-			VFLOAT *originalVerticesVector;
-			size_t verticesVectorSize;
+namespace Model3D
+{
+class ModelH
+{
+public:
+  bool isAllocated;
+  std::vector<ModelGroup*>* groups;
 
-			float* verticesGPU, *verticesGPUBuff;
-			
-			VFLOAT minZ;
+  VFLOAT *verticesVector;
+  VFLOAT *verticesVectorPreP;
+  VFLOAT *originalVerticesVector;
+  size_t verticesVectorSize;
 
-			int faceCount;
+  float* verticesGPU, *verticesGPUBuff;
 
-			ModelH(void);
-			~ModelH(void);
-		};
-	}
+  VFLOAT minZ;
+
+  int faceCount;
+
+  ModelH(void);
+  ~ModelH(void);
+};
+}
 }

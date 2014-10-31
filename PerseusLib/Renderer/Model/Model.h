@@ -13,37 +13,37 @@ using namespace Renderer::Model3D;
 
 namespace Renderer
 {
-	namespace Model3D
-	{
+namespace Model3D
+{
 
-  class Model
-		{
-		private:
-			int createFromFile(FILE *file);
-      int createFromMesh(aiMesh* pMesh);
+class Model
+{
+private:
+  int createFromFile(FILE *file);
+  int createFromMesh(aiMesh* pMesh);
 
-		public:
-			std::vector<ModelGroup*> groups;
-			std::vector<ModelVertex> vertices;
+public:
+  std::vector<ModelGroup*> groups;
+  std::vector<ModelVertex> vertices;
 
-			VFLOAT* verticesVector;
+  VFLOAT* verticesVector;
 
-			VFLOAT minZ;
+  VFLOAT minZ;
 
-			int faceCount;
+  int faceCount;
 
-			Model(void);
-			Model(char* fileName);
-      Model(std::string fileName);
-      Model(aiMesh* pMesh);
-      Model(FILE* f);
+  Model(void);
+  Model(char* fileName);
+  Model(std::string fileName);
+  Model(aiMesh* pMesh);
+  Model(FILE* f);
 
-			Model* Clone();
-			
-			void ToModelH(ModelH* newModel);
-			void ToModelHInit(ModelH* newModel);
+  Model* Clone();
 
-			~Model(void);
-		};
-	}
+  void ToModelH(ModelH* newModel);
+  void ToModelHInit(ModelH* newModel);
+
+  ~Model(void);
+};
+}
 }

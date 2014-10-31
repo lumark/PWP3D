@@ -6,17 +6,17 @@ using namespace Renderer::Model3D;
 
 ModelH::ModelH(void)
 {
-	isAllocated = false;
+  isAllocated = false;
 }
 
 ModelH::~ModelH(void)
 {
-	if (isAllocated)
-	{
-		delete verticesVector; 
-		delete verticesVectorPreP;
-		delete verticesGPUBuff;
-	
-		perseusSafeCall(cudaFree(verticesGPU));
-	}
+  if (isAllocated)
+  {
+    delete verticesVector;
+    delete verticesVectorPreP;
+    delete verticesGPUBuff;
+
+    perseusSafeCall(cudaFree(verticesGPU));
+  }
 }

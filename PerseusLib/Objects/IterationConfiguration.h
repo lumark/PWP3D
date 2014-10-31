@@ -21,39 +21,39 @@ using namespace PerseusLib::Objects;
 
 namespace PerseusLib
 {
-	namespace Objects
-	{
-		class IterationConfiguration
-		{
-		public:
-			int iterCount;
+namespace Objects
+{
+class IterationConfiguration
+{
+public:
+  int iterCount;
 
-			int width;
-			int height;
+  int width;
+  int height;
 
-			int levelSetBandSize;
+  int levelSetBandSize;
 
-			int iterObjectCount[PERSEUS_MAX_VIEW_COUNT];
-			int iterViewCount;
+  int iterObjectCount[PERSEUS_MAX_VIEW_COUNT];
+  int iterViewCount;
 
-			int iterObjectIds[PERSEUS_MAX_VIEW_COUNT][PERSEUS_MAX_OBJECT_COUNT];
-			int iterViewIds[PERSEUS_MAX_VIEW_COUNT];
+  int iterObjectIds[PERSEUS_MAX_VIEW_COUNT][PERSEUS_MAX_OBJECT_COUNT];
+  int iterViewIds[PERSEUS_MAX_VIEW_COUNT];
 
-			IterationTarget iterTarget[PERSEUS_MAX_ITER_COUNT];
+  IterationTarget iterTarget[PERSEUS_MAX_ITER_COUNT];
 
-			bool useCUDARender;
-			bool useCUDAEF;
+  bool useCUDARender;
+  bool useCUDAEF;
 
-			IterationConfiguration(void) { 
-				int i;
-				iterViewCount = 0; iterCount = 1;
-				for (i=0; i<PERSEUS_MAX_VIEW_COUNT; i++) iterObjectCount[i] = 0;
-				for (i=0; i<PERSEUS_MAX_ITER_COUNT; i++) iterTarget[i] = ITERATIONTARGET_BOTH;
-				useCUDARender = false;
-				useCUDAEF = false;
-			}
-			~IterationConfiguration(void) { 
-			} 
-		};
-	}
+  IterationConfiguration(void) {
+    int i;
+    iterViewCount = 0; iterCount = 1;
+    for (i=0; i<PERSEUS_MAX_VIEW_COUNT; i++) iterObjectCount[i] = 0;
+    for (i=0; i<PERSEUS_MAX_ITER_COUNT; i++) iterTarget[i] = ITERATIONTARGET_BOTH;
+    useCUDARender = false;
+    useCUDAEF = false;
+  }
+  ~IterationConfiguration(void) {
+  }
+};
+}
 }

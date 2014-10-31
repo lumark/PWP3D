@@ -15,52 +15,52 @@ using namespace PerseusLib::Utils;
 
 namespace PerseusLib
 {
-	namespace Optimiser
-	{
-		class OptimisationEngine
-		{
-		private:
-			static OptimisationEngine* instance;
+namespace Optimiser
+{
+class OptimisationEngine
+{
+private:
+  static OptimisationEngine* instance;
 
-			IEnergyFunction *energyFunction;
-			IEnergyFunction *energyFunction_standard;
+  IEnergyFunction *energyFunction;
+  IEnergyFunction *energyFunction_standard;
 
-			IterationConfiguration *iterConfig;
+  IterationConfiguration *iterConfig;
 
-			int viewCount;
-			int *objectCount;
-			Object3D*** objects;
-			View3D** views;
-			
-			StepSize3D **stepSizes;
+  int viewCount;
+  int *objectCount;
+  Object3D*** objects;
+  View3D** views;
 
-			bool HasConverged();
+  StepSize3D **stepSizes;
 
-			void SetPresetStepSizes();
+  bool HasConverged();
 
-			void NormaliseRotation();
+  void SetPresetStepSizes();
 
-			void DescendWithGradient(StepSize3D *stepSize, IterationConfiguration *iterConfig);
-			void AdvanceTranslation(Object3D* object, View3D* view, StepSize3D* stepSize);
-			void AdvanceRotation(Object3D* object, View3D* view, StepSize3D* stepSize);
+  void NormaliseRotation();
 
-			void RunOneMultiIteration(IterationConfiguration* iterConfig);
-			void RunOneSingleIteration(StepSize3D* stepSize, IterationConfiguration* iterConfig);
+  void DescendWithGradient(StepSize3D *stepSize, IterationConfiguration *iterConfig);
+  void AdvanceTranslation(Object3D* object, View3D* view, StepSize3D* stepSize);
+  void AdvanceRotation(Object3D* object, View3D* view, StepSize3D* stepSize);
 
-		public:
-			static OptimisationEngine* Instance(void) {
-				if (instance == NULL) instance = new OptimisationEngine();
-				return instance;
-			}
+  void RunOneMultiIteration(IterationConfiguration* iterConfig);
+  void RunOneSingleIteration(StepSize3D* stepSize, IterationConfiguration* iterConfig);
 
-			void Initialise(int width, int heigh);
-			void Shutdown();
+public:
+  static OptimisationEngine* Instance(void) {
+    if (instance == NULL) instance = new OptimisationEngine();
+    return instance;
+  }
 
-			void RegisterViewImage(View3D *view, ImageUChar4* image);
-			void Minimise(Object3D **objects, View3D **views, IterationConfiguration *iterConfig);
+  void Initialise(int width, int heigh);
+  void Shutdown();
 
-			OptimisationEngine(void);
-			~OptimisationEngine(void);
-		};
-	}
+  void RegisterViewImage(View3D *view, ImageUChar4* image);
+  void Minimise(Object3D **objects, View3D **views, IterationConfiguration *iterConfig);
+
+  OptimisationEngine(void);
+  ~OptimisationEngine(void);
+};
+}
 }
