@@ -22,6 +22,7 @@ public:
     numberOfOptimizedVariables = 7;
     //        printf("Finish init Object3DParams, noVarBinHistograms %d \n", noVarBinHistogramBins);
   }
+
   ~Object3DParams(void)
   {
 

@@ -166,7 +166,6 @@ public:
 
   void UpdateGPUFromCPU()
   {
-    printf("update GPUFromCPU (%f,%f,%f); size %d\n", normalised[0].x, normalised[1].x, normalised[2].x, fullHistSize);
     cudaMemcpy(normalisedGPU, normalised, sizeof(float2) * fullHistSize, cudaMemcpyHostToDevice);
   }
 

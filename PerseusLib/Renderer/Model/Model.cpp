@@ -256,7 +256,6 @@ void Model::ToModelH(ModelH* newModel)
 
 void Model::ToModelHInit(ModelH* newModel)
 {
-  std::cout<<"[ToModelHInit] start"<<std::endl;
   int i, j, k;
 
   newModel->isAllocated = true;
@@ -267,8 +266,6 @@ void Model::ToModelHInit(ModelH* newModel)
   newModel->verticesVector = new VFLOAT[newModel->verticesVectorSize * 4];
   newModel->verticesVectorPreP = new VFLOAT[newModel->verticesVectorSize * 4];
   newModel->minZ = this->minZ;
-
-  printf(" Groups size is: %d\n", static_cast<int>(newModel->groups->size()));
 
   if(newModel->groups->size()<=0)
   {
