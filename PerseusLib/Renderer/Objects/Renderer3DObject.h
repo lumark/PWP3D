@@ -4,7 +4,6 @@
 #include <PerseusLib/Others/PerseusLibDefines.h>
 #include <PerseusLib/Renderer/Model/Model.h>
 #include <PerseusLib/Renderer/Model/ModelH.h>
-
 #include <PerseusLib/Renderer/Transforms/ObjectCoordinateTransform.h>
 
 using namespace Renderer::Model3D;
@@ -31,7 +30,6 @@ public:
 
   Renderer3DObject(std::string fileName, int viewCount, int objectId)
   {
-    std::cout<<"[Renderer3DObject] Initializing.."<<std::endl;
     this->viewCount = viewCount;
     this->objectId = objectId;
 
@@ -42,7 +40,6 @@ public:
     model = new Model( fileName );
     drawingModel = new ModelH*[viewCount];
 
-    printf("viewCount is %d\n", viewCount);
     for (int i=0; i<viewCount; i++)
     {
       drawingModel[i] = new ModelH();
@@ -52,7 +49,6 @@ public:
 
   Renderer3DObject(aiMesh* pMesh, int viewCount, int objectId)
   {
-    std::cout<<"[Renderer3DObject] Initializing.."<<std::endl;
     this->viewCount = viewCount;
     this->objectId = objectId;
 
@@ -63,14 +59,12 @@ public:
     model = new Model( pMesh );
     drawingModel = new ModelH*[viewCount];
 
-    printf("viewCount is %d\n", viewCount);
     for (int i=0; i<viewCount; i++)
     {
       drawingModel[i] = new ModelH();
       model->ToModelHInit(drawingModel[i]);
     }
   }
-
 
   void GetModelViewMatrix(float* modelViewMatrix, int viewId)
   {

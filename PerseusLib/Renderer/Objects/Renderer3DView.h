@@ -1,9 +1,7 @@
 #pragma once
 
 #include <PerseusLib/Others/PerseusLibDefines.h>
-
 #include <PerseusLib/Utils/ImageUtils.h>
-
 #include <PerseusLib/Renderer/Primitives/Camera3D.h>
 #include <PerseusLib/Renderer/Transforms/CameraCoordinateTransform.h>
 
@@ -43,6 +41,7 @@ public:
     this->camera3D = camera;
     cameraCoordinateTransform = new CameraCoordinateTransform();
     printf("[Renderer3DView] Set zNear %f, zFar %f; \n", zNear, zFar);
+
     cameraCoordinateTransform->SetProjectionMatrix(camera, zNear, zFar);
 
     this->viewId = viewId;

@@ -39,7 +39,6 @@ void OptimisationEngine::Shutdown()
 
   shutdownCUDA();
 
-  printf("size stepsize is %d\n", sizeof(stepSizes));
   for (i=0; i<8; i++) delete stepSizes[i];
 
   delete objectCount;
