@@ -106,7 +106,10 @@ public:
     q.CopyInto(this);
   }
 
-  void SetFromEuler(VFLOAT rotationX, VFLOAT rotationY, VFLOAT rotationZ) { FromEuler(rotationX, rotationY, rotationZ); }
+  void SetFromEuler(VFLOAT rotationX, VFLOAT rotationY, VFLOAT rotationZ)
+  {
+    FromEuler(rotationX, rotationY, rotationZ);
+  }
 
   void Normalize()
   {

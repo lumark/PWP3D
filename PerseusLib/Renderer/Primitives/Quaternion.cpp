@@ -126,7 +126,9 @@ void Quaternion::matrixToOpenGLMatrix(VFLOAT m[][4], VFLOAT* M)
   }
 }
 
-void Quaternion::GetDerivatives(VFLOAT* derivatives, VFLOAT* xUnprojected, VFLOAT* xSource, VFLOAT* projectionParams, VFLOAT* otherInfo)
+void Quaternion::GetDerivatives(VFLOAT* derivatives, VFLOAT* xUnprojected,
+                                VFLOAT* xSource, VFLOAT* projectionParams,
+                                VFLOAT* otherInfo)
 {
   VFLOAT qx2, qy2, qz2, qw2;
   VFLOAT precalcX, precalcY, precalcXY;

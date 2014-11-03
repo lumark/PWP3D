@@ -98,6 +98,7 @@ int main(void)
   objects[objectIdx]->stepSize[viewIdx] = new StepSize3D(0.2f, 0.5f, 0.5f, 10.0f);
 
   //initial pose per object and view
+  // Notice the input pose here is angle, not radians for the rotation part
   //  objects[objectIdx]->initialPose[viewIdx]->SetFrom(
   //        -1.98f, -2.90f, 37.47f, -40.90f, -207.77f, 27.48f);
 
