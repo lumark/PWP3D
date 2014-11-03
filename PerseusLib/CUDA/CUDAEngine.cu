@@ -11,7 +11,7 @@ CUDAData *cudaData;
 
 void initialiseCUDA(int width, int height, float* heavisideFunction, int heavisideFunctionSize)
 {
-  printf("init cuda, heaviside Function size is %d\n", heavisideFunctionSize);
+  //  printf("init cuda, heaviside Function size is %d\n", heavisideFunctionSize);
   cudaData = new CUDAData();
 
   initialiseRenderer(width, height);

@@ -78,7 +78,8 @@ public:
 
   Object3D(int objectId, int viewCount, char *objectFileName, int width, int height, Object3DParams* objectParams = NULL)
   {
-    std::cout<<"[Object3D] Initializing.."<<std::endl;
+    //    std::cout<<"[Object3D] Initializing.."<<std::endl;
+
     if (objectParams == NULL) {
       objectParams = new Object3DParams();
     }
@@ -159,12 +160,12 @@ public:
       imagePosteriorsPFPB[i] = new ImageFloat(width, height, false);
     }
 
-    std::cout<<"[Object3D] finish init object.."<<std::endl;
+    //    std::cout<<"[Object3D] finish init object.."<<std::endl;
   }
 
   Object3D(int objectId, int viewCount, aiMesh* pMesh, int width, int height, Object3DParams* objectParams = NULL)
   {
-    std::cout<<"[Object3D] Initializing.."<<std::endl;
+    //    std::cout<<"[Object3D] Initializing.."<<std::endl;
     if (objectParams == NULL) {
       objectParams = new Object3DParams();
     }
@@ -245,7 +246,7 @@ public:
       imagePosteriorsPFPB[i] = new ImageFloat(width, height, false);
     }
 
-    std::cout<<"[Object3D] finish init object.."<<std::endl;
+    //    std::cout<<"[Object3D] finish init object.."<<std::endl;
   }
 
 
