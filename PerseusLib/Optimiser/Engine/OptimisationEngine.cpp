@@ -30,7 +30,6 @@ void OptimisationEngine::Initialise(int width, int height)
 
   initialiseCUDA(width, height, MathUtils::Instance()->heavisideFunction, MathUtils::Instance()->heavisideSize);
 
-  printf("[OptimisationEngine::Initialise] init cuda success.\n");
 }
 
 void OptimisationEngine::Shutdown()

@@ -518,9 +518,6 @@ void MathUtils::ReadAndAllocateHeaviside(int heavisideSize, char* fileName)
   this->heavisideSize = heavisideSize;
   heavisideFunction = new float[heavisideSize];
   FileUtils::Instance()->ReadFromFile(heavisideFunction, heavisideSize, fileName);
-
-  //  printf("[MathUtils::ReadAndAllocateHeaviside] Init heaviside function as (%f,%f,%f ..)\n",
-  //         heavisideFunction[0], heavisideFunction[1], heavisideFunction[2]);
 }
 
 void MathUtils::DeallocateHeaviside()
