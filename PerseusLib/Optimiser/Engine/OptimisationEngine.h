@@ -58,6 +58,7 @@ public:
 
   void RegisterViewImage(View3D *view, ImageUChar4* image);
   void Minimise(Object3D **objects, View3D **views, IterationConfiguration *iterConfig);
+  void MinimiseSingle(Object3D **objects, View3D **views, IterationConfiguration *iterConfig, int nIterNum);
 
   OptimisationEngine(void);
   ~OptimisationEngine(void);

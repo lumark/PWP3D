@@ -93,7 +93,44 @@ void OptimisationEngine::Minimise(Object3D **objects, View3D **views, IterationC
 
   energyFunction = energyFunction_standard;
 
-  for (iterIdx=0; iterIdx<iterConfig->iterCount; iterIdx++) this->RunOneMultiIteration(iterConfig);
+  for (iterIdx=0; iterIdx< iterConfig->iterCount; iterIdx++)
+  {
+    this->RunOneMultiIteration(iterConfig);
+  }
+}
+
+
+void OptimisationEngine::MinimiseSingle(Object3D **objects, View3D **views, IterationConfiguration *iterConfig, int nIterNum)
+{
+  int objectIdx, viewIdx, iterIdx;
+
+  this->iterConfig = iterConfig;
+
+  viewCount = iterConfig->iterViewCount;
+  for (viewIdx=0; viewIdx<viewCount; viewIdx++)
+  {
+    this->views[viewIdx] = views[iterConfig->iterViewIds[viewIdx]];
+    this->objectCount[viewIdx] = iterConfig->iterObjectCount[viewIdx];
+  }
+
+  for (viewIdx=0; viewIdx<viewCount; viewIdx++) for (objectIdx=0; objectIdx<objectCount[viewIdx]; objectIdx++)
+  {
+    this->objects[viewIdx][objectIdx] = objects[iterConfig->iterObjectIds[viewIdx][objectIdx]];
+    this->objects[viewIdx][objectIdx]->initialPose[viewIdx]->CopyInto(this->objects[viewIdx][objectIdx]->pose[viewIdx]);
+    this->objects[viewIdx][objectIdx]->UpdateRendererFromPose(views[viewIdx]);
+  }
+
+  energyFunction = energyFunction_standard;
+
+  for (iterIdx=0; iterIdx< iterConfig->iterCount; iterIdx++)
+  {
+    if(nIterNum >7 || nIterNum<0){
+      std::cout<<"fatal error! nIterNum must be from 0 to 7"<<std::endl;
+      exit(-1);
+    }
+
+    this->RunOneSingleIteration(stepSizes[nIterNum], iterConfig); if (this->HasConverged()) return;
+  }
 }
 
 void OptimisationEngine::RunOneMultiIteration(IterationConfiguration* iterConfig)
