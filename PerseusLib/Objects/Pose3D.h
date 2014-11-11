@@ -18,17 +18,12 @@ public:
 
   void SetFrom(float *pose, int poseSize)
   {
-    //        printf("[Pose3D/SetFrom] 1 \n");
-    //        printf("  pose is (%f,%f,%f,%f)\n", pose[0], pose[1], pose[2], pose[3]);
-
     if (poseSize == 4) this->SetFrom(pose[0], pose[1], pose[2], pose[3], 0.0f, 0.0f);
     if (poseSize == 6) this->SetFrom(pose[0], pose[1], pose[2], pose[3], pose[4], pose[5]);
     if (poseSize == 7) this->SetFrom(pose[0], pose[1], pose[2], pose[3], pose[4], pose[5], pose[6]);
   }
 
   void SetFrom(Pose3D *pose) {
-    //        printf("[Pose3D/SetFrom] 2 \n");
-
     this->translation->x = pose->translation->x;
     this->translation->y = pose->translation->y;
     this->translation->z = pose->translation->z;

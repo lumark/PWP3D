@@ -124,7 +124,7 @@ void EFStandard::GetFirstDerivativeValues_CPU_6DoF(Object3D ***objects, int *obj
 
           dfPPGeneric = dirac * (pYF - pYB) / (heaviside * (pYF - pYB) + pYB);
 
-          // run 1
+          // ------- run 1
           xProjected[0] = (float) 2 * (icX - view->renderView->view[0]) / view->renderView->view[2] - 1.0f;
           xProjected[1] = (float) 2 * (icY - view->renderView->view[1]) / view->renderView->view[3] - 1.0f;
           xProjected[2] = (float) 2 * ((float)object->imageRender[viewId]->imageZBuffer->pixels[icZ] / (float)MAX_INT) - 1.0f;
@@ -143,9 +143,12 @@ void EFStandard::GetFirstDerivativeValues_CPU_6DoF(Object3D ***objects, int *obj
           object->renderObject->objectCoordinateTransform[viewId]->rotation->GetDerivatives(dfPP + 3, xUnprojected, xUnrotated,
                                                                                             view->renderView->projectionParams.all, otherInfo);
 
-          for (k=0; k<7; k++) { dfPP[k] *= dfPPGeneric; dpose[k] += dfPP[k]; }
+          for (k=0; k<7; k++) {
+            dfPP[k] *= dfPPGeneric;
+            dpose[k] += dfPP[k];
+          }
 
-          // run 2
+          // -------- run 2
           xProjected[0] = (float) 2 * (icX - view->renderView->view[0]) / view->renderView->view[2] - 1.0f;
           xProjected[1] = (float) 2 * (icY - view->renderView->view[1]) / view->renderView->view[3] - 1.0f;
           xProjected[2] = (float) 2 * ((float)object->imageRender[viewId]->imageZBufferInverse->pixels[icZ] / (float)MAX_INT) - 1.0f;

@@ -249,7 +249,6 @@ public:
     //    std::cout<<"[Object3D] finish init object.."<<std::endl;
   }
 
-
   ~Object3D(void)
   {
     delete renderObject;
