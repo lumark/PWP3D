@@ -89,8 +89,10 @@ void EFStandard::GetFirstDerivativeValues_CPU_6DoF(Object3D ***objects, int *obj
 
     getProcessedDataDTSihluetteLSDXDY(object, view);
 
+    // init dpose to 0
     for (i=0; i<7; i++) dpose[i] = 0;
 
+    // for each pixel in the image
     for (j=0, idx=0; j<height; j++) for (i=0; i<width; idx++, i++)
     {
       if (dtPosY[idx] >= 0)// && view->videoMask->pixels[idx] > 128)
@@ -110,6 +112,8 @@ void EFStandard::GetFirstDerivativeValues_CPU_6DoF(Object3D ***objects, int *obj
             continue;
 
         nhidx = int(4096 + 512 * dtIdx);
+
+        // for a vaild pixel
         if (nhidx >= 0 && nhidx < MathUtils::Instance()->heavisideSize)
         {
           heaviside = MathUtils::Instance()->heavisideFunction[nhidx];
@@ -124,7 +128,7 @@ void EFStandard::GetFirstDerivativeValues_CPU_6DoF(Object3D ***objects, int *obj
 
           dfPPGeneric = dirac * (pYF - pYB) / (heaviside * (pYF - pYB) + pYB);
 
-          // ------- run 1
+          /// ------- run 1
           xProjected[0] = (float) 2 * (icX - view->renderView->view[0]) / view->renderView->view[2] - 1.0f;
           xProjected[1] = (float) 2 * (icY - view->renderView->view[1]) / view->renderView->view[3] - 1.0f;
           xProjected[2] = (float) 2 * ((float)object->imageRender[viewId]->imageZBuffer->pixels[icZ] / (float)MAX_INT) - 1.0f;
@@ -148,7 +152,7 @@ void EFStandard::GetFirstDerivativeValues_CPU_6DoF(Object3D ***objects, int *obj
             dpose[k] += dfPP[k];
           }
 
-          // -------- run 2
+          /// -------- run 2
           xProjected[0] = (float) 2 * (icX - view->renderView->view[0]) / view->renderView->view[2] - 1.0f;
           xProjected[1] = (float) 2 * (icY - view->renderView->view[1]) / view->renderView->view[3] - 1.0f;
           xProjected[2] = (float) 2 * ((float)object->imageRender[viewId]->imageZBufferInverse->pixels[icZ] / (float)MAX_INT) - 1.0f;
