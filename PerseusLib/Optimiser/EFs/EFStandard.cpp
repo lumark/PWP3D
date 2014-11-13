@@ -126,6 +126,7 @@ void EFStandard::GetFirstDerivativeValues_CPU_6DoF(Object3D ***objects, int *obj
 
           dirac = (1.0f / float(PI)) * (1.0f / (dtIdx * dtIdx + 1.0f) + float(1e-3));
 
+          // Get the derivate of PWP3D. this is for update
           dfPPGeneric = dirac * (pYF - pYB) / (heaviside * (pYF - pYB) + pYB);
 
           /// ------- run 1

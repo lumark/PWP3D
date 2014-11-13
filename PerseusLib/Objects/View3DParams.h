@@ -15,6 +15,14 @@ public:
     zFar = 50.0f;
     zNear = 0.01f;
   }
+
+
+  View3DParams(float f_zFar, float f_zNear) {
+    zBufferOffset = 0.0001f;
+    zFar = f_zFar;
+    zNear = f_zNear;
+  }
+
   ~View3DParams(void) {}
 };
 }

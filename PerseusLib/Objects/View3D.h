@@ -82,11 +82,11 @@ public:
   View3D(int viewIdx, float fSizeX, float fSizeY,
          float fFocalLengthX, float fFocalLengthY,
          float fCenterPointX, float fCenterPointY,
-         int width, int height, View3DParams* params = NULL)
+         int width, int height, float fzNear, float fzFar, View3DParams* params = NULL)
   {
     if (params == NULL)
     {
-      params = new View3DParams();
+      params = new View3DParams(fzFar, fzNear);
     }
 
     if(params->zFar <0 || params->zNear<0)
