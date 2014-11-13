@@ -9,13 +9,13 @@ void Quaternion::FromEuler(VFLOAT rotationX, VFLOAT rotationY, VFLOAT rotationZ)
   rotationY = rotationY * (VFLOAT) DEGTORAD;
   rotationZ = rotationZ * (VFLOAT) DEGTORAD;
 
-  VFLOAT c1 = cos(rotationY / 2);
-  VFLOAT c2 = cos(rotationZ / 2);
-  VFLOAT c3 = cos(rotationX / 2);
+  VFLOAT c1 = cos(rotationY / 2.f);
+  VFLOAT c2 = cos(rotationZ / 2.f);
+  VFLOAT c3 = cos(rotationX / 2.f);
 
-  VFLOAT s1 = sin(rotationY / 2);
-  VFLOAT s2 = sin(rotationZ / 2);
-  VFLOAT s3 = sin(rotationX / 2);
+  VFLOAT s1 = sin(rotationY / 2.f);
+  VFLOAT s2 = sin(rotationZ / 2.f);
+  VFLOAT s3 = sin(rotationX / 2.f);
 
   VFLOAT c1c2 = c1*c2;
   VFLOAT s1s2 = s1*s2;
