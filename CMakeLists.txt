@@ -9,20 +9,19 @@ if(${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
 endif()
 
-option(BUILD_APPLICATIONS "Build Applications" ON)
-option(BUILD_SHARED_LIBS "Build Shared Library" ON)
+# Platform configuration vars
+include(SetPlatformVars)
 
 # Overide with cmake -DCMAKE_BUILD_TYPE=Debug {dir}
 if( NOT CMAKE_BUILD_TYPE )
    set( CMAKE_BUILD_TYPE Release )
 endif()
 
-# Platform configuration vars
-include(SetPlatformVars)
-
+option(BUILD_SHARED_LIBS "Build Shared Library" ON)
 add_subdirectory(PerseusLib)
 
-if(BUILD_APPLICATIONS)
+option(BUILD_PWP3D_APPLICATIONS "Build Applications" OFF)
+if(BUILD_PWP3D_APPLICATIONS)
   add_subdirectory(Application)
 endif()
 
