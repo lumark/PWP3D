@@ -140,6 +140,13 @@ if(FREEIMAGE_FOUND)
     list(APPEND LINK_LIBS ${FREEIMAGE_LIBRARIES} )
 endif()
 
+find_package( ASSIMP REQUIRED )
+if(ASSIMP_FOUND)
+    set(HAVE_ASSIMP 1)
+    list(APPEND USER_INC ${ASSIMP_INCLUDE_DIR})
+    list(APPEND LINK_LIBS ${ASSIMP_LIBRARIES} )
+endif()
+
 find_package( OpenCV REQUIRED )
 if(FREEIMAGE_FOUND)
     set(HAVE_OpenCV 1)
