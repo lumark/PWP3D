@@ -234,8 +234,8 @@ void FileUtils::WriteToFile(std::vector<std::vector<double>> matrix, std::string
   int i,j;
   int m = (int)matrix.size();
   int n = (int)matrix[0].size();
-  fprintf(f, "height_%s=%d;\n", name.data(), matrix.size());
-  fprintf(f, "width_%s=%d;\n", name.data(), matrix[0].size());
+  fprintf(f, "height_%s=%d;\n", name.data(), static_cast<int>(matrix.size()));
+  fprintf(f, "width_%s=%d;\n", name.data(), static_cast<int>(matrix[0].size()));
 
   fprintf(f, "%s=[\n", name.data());
   for (i=0; i<m; i++)
@@ -258,8 +258,8 @@ void FileUtils::WriteToFile(std::vector<std::vector<float>> matrix, std::string 
   int i,j;
   int m = (int)matrix.size();
   int n = (int)matrix[0].size();
-  fprintf(f, "height_%s=%d;\n", name.data(), matrix.size());
-  fprintf(f, "width_%s=%d;\n", name.data(), matrix[0].size());
+  fprintf(f, "height_%s=%d;\n", name.data(), static_cast<int>(matrix.size()) );
+  fprintf(f, "width_%s=%d;\n", name.data(), static_cast<int>(matrix[0].size()) );
 
   fprintf(f, "%s=[\n", name.data());
   for (i=0; i<m; i++)
@@ -281,8 +281,8 @@ void FileUtils::WriteToFile(std::vector<std::vector<int>> matrix, std::string na
   int i,j;
   int m = (int)matrix.size();
   int n = (int)matrix[0].size();
-  fprintf(f, "height_%s=%d;\n", name.data(), matrix.size());
-  fprintf(f, "width_%s=%d;\n", name.data(), matrix[0].size());
+  fprintf(f, "height_%s=%d;\n", name.data(), static_cast<int>(matrix.size()) );
+  fprintf(f, "width_%s=%d;\n", name.data(), static_cast<int>(matrix[0].size()) );
 
   fprintf(f, "%s=[\n", name.data());
   for (i=0; i<m; i++)
