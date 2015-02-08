@@ -19,7 +19,7 @@ endif()
 option(BUILD_SHARED_LIBS "Build Shared Library" ON)
 add_subdirectory(PerseusLib)
 
-option(BUILD_PWP3D_APPLICATIONS "Build Applications" OFF)
+option(BUILD_PWP3D_APPLICATIONS "Build PWP3D App" OFF)
 if(BUILD_PWP3D_APPLICATIONS)
   add_subdirectory(Application)
 endif()
