@@ -1,4 +1,4 @@
-cmake_minimum_required( VERSION 2.8 )
+cmake_minimum_required( VERSION 3.0 )
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/")
 
@@ -19,8 +19,8 @@ endif()
 option(BUILD_SHARED_LIBS "Build Shared Library" ON)
 add_subdirectory(PerseusLib)
 
-option(BUILD_PWP3D_APPLICATIONS "Build PWP3D App" OFF)
-if(BUILD_PWP3D_APPLICATIONS)
+option(BUILD_PWP3D_APP "Build PWP3D App" OFF)
+if(BUILD_PWP3D_APP)
   add_subdirectory(Application)
 endif()
 
